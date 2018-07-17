@@ -1,0 +1,167 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.labor.ResourceTaskAssignmentFragment">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_marginTop="5dp"
+                  android:orientation="vertical">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtPlanName"
+                      android:layout_width="140dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Select plan/program: "/>
+            <Spinner
+                android:id="@+id/spn_plan_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtPhaseName"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Select plan phase"/>
+            <Spinner
+                android:id="@+id/spn_task_phase"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtTaskName"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Select task name:"/>
+            <Spinner
+                android:id="@+id/spn_plan_task"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtPayRate"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Select pay rate."/>
+            <Spinner
+                android:id="@+id/spn_pay_rate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+        <EditText android:id="@+id/edit_start_date"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Task start date."
+                  android:inputType="date"/>
+
+        <EditText android:id="@+id/edit_end_date"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Task end date."
+                  android:inputType="date"/>
+
+        <EditText android:id="@+id/edit_total_work"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Total quantity of work."
+                  android:inputType="numberDecimal"/>
+        <EditText android:id="@+id/edit_total_payment"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Total payment due."
+                  android:inputType="numberDecimal"/>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtTaskCompletion"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Completed  ?:"/>
+            <Spinner
+                android:id="@+id/spn_complete_status"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/tast_status_prompt"
+                android:entries="@array/task_status_array"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+
+        <EditText android:id="@+id/edit_comments"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Type comments here."/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_cancel_inventory_creation"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/flat_grey"
+                    android:text="Cancel"/>
+
+            <Button android:id="@+id/btn_submit_task_assignment"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/flat_green"
+                    android:text="Submit"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

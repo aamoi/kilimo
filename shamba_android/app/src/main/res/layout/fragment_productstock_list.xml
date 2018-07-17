@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<LinearLayout android:layout_height="wrap_content"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:id="@+id/main_layout"-->
+                  <!--android:layout_marginLeft="@dimen/text_marginLeft"-->
+                  <!--android:layout_marginTop="@dimen/text_marginTop"-->
+                  <!--android:orientation="vertical">-->
+
+        <!--<LinearLayout android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:orientation="horizontal">-->
+
+            <!--<TextView android:id="@+id/title_product_name"-->
+                      <!--android:layout_width="100dp"-->
+                      <!--android:layout_height="@dimen/form_buttons_height"-->
+                      <!--android:text="Product Name:"-->
+                      <!--android:textStyle="bold"/>-->
+
+            <!--<TextView android:id="@+id/txt_product_name"-->
+                      <!--android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginLeft="@dimen/text_marginLeft"-->
+                      <!--android:hint="product name" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginTop="@dimen/form_element_spacing"-->
+                      <!--android:orientation="horizontal">-->
+            <!--<TextView android:id="@+id/title_product_type"-->
+                      <!--android:layout_width="100dp"-->
+                      <!--android:layout_height="@dimen/form_buttons_height"-->
+                      <!--android:text="Product Type:"-->
+                      <!--android:textStyle="bold"/>-->
+
+            <!--<TextView android:id="@+id/txt_product_type"-->
+                      <!--android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginLeft="@dimen/text_marginLeft"-->
+                      <!--android:hint="product type" />-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginTop="@dimen/form_element_spacing"-->
+                      <!--android:orientation="horizontal">-->
+            <!--<TextView android:id="@+id/title_package_size"-->
+                      <!--android:layout_width="100dp"-->
+                      <!--android:layout_height="@dimen/form_buttons_height"-->
+                      <!--android:text="SI Unit: "-->
+                      <!--android:textStyle="bold"/>-->
+
+            <!--<TextView android:id="@+id/txt_product_uom"-->
+                      <!--android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginLeft="@dimen/text_marginLeft"-->
+                      <!--android:hint="Unit of Measure" />-->
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recycler_list_product_stock"
+        android:name="com.shamba.amoi.shambaapp.fragments.projects.ProductStockFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_layout"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.shamba.amoi.shambaapp.fragments.projects.ProductStockFragment"
+        tools:listitem="@layout/fragment_productstock"/>
+
+<Button android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_add_product_stock"
+        android:text="Add Product Stock"
+        android:background="@color/flat_green"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
+
+
+

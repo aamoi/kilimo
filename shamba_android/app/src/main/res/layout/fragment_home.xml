@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/btn_projects"
+                            android:layout_width="@dimen/six_buttons_width"
+                            android:layout_height="@dimen/six_buttons_height"
+                            android:background="@android:color/transparent"
+                            android:onClick="onClickProjects"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingTop="20dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_projects" />
+
+                        <TextView
+                            android:id="@+id/txt_projects"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="0dp"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:onClick="onClickProjects"
+                            android:text="@string/title_fragment_projects"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/six_buttons_title_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/btn_inventory"
+                            android:layout_width="@dimen/six_buttons_width"
+                            android:layout_height="@dimen/six_buttons_height"
+                            android:background="@android:color/transparent"
+                            android:onClick="onClickInventory"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingTop="20dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_seed_product" />
+
+                        <TextView
+                            android:id="@+id/txt_inventory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="0dp"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:onClick="onClickInventory"
+                            android:text="@string/title_fragment_Products"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/six_buttons_title_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_labor"
+                        android:layout_width="@dimen/six_buttons_width"
+                        android:layout_height="@dimen/six_buttons_height"
+                        android:background="@android:color/transparent"
+                        android:onClick="onClickLabor"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_labor" />
+
+                    <TextView
+                        android:id="@+id/txt_labor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="0dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClickLabor"
+                        android:text="@string/title_fragment_labor"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/six_buttons_title_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_power"
+                        android:layout_width="@dimen/six_buttons_width"
+                        android:layout_height="@dimen/six_buttons_height"
+                        android:background="@android:color/transparent"
+                        android:onClick="onClickPowerButton"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_power3" />
+
+                    <TextView
+                        android:id="@+id/txt_power"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="0dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClickPowerButton"
+                        android:text="@string/title_fragment_power"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/six_buttons_title_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_assets"
+                        android:layout_width="@dimen/six_buttons_width"
+                        android:layout_height="@dimen/six_buttons_height"
+                        android:background="@android:color/transparent"
+                        android:onClick="onClickAssets"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_assets" />
+
+                    <TextView
+                        android:id="@+id/txt_assets"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="0dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClickAssets"
+                        android:text="@string/title_fragment_assets"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/six_buttons_title_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_reports"
+                        android:layout_width="@dimen/six_buttons_width"
+                        android:layout_height="@dimen/six_buttons_height"
+                        android:background="@android:color/transparent"
+                        android:onClick="onClickReports"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_reports" />
+
+                    <TextView
+                        android:id="@+id/txt_reports"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="0dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClickReports"
+                        android:text="@string/title_fragment_reports"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/six_buttons_title_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+
+
+
+
+<!--<RelativeLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context="com.shamba.amoi.shambaapp.fragments.HomeFragment">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_projects"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickProjects"-->
+            <!--android:text="Projects"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginTop="@dimen/text_marginTop"-->
+            <!--android:layout_marginStart="@dimen/text_marginLeft"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btn_inventory"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickInventory"-->
+            <!--android:text="Inventory"-->
+            <!--android:layout_toRightOf="@id/btn_projects"-->
+            <!--android:layout_alignParentTop="@id/btn_projects"-->
+            <!--android:layout_alignBottom="@id/btn_projects"-->
+            <!--android:layout_alignTop="@id/btn_projects"-->
+            <!--android:layout_marginStart="70dp"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_labor"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickLabor"-->
+            <!--android:text="Labor"-->
+            <!--android:layout_below="@id/btn_projects"-->
+            <!--android:layout_marginStart="@dimen/text_marginLeft"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_power"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickPowerButton"-->
+            <!--android:text="Power"-->
+            <!--android:layout_toRightOf="@id/btn_labor"-->
+            <!--android:layout_below="@id/btn_inventory"-->
+            <!--android:layout_alignLeft="@id/btn_inventory"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_assets"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickAssets"-->
+            <!--android:text="Assets"-->
+            <!--android:layout_below="@id/btn_labor"-->
+            <!--android:layout_marginLeft="@dimen/text_marginLeft"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:id="@+id/btn_reports"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:onClick="onClickReports"-->
+            <!--android:text="Reports"-->
+            <!--android:layout_below="@id/btn_power"-->
+            <!--android:layout_toRightOf="@id/btn_assets"-->
+            <!--android:layout_alignLeft="@id/btn_power"-->
+            <!--/>-->
+
+    <!--</RelativeLayout>-->
+
+

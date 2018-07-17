@@ -1,0 +1,122 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.CreateHumanResourceFragment">
+
+    <LinearLayout android:layout_height="match_parent"
+                  android:layout_width="match_parent"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:orientation="vertical">
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="15dp"
+                  android:id="@+id/edit_resource_name"
+                  android:hint="Name of resource"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:layout_marginBottom="10dp"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txt_resource_type"
+                      android:layout_width="150dp"
+                      android:layout_height="wrap_content"
+                      android:text="Type of resource: "
+                      android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/spn_resource_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_resource_joining_date"
+                  android:hint="Date resource joined"/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_resource_main_skillset"
+                  android:hint="Resource main skill set"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:layout_marginBottom="10dp"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txt_resource_contract"
+                      android:layout_width="150dp"
+                      android:layout_height="wrap_content"
+                      android:text="Resource contract: "
+                      android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/spn_resource_contract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:layout_marginBottom="10dp"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txt_resource_pay_rate"
+                      android:layout_width="150dp"
+                      android:layout_height="wrap_content"
+                      android:text="Payment rate: "
+                      android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/spn_resource_pay_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <EditText android:id="@+id/edit_comments_on_resource"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:hint="Comments on resource"/>
+
+
+        <LinearLayout android:layout_height="match_parent"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="@dimen/text_marginTop">
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_cance_hr_addition"
+                    android:text="Cancel"
+                    android:background="@color/flat_grey"/>
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_add_hr"
+                    android:text="Submit"
+                    android:background="@color/flat_green"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.projects.UpdateActualsMasterPlantingPlanFragment">
+
+    <ViewStub android:id="@+id/update_master_planting_plan_stub"
+              android:inflatedId="@+id/subTree"
+              android:layout_width="120dip"
+              android:layout_height="40dip" />
+
+</FrameLayout>

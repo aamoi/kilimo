@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.projects.ProjectsHomeFragment">
+
+    <LinearLayout android:layout_height="wrap_content"
+                  android:layout_width="match_parent" android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_masterplantingplan"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:text="Master Planting Plan"
+        />
+    <Button
+        android:id="@+id/btn_plantingprograms"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:text="Planting Programmes"/>
+    <Button
+        android:id="@+id/btn_livestockprograms"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:text=" Livestock Programmes"/>
+    <Button
+        android:id="@+id/btn_masterlogisticsplan"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginBottom="112dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:text="Master Logistics Plan"/>
+    </LinearLayout>
+
+</FrameLayout>

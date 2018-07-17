@@ -1,0 +1,95 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.CreateProductFragment">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:orientation="vertical">
+        <EditText android:id="@+id/edit_product_name"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:hint="Product name"/>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtProductType"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Product Type: "/>
+            <Spinner
+                android:id="@+id/spn_product_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:entries="@array/product_unitOfMeasure_array"
+                android:prompt="@string/product_unit_of_mesure_prompt"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:orientation="horizontal">
+
+            <TextView android:id="@+id/txtUnitOfMeasure"
+                      android:layout_width="130dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="@dimen/text_marginLeft"
+                      android:text="Unit of measure"/>
+            <Spinner
+                android:id="@+id/spn_product_measuringUnit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:entries="@array/product_unitOfMeasure_array"
+                android:prompt="@string/product_unit_of_mesure_prompt"/>
+        </LinearLayout>
+
+
+        <EditText android:id="@+id/edit_comments"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Type comments here."/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="@dimen/text_marginTop"
+                      android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_cancel_inventory_creation"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/flat_grey"
+                    android:text="Cancel"
+            />
+
+            <Button android:id="@+id/btn_accept_inventory_creation"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/flat_green"
+                    android:text="Submit"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

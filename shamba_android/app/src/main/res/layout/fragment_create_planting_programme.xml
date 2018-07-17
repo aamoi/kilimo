@@ -1,0 +1,171 @@
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_marginTop="@dimen/text_marginTop"--><!--android:orientation="vertical">-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/scroll_view_form_height"-->
+    <!--android:fillViewport="true"-->
+    <!--tools:context="com.shamba.amoi.shambaapp.fragments.projects.CreatePlantingProgrammeFragment">-->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll_view"
+        android:layout_above="@+id/submit_form">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_marginLeft"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edit_planting_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Planting name" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_planting_crop"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Select planting crop: "
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_planting_produce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/crop_array"
+                    android:prompt="@string/crops_prompt" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_seed_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Seed quantity"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/edit_preparation_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Preparation date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/edit_seedbed_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Seedbed date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/edit_transplanting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Transplanting date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/edit_harvesting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Harvesting date"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/edit_sales_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Selling  date"
+                android:inputType="date" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_planting_location"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Planting location: "
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_planting_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/location_array"
+                    android:prompt="@string/location_prompt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_planting_block"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Select planting block: "
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_planting_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/block_array"
+                    android:prompt="@string/block_prompt" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_planting_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Total planting cost"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/edit_planting_revenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Projected revenue"
+                android:inputType="number|numberDecimal" />
+
+        </LinearLayout>
+        <!--</ScrollView>-->
+    </android.support.v4.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/submit_form"
+        layout="@layout/submit_form_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/submit_form_buttons_marginTop"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible" />
+</RelativeLayout>

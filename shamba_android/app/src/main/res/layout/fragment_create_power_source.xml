@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.CreatePowerSourceFragment">
+
+    <LinearLayout android:layout_height="match_parent"
+                  android:layout_width="match_parent"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:orientation="vertical">
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_power_source_name"
+                  android:text="PowerSource Name"/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="20dp"
+                  android:id="@+id/edit_power_source_name"
+                  android:hint="E.g. Diesel"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txt_power_source_unitOfMeasure"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="20dp"
+                  android:text="Unit Of Measure" />
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_power_source_unitOfMeasure"
+                  android:hint="E.g. Litres"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_power_source_use"
+                  android:text="Power Use "/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_power_source_use"
+                  android:hint="E.g diesel pump, diesel generator"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_comments_on_power_source"
+                  android:text="Comments "/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_comments_on_power_source"
+                  android:hint="Comments on power source"/>
+
+
+        <LinearLayout android:layout_height="match_parent"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="@dimen/text_marginTop">
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_cance_power_source"
+                    android:text="Cancel"
+                    android:background="@color/flat_grey"
+            />
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_add_power_source"
+                    android:text="Submit"
+                    android:background="@color/flat_green"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

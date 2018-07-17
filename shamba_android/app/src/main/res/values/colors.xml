@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary2">#FF9800</color>
+    <color name="colorPrimary">#3F51B5</color>
+
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="flat_green">#2ecc71</color>
+    <color name="flat_grey">#7f8c8d</color>
+    <color name="statusBar">#F57C00</color>
+    <color name="toolbar">#FF9800</color>
+    <color name="colorPrimaryDark2">#E96E32</color>
+    <color name="buttonColor">#ff6600</color>
+    <color name="tabIndicatorColor">#FFFFFF</color>
+    <color name="hintColor">#bdbdbd</color>
+    <color name="colorGreen">#19934A</color>
+    <color name="mint_green">#ff00b4bf</color>
+    <color name="theme_blue">#ff017eba</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_grey">#ffededed</color>
+    <color name="grey">#9b9b9b</color>
+    <color name="dark_grey">#616161</color>
+    <color name="black">#ff111111</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#e50822</color>
+    <color name="flat_blue">#3498db</color>
+    <color name="flat_blue_opaque">#503498db</color>
+    <color name="flat_black_opaque">#70000000</color>
+    <color name="btn_2">#159154</color>
+    <color name="flat_red">#e74c3c</color>
+    <color name="flat_navy_blue">#017eba</color>
+    <color name="error_red">#ff0033</color>
+    <color name="btn_blue">#ff0A6691</color>
+    <color name="btn_blue_selected">#ff115A7D</color>
+    <color name="theme_blue_text">#de017eba</color>
+    <color name="white_text">#deffffff</color>
+    <color name="leaf_green">#39B54A</color>
+    <color name="blue">#0000ff</color>
+    <color name="home_orange">#ED6D24</color>
+    <color name="scrollbar">#22111111</color>
+    <color name="light_background">#fff3f3f3</color>
+    <color name="darkGray">#666666</color>
+
+</resources>

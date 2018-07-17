@@ -1,0 +1,326 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.projects.TaskSchedulingActuals">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:layout_marginLeft="@dimen/text_marginLeft">
+
+        <LinearLayout android:id="@+id/layout_planting_details"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal">
+
+                <TextView android:id="@+id/title_product_name"
+                          android:layout_width="150dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Product Name:"
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/product_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="product name"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/form_element_spacing"
+                          android:orientation="horizontal">
+                <TextView android:id="@+id/title_planting_name"
+                          android:layout_width="150dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Planting name:"
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/planting_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="Planting programme name"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/form_element_spacing"
+                          android:orientation="horizontal">
+                <TextView android:id="@+id/title_planting_ref"
+                          android:layout_width="150dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Phase name: "
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/planting_phase"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="planting phase"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:id="@+id/txt_task_name"
+                      android:layout_width="160dp"
+                      android:layout_height="wrap_content"
+                      android:text="Task name: "
+                      android:textStyle="bold" android:textSize="20dp"/>
+
+            <EditText android:id="@+id/edit_task_name"
+                      android:layout_width="160dp"
+                      android:layout_height="wrap_content"
+                      android:hint="Enter task name" />
+        </LinearLayout>
+
+        <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+                     xmlns:tools="http://schemas.android.com/tools"
+                     android:layout_width="wrap_content"
+                     android:layout_height="350dp"
+                     android:fillViewport="true"
+                     tools:context="com.shamba.amoi.shambaapp.fragments.projects.TaskSchedulingFragment">
+
+            <LinearLayout android:layout_height="wrap_content"
+                          android:layout_width="wrap_content"
+                          android:orientation="vertical">
+
+                <!--Number of days required to execute the task.-->
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/schedule_parameter_days"
+                              android:orientation="horizontal"
+                              android:layout_marginTop="15dp">
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_planned_days"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Planned Days: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_planned_days"
+                                  android:layout_width="150dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="0.00" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_actual_days"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Actual Days: "
+                                  android:textStyle="bold"
+                        />
+
+                        <EditText android:id="@+id/edit_actual_days"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="0.00" android:inputType="numberDecimal"
+                        />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--Start date to execute the task.-->
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/schedule_parameter_startDate"
+                              android:orientation="horizontal"
+                              android:layout_marginTop="15dp">
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_planned_startDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Planned Start Date: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_planned_startDate"
+                                  android:layout_width="150dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="exp. start date" android:inputType="date"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_actual_startDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Actual start Date: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_actual_startDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="Actual start date" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--End date to execute the task.-->
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/schedule_parameter_endDate"
+                              android:orientation="horizontal"
+                              android:layout_marginTop="15dp">
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_planned_endDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Planned End Date: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_planned_endDate"
+                                  android:layout_width="150dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="exp. end date" />
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_actual_endDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Actual end Date: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_actual_endDate"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="Actual end date" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Number of people to execute the task.-->
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/schedule_parameter_people"
+                              android:orientation="horizontal"
+                              android:layout_marginTop="15dp">
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_planned_people"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Planned people: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_planned_people"
+                                  android:layout_width="150dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="0" android:inputType="number"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_actual_people"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Actual people: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_actual_people"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="Actual people" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Cost to execute the task.-->
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/schedule_parameter_cost"
+                              android:orientation="horizontal"
+                              android:layout_marginTop="15dp">
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_planned_cost"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Planned cost: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_planned_cost"
+                                  android:layout_width="150dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="exp. cost" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical">
+                        <TextView android:id="@+id/txt_actual_cost"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:text="Actual cost: "
+                                  android:textStyle="bold" />
+
+                        <EditText android:id="@+id/edit_actual_cost"
+                                  android:layout_width="160dp"
+                                  android:layout_height="wrap_content"
+                                  android:hint="Actual cost" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout android:layout_height="wrap_content"
+                      android:layout_width="wrap_content"
+                      android:orientation="horizontal"
+                      android:layout_marginRight="20dp"
+
+                      android:layout_marginTop="20dp">
+
+            <Button android:layout_height="40dp"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_cancel_inventory_creation"
+                    android:text="Cancel"
+                    android:background="@color/flat_grey"
+            />
+
+            <Button android:id="@+id/btn_submit_task"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/flat_green"
+                    android:text="Submit"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

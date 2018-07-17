@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:clickable="true"
+>
+
+<RelativeLayout android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+                android:clickable="true">
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recycler_list_invenory"
+        android:name="com.shamba.amoi.shambaapp.InventoryFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.shamba.amoi.shambaapp.fragments.inventory.InventoryFragment"
+        tools:listitem="@layout/fragment_inventory"
+
+        android:clickable="true"
+    />
+
+    <Button android:id="@+id/btn_add_product"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/flat_green"
+            android:text="Add Product"/>
+</RelativeLayout>
+
+
+</FrameLayout>

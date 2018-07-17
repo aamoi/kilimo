@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">ShambaApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_unit_of_mesure_prompt">Select Unit of Measure</string>
+
+    <string-array name="product_unitOfMeasure_array">
+        <item>gm</item>
+        <item>KG</item>
+        <item>MLs</item>
+        <item>Lts</item>
+        <item>M</item>
+        <item>Horse Power</item>
+        <item>CC</item>
+    </string-array>
+
+    <string name="crops_prompt">Select Crop</string>
+    <string-array name="crop_array">
+        <item>Maize</item>
+    </string-array>
+
+    <string name="location_prompt">Select location</string>
+    <string-array name="location_array">
+        <item>Kangemi</item>
+        <item>Kwa George</item>
+        <item>Chemche</item>
+        <item>Mateka</item>
+    </string-array>
+
+    <string name="block_prompt">Select location</string>
+    <string-array name="block_array">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+    </string-array>
+
+    <string name="tast_status_prompt">Select completion status</string>
+    <string-array name="task_status_array">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+    <string name="title_fragment_home">Home</string>
+    <string name="title_fragment_projects">Projects</string>
+    <string name="title_fragment_labor">Labor</string>
+    <string name="title_fragment_power">Power</string>
+
+    <string name="title_fragment_assets">Assets</string>
+    <string name="title_fragment_asset_fuelings">fuelings</string>
+    <string name="title_fragment_asset_servicngs">servicings</string>
+
+    <string name="title_fragment_Products">Products</string>
+    <string name="message_processing_products">Fetching products ...</string>
+
+
+
+
+    <string name="title_fragment_reports">Reports</string>
+    <string name="title_fragment_others">Others</string>
+
+    <string name="title_fragment_new_planting_project">New planting project</string>
+    <string name="title_fragment_planting_projects">Planting projects</string>
+    <string name="title_fragment_planting_phases">Planting phases</string>
+    <string name="title_fragment_task_list">Project tasks</string>
+    <string name="title_fragment_add_task">Add project task</string>
+    <string name="title_fragment_resource_assignment_list">tasks</string>
+    <string name="title_fragment_assign_resource_task">Assign task</string>
+
+    <string name="title_fragment_product_stocks">Stocks</string>
+    <string name="title_fragment_product_list">Products</string>
+    <string name="title_fragment_salary_payment_list">payments due</string>
+
+    <string name="title_fragment_power_source_list">Power sources</string>
+    <string name="title_fragment_restock_power_source">Restock </string>
+    <string name="title_fragment_power_source_stocks">stock list </string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>

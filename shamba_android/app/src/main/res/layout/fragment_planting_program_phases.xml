@@ -1,0 +1,118 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.projects.PlantingProgramPhasesFragment">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:layout_marginLeft="@dimen/text_marginLeft">
+
+        <LinearLayout android:id="@+id/layout_planting_details"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal">
+
+                <TextView android:id="@+id/title_product_name"
+                          android:layout_width="100dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Product Name:"
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/product_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="product name"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/form_element_spacing"
+                          android:orientation="horizontal">
+                <TextView android:id="@+id/title_planting_name"
+                          android:layout_width="100dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Planting name:"
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/planting_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="Planting programme name"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/form_element_spacing"
+                          android:orientation="horizontal">
+                <TextView android:id="@+id/title_planting_ref"
+                          android:layout_width="100dp"
+                          android:layout_height="@dimen/form_buttons_height"
+                          android:text="Start Date Ref: "
+                          android:textStyle="bold"/>
+
+                <TextView android:id="@+id/planting_ref"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/text_marginLeft"
+                          android:hint="planting reference no"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_land_preparation"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:text="Land Preparation" android:textAlignment="textStart"
+            />
+
+            <Button
+                android:id="@+id/btn_seedbed_preparation"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:text="Seed Bed Management" android:textAlignment="textStart"
+            />
+            <Button
+                android:id="@+id/btn_transplanting"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:text="Transplanting" android:textAlignment="textStart"/>
+            <Button
+                android:id="@+id/btn_crop_maintainance"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:text="Crop Maintaince" android:textAlignment="textStart"/>
+            <Button
+                android:id="@+id/btn_harvesting"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:text="Harvesting" android:textAlignment="textStart"/>
+
+            <Button
+                android:id="@+id/btn_post_harvesting"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:text="Post Harvesting" android:textAlignment="textStart"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,95 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.shamba.amoi.shambaapp.fragments.CreateAssetFragment">
+
+    <LinearLayout android:layout_height="match_parent"
+                  android:layout_width="match_parent"
+                  android:layout_marginTop="@dimen/text_marginTop"
+                  android:orientation="vertical">
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_product_manafacturer"
+                  android:text="Manafacturer Name"/>
+
+        <EditText android:id="@+id/edit_asset_manufacturer"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="20dp"
+                  android:hint="E.g. Davis &amp; Shirtfli"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txt_asset_name"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="20dp"
+                  android:text="Asset Name" />
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_asset_name"
+                  android:hint="E.g. Water Pump"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_asset_measuringUnit"
+                  android:text="Unit Of Measure"/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_asset_measuringUnit" android:hint="Horse Power"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/txt_asset_capacity"
+                  android:text="Capacity"/>
+
+        <EditText android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:id="@+id/edit_asset_unit_size"
+                  android:hint="E.g. 7"/>
+
+
+        <LinearLayout android:layout_height="match_parent"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="@dimen/text_marginTop">
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_cancel_asset_creation"
+                    android:text="Cancel"
+                    android:background="@color/flat_grey"
+            />
+
+            <Button android:layout_height="wrap_content"
+                    android:layout_width="@dimen/form_buttons_width"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_accept_asset_creation"
+                    android:text="Submit"
+                    android:background="@color/flat_green"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

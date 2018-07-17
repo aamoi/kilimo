@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/two_columns_recycler_view_height"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txt_first_column"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="planting name"
+            android:textStyle="bold"
+            android:textSize="@dimen/two_columns_recycler_view_size"
+            android:textAppearance="?attr/textAppearanceListItem"/>
+
+        <TextView
+            android:id="@+id/txt_second_column"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/two_columns_recycler_view_space"
+            android:text="planting ref."
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:textStyle="bold"
+            android:textSize="@dimen/two_columns_recycler_view_size"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+</LinearLayout>

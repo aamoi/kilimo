@@ -1,0 +1,106 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.shamba.amoi.shambaapp.fragments.power.RestockPowerSource">
+
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/text_marginTop"
+    android:layout_marginLeft="@dimen/text_marginLeft"
+    android:orientation="vertical">
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_vendor"
+            android:text="Vendor Name" android:textStyle="bold"/>
+        <EditText android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_vendor"
+            />
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_date"
+            android:text="Purchase Date" android:textStyle="bold"/>
+        <EditText android:id="@+id/edit_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_quantity"
+            android:text="Purchase Quantity" android:textStyle="bold"/>
+        <EditText android:id="@+id/edit_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0.00" android:inputType="numberDecimal"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:id="@+id/txt_cost"
+            android:text="Purchase Price" android:textStyle="bold"/>
+        <EditText android:id="@+id/edit_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="0.00" android:inputType="numberDecimal"/>
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:id="@+id/txt_description"
+            android:text="Purchase Description" android:textStyle="bold"/>
+        <EditText android:id="@+id/edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        >
+
+        <Button android:layout_height="wrap_content"
+            android:layout_width="@dimen/form_buttons_width"
+            android:id="@+id/btn_cancel_stock_submition"
+            android:text="Cancel"
+            android:background="@color/flat_grey"
+            />
+
+        <Button android:layout_height="wrap_content"
+            android:layout_width="@dimen/form_buttons_width"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/btn_submit_stock"
+            android:text="Submit"
+            android:background="@color/flat_green"
+            />
+
+    </LinearLayout>
+</LinearLayout>
+
+</FrameLayout>

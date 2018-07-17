@@ -1,0 +1,182 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context="com.shamba.amoi.shambaapp.fragments.projects.CreateMasterPlantingPlanFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="vertical">
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context="com.shamba.amoi.shambaapp.fragments.projects.CreateMasterPlantingPlanFragment"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:fillViewport="true" >
+
+   <LinearLayout android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="@dimen/text_marginTop"
+                 android:layout_marginLeft="@dimen/text_marginLeft"
+                 android:orientation="vertical">
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+       <TextView android:layout_width="120dp"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/txt_plan_name" android:text="Plan Name :" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_plan_name"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_plan_ref" android:text="Plan Ref:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_plan_ref"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_farm_location" android:text="Farm Location:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_farm_location"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_farm_block" android:text="Farm Block:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_farm_block"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+       <TextView android:layout_width="120dp"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/txt_block_size" android:text="Farm Block Size:" android:textStyle="bold"/>
+
+       <EditText android:layout_width="300dp"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/edit_block_size"/>
+   </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_plan_produce" android:text="Produce Name:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_plan_produce"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_produce_quantity" android:text="Produce Quantity:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_produce_quantity"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_seedbed_date" android:text="SeedBed Date:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_seedbed_date"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_transplanting_date" android:text="Transplating Date:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_transplanting_date"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_harvesting_date" android:text="Harvesting Date:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_harvesting_date"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_estimated_cost" android:text="Est. Cost:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_estimated_cost"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_estimated_revenue" android:text="Est. Revenue:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_estimated_revenue"/>
+       </LinearLayout>
+
+       <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+           <TextView android:layout_width="120dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/txt_comments" android:text="Comments:" android:textStyle="bold"/>
+
+           <EditText android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/edit_comments"/>
+       </LinearLayout>
+   </LinearLayout>
+</ScrollView>
+
+        <LinearLayout android:layout_height="match_parent"
+                      android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="20dp">
+
+            <Button android:layout_height="30dp"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_cancel_inventory_creation"
+                    android:text="Cancel"
+                    android:background="@color/flat_grey"
+            />
+
+            <Button android:layout_height="30dp"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btn_accept_inventory_creation"
+                    android:text="Submit"
+                    android:background="@color/flat_green"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
