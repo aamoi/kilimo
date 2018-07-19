@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "363098d5-ce19-447d-954e-f223237eeee7",
+		"name": "kilimo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/planting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/planting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"planting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/phase",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/planting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"planting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/locationBlock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/locationBlock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"locationBlock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/unitOfMeasure",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/unitOfMeasure",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unitOfMeasure"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
