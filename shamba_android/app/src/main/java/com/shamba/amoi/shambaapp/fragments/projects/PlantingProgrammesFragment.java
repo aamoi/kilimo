@@ -179,20 +179,80 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                 for(int i=0;i<jArray.length();++i){
 
+                    PlantingProgramItem planting=new PlantingProgramItem();
+
                     JSONObject jsonObject = jArray.getJSONObject(i);
 
-                    String name=jsonObject.getString("planting_name");
+                    String planned_preparation_date=jsonObject.getString("planned_preparation_date").substring(0,10);
+                    planting.setPlanned_preparation_date(planned_preparation_date);
 
-//                    JsonObject jsonObject = jArray.get(i).getAsJsonObject();
+                    String planned_seedbed_date=jsonObject.getString("planned_seedbed_date");
+                    planting.setPlanned_seedbed_date(planned_seedbed_date);
 
-                    Log.d("Planting name @ "+i, name);
+                    String planned_transplant_date=jsonObject.getString("planned_transplant_date");
+                    planting.setPlanned_transplant_date(planned_transplant_date);
 
-                    PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-                    plantingProgramItem.setPlan_id(String.valueOf(jsonObject.get("id")));
-                    plantingProgramItem.setPlanting_block(String.valueOf(jsonObject.get("block_id")));
-                    plantingProgramItem.setPlanting_location(String.valueOf(jsonObject.get("location_id")));
-                    plantingProgramItem.setPlanting_name(String.valueOf(jsonObject.get("planting_name")));
-                    plantingProgramItem.setPlanting_produce(String.valueOf(jsonObject.get("product_id")));
+                    String planned_harvest_date=jsonObject.getString("planned_harvest_date");
+                    planting.setPlanned_harvest_date(planned_harvest_date);
+
+                    String planned_sales_date=jsonObject.getString("planned_sales_date");
+                    planting.setPlanned_sales_date(planned_sales_date);
+
+                    double estimated_cost=jsonObject.getDouble("estimated_cost");
+                    planting.setEstimated_cost(estimated_cost);
+
+                    double estimated_sales_quantity=jsonObject.getDouble("estimated_sales_quantity");
+                    planting.setEstimated_sales_quantity(estimated_sales_quantity);
+
+                    double estimated_revenue=jsonObject.getDouble("estimated_revenue");
+                    planting.setEstimated_revenue(estimated_revenue);
+
+                    double seed_quantity=jsonObject.getDouble("seed_quantity");
+                    planting.setSeed_quantity(seed_quantity);
+
+                    int location_block_id=jsonObject.getInt("location_block_id");
+//                    int location_id=jsonObject.getInt("location_id");
+//                    int product_id=jsonObject.getInt("product_id");
+
+                    String planting_name=jsonObject.getString("planting_name");
+                    planting.setPlanting_name(planting_name);
+
+                    Log.d("Planting name @ "+i, planting_name);
+
+                    String planting_details=jsonObject.getString("planting_details");
+                    planting.setPlanting_details(planting_details);
+
+                    String actual_preparation_date=jsonObject.getString("actual_preparation_date");
+                    planting.setActual_preparation_date(actual_preparation_date);
+
+                    String actual_seedbed_date=jsonObject.getString("actual_seedbed_date");
+                    planting.setActual_seedbed_date(actual_seedbed_date);
+
+                    String actual_transplant_date=jsonObject.getString("actual_transplant_date");
+                    planting.setActual_transplant_date(actual_transplant_date);
+
+                    String actual_harvest_date=jsonObject.getString("actual_harvest_date");
+                    planting.setActual_harvest_date(actual_harvest_date);
+
+                    String actual_sales_date=jsonObject.getString("actual_sales_date");
+                    planting.setActual_sales_date(actual_sales_date);
+
+                    double actual_cost=jsonObject.getDouble("actual_cost");
+                    planting.setActual_cost(actual_cost);
+
+                    double actual_sales_quantity=jsonObject.getDouble("actual_sales_quantity");
+                    planting.setActual_sales_quantity(actual_sales_quantity);
+
+                    double actual_revenue=jsonObject.getDouble("actual_revenue");
+                    planting.setActual_revenue(actual_revenue);
+
+//                    PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
+//                    plantingProgramItem.setPlan_id(String.valueOf(jsonObject.get("id")));
+//                    plantingProgramItem.setPlanting_block(String.valueOf(jsonObject.get("block_id")));
+//                    plantingProgramItem.setPlanting_location(String.valueOf(jsonObject.get("location_id")));
+//                    plantingProgramItem.setPlanting_name(String.valueOf(jsonObject.get("planting_name")));
+//                    plantingProgramItem.setPlanting_produce(String.valueOf(jsonObject.get("product_id")));
+//
 //                    plantingProgramItem.setPreparation_date(db_planting_programs.get(count).getPreparation_date());
 //                    plantingProgramItem.setSeedbed_date(db_planting_programs.get(count).getSeedbed_date());
 //                    plantingProgramItem.setTransplanting_date(db_planting_programs.get(count).getTransplanting_date());
@@ -202,7 +262,7 @@ public class PlantingProgrammesFragment extends BaseFragment {
 //                    plantingProgramItem.setPlanting_cost(db_planting_programs.get(count).getPlanting_cost());
 //                    plantingProgramItem.setPlanting_revenue(db_planting_programs.get(count).getPlanting_revenue());
 
-                    plantingProgramItems.add(plantingProgramItem);
+                    plantingProgramItems.add(planting);
                 }
 
 

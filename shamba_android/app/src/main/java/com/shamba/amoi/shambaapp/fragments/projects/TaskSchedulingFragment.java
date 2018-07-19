@@ -119,7 +119,7 @@ public class TaskSchedulingFragment extends BaseFragment {
         taskItem=BaseFragment.taskItem;
 
         product_name = (TextView) view.findViewById(R.id.product_name);
-        product_name.setText(plantingProgramItem.getPlanting_produce());
+//        product_name.setText(plantingProgramItem.getPlanting_produce());
 
         planting_name = (TextView) view.findViewById(R.id.planting_name);
         planting_name.setText(plantingProgramItem.getPlanting_name());
@@ -146,11 +146,15 @@ public class TaskSchedulingFragment extends BaseFragment {
                     str_planned_People = planned_People.getText().toString();
                     str_planned_startDate = planned_startDate.getText().toString();
 
-                    new SaveScheduleTask(plantingProgramItem.getPlan_id(), plantingPhaseItem.getPhase_id(),
+//                    new SaveScheduleTask(plantingProgramItem.getId(), plantingPhaseItem.getPhase_id(),
+//                            str_taskName, str_planned_days, str_planned_startDate, str_planned_endDate,
+//                            str_planned_People, str_planned_assets, str_planned_cost, str_planned_miscellenious
+//                    ).execute();
+
+                    new SaveScheduleTask("", plantingPhaseItem.getPhase_id(),
                             str_taskName, str_planned_days, str_planned_startDate, str_planned_endDate,
                             str_planned_People, str_planned_assets, str_planned_cost, str_planned_miscellenious
                     ).execute();
-
 
                     BaseFragment.changeFragment((AppCompatActivity) getActivity(),R.id.fragment_placeholder_home,new TaskListFragment());
 

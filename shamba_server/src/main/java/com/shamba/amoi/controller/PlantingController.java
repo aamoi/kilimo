@@ -63,8 +63,11 @@ public class PlantingController {
         Date planned_seedbed_date= DateUtil.stringToDate(body.get("planned_seedbed_date"));
         Date planned_sales_date= DateUtil.stringToDate(body.get("planned_sales_date"));
         Date planned_transplant_date= DateUtil.stringToDate(body.get("planned_transplant_date"));
-        int block_id=Integer.parseInt(body.get("block_id"));
-        int location_id=Integer.parseInt(body.get("location_id"));
+//        int block_id=Integer.parseInt(body.get("block_id"));
+//        int location_id=Integer.parseInt(body.get("location_id"));
+
+        int location_block_id=Integer.parseInt(body.get("location_block_id"));
+
         int product_id=Integer.parseInt(body.get("product_id"));
         String planting_name=body.get("planting_name");
         String planting_details=body.get("planting_details");
@@ -79,7 +82,7 @@ public class PlantingController {
         Date actual_sales_date= JavaUtils.stringToDate(body.get("actual_sales_date"));
 
         return plantingRepository.save(new Planting(estimated_cost,planned_harvest_date,planned_preparation_date,estimated_revenue,
-        seed_quantity,planned_seedbed_date,planned_sales_date,planned_transplant_date,block_id,location_id,product_id,
+        seed_quantity,planned_seedbed_date,planned_sales_date,planned_transplant_date,location_block_id,product_id,
                 planting_name,planting_details,actual_cost,actual_revenue, estimated_sales_quantity,actual_sales_quantity,
                 actual_harvest_date,actual_preparation_date,actual_seedbed_date,actual_transplant_date,actual_sales_date));
     }

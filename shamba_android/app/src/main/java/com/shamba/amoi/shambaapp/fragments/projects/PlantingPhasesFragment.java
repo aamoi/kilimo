@@ -81,13 +81,13 @@ public class PlantingPhasesFragment extends BaseFragment {
 
         //setup profile details
         TextView txt_crop_name=(TextView)view.findViewById(R.id.product_name);
-        txt_crop_name.setText(plantingProgramItem.getPlanting_produce());
+//        txt_crop_name.setText(plantingProgramItem.getPlanting_produce());
 
         TextView txt_program_name=(TextView)view.findViewById(R.id.planting_name);
         txt_program_name.setText(plantingProgramItem.getPlanting_name());
 
         TextView txt_start_date=(TextView)view.findViewById(R.id.planting_ref);
-        txt_start_date.setText(plantingProgramItem.getPreparation_date());
+//        txt_start_date.setText(plantingProgramItem.getPreparation_date());
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_phases);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

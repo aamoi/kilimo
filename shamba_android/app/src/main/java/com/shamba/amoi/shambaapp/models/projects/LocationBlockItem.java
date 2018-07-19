@@ -2,7 +2,7 @@ package com.shamba.amoi.shambaapp.models.projects;
 /**
  * Created by amoi on 09/02/2018.
  */
-    public class LocationItem {
+    public class LocationBlockItem {
         private int id;
         private int location_id;
         private int block_id;

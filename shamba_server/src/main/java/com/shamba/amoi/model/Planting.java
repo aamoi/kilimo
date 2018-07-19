@@ -1,6 +1,7 @@
 package com.shamba.amoi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.shamba.amoi.Utils.JavaUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,8 +26,9 @@ public class Planting {
     private Date planned_seedbed_date;
     private Date planned_sales_date;
     private Date planned_transplant_date;
-    private int block_id;
-    private int location_id;
+//    private int block_id;
+//    private int location_id;
+    private int location_block_id;
     private int product_id;
     private String planting_name;
     private String planting_details;
@@ -39,6 +41,8 @@ public class Planting {
     private Date actual_seedbed_date;
     private Date actual_transplant_date;
     private Date actual_sales_date;
+
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -55,8 +59,8 @@ public class Planting {
     public Planting() {  }
 
     public Planting(double estimated_cost,Date planned_harvest_date,Date planned_preparation_date,double estimated_revenue,
-             double seed_quantity,Date planned_seedbed_date,Date planned_sales_date,Date planned_transplant_date,int block_id,
-             int location_id,int product_id,String planting_name,String planting_details,double actual_cost,double actual_revenue,
+             double seed_quantity,Date planned_seedbed_date,Date planned_sales_date,Date planned_transplant_date,int location_block_id,
+                    int product_id,String planting_name,String planting_details,double actual_cost,double actual_revenue,
              double estimated_sales_quantity,double actual_sales_quantity,Date actual_harvest_date,Date actual_preparation_date,
              Date actual_seedbed_date,Date actual_transplant_date,Date actual_sales_date) {
 
@@ -68,8 +72,10 @@ public class Planting {
         this.planned_seedbed_date = planned_seedbed_date;
         this.planned_sales_date = planned_sales_date;
         this.planned_transplant_date = planned_transplant_date;
-        this.block_id = block_id;
-        this.location_id = location_id;
+        this.location_block_id = location_block_id;
+
+//        this.block_id = block_id;
+//        this.location_id = location_id;
         this.product_id = product_id;
         this.planting_name = planting_name;
         this.planting_details = planting_details;
@@ -108,13 +114,9 @@ public class Planting {
         this.planned_harvest_date = planned_harvest_date;
     }
 
-    public Date getPlanned_preparation_date() {
-        return planned_preparation_date;
-    }
+    public Date getPlanned_preparation_date() {return planned_preparation_date;}
 
-    public void setPlanned_preparation_date(Date planned_preparation_date) {
-        this.planned_preparation_date = planned_preparation_date;
-    }
+    public void setPlanned_preparation_date(Date planned_preparation_date) {this.planned_preparation_date = planned_preparation_date;}
 
     public double getEstimated_revenue() {
         return estimated_revenue;
@@ -155,22 +157,28 @@ public class Planting {
     public void setPlanned_transplant_date(Date planned_transplant_date) {
         this.planned_transplant_date = planned_transplant_date;
     }
-
-    public int getBlock_id() {
-        return block_id;
+    public int getLocation_block_id() {
+        return location_block_id;
     }
 
-    public void setBlock_id(int block_id) {
-        this.block_id = block_id;
+    public void setLocation_block_id(int block_id) {
+        this.location_block_id = block_id;
     }
-
-    public int getLocation_id() {
-        return location_id;
-    }
-
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
-    }
+//    public int getBlock_id() {
+//        return block_id;
+//    }
+//
+//    public void setBlock_id(int block_id) {
+//        this.block_id = block_id;
+//    }
+//
+//    public int getLocation_id() {
+//        return location_id;
+//    }
+//
+//    public void setLocation_id(int location_id) {
+//        this.location_id = location_id;
+//    }
 
     public int getProduct_id() {
         return product_id;
@@ -279,8 +287,9 @@ public class Planting {
                 "id=" + id +
                 ", planting_name'" + planting_name + '\'' +
                 ", planting_details='" + planting_details + '\'' +
-                ", location_id='" + location_id + '\'' +
-                ", block_id='" + block_id  + '\'' +
+//                ", location_id='" + location_id + '\'' +
+//                ", block_id='" + block_id  + '\'' +
+                ", location_block_id='" + location_block_id  + '\'' +
                 ", product_id='" + product_id  + '\'' +
                 ", seed_quantity='" + seed_quantity  + '\'' +
                 ", estimated_sales_quantity='" + estimated_sales_quantity  + '\'' +

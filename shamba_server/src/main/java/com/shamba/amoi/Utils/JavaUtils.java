@@ -1,5 +1,7 @@
 package com.shamba.amoi.Utils;
 
+import com.oracle.tools.packager.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,7 +22,11 @@ public class JavaUtils {
         return double_val;
     }
 
-
+    /**
+     * Convert string to date
+     * @param date_string
+     * @return
+     */
     public static Date stringToDate(String date_string) {
 
         Date date = null;
@@ -36,5 +42,14 @@ public class JavaUtils {
         }
 
         return date;
+    }
+
+    /**
+     * Formats date to "dd-MM-yyyy"
+     * @param date
+     * @return
+     */
+    public static Date formatDate(Date date) {
+        return stringToDate(date.toString());
     }
 }

@@ -25,6 +25,6 @@ public interface PlantingProgramDao {
     @Query("select * from PlantingProgram")
     public List<PlantingProgram> getAllPlantingPrograms();
 
-    @Query("select * from plantingprogram where plan_id in (:plan_ids)")
+    @Query("select * from plantingprogram where id in (:plan_ids)")
     public List<PlantingProgram> getPlantingProgram(int plan_ids);
 }

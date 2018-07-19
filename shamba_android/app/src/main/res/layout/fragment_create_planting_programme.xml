@@ -14,9 +14,9 @@
     <!--tools:context="com.shamba.amoi.shambaapp.fragments.projects.CreatePlantingProgrammeFragment">-->
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scroll_view"
         android:layout_above="@+id/submit_form">
 
         <LinearLayout
@@ -24,17 +24,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text_marginLeft"
             android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/edit_planting_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Planting name" />
-
+            <!--<EditText-->
+            <!--android:id="@+id/edit_planting_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Planting name" />-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -42,7 +40,8 @@
                     android:id="@+id/txt_planting_crop"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="Select planting crop: "
+                    android:text="Select crop: "
+                    android:textSize="15dp"
                     android:textStyle="bold" />
 
                 <Spinner
@@ -52,6 +51,76 @@
                     android:entries="@array/crop_array"
                     android:prompt="@string/crops_prompt" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_planting_location"-->
+                    <!--android:layout_width="170dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Select location: "-->
+                    <!--android:textStyle="bold" />-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/spn_planting_location"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:entries="@array/location_array"-->
+                    <!--android:prompt="@string/location_prompt" />-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_planting_block"-->
+                    <!--android:layout_width="170dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Select block: "-->
+                    <!--android:textStyle="bold" />-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/spn_planting_block"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:entries="@array/block_array"-->
+                    <!--android:prompt="@string/block_prompt" />-->
+            <!--</LinearLayout>-->
+
+
+                <TextView
+                    android:id="@+id/txt_planting_location"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Location block: "
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_planting_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/location_array"
+                    android:prompt="@string/location_prompt" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/edit_planting_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Planting name"
+                android:editable="false"
+                />
 
             <EditText
                 android:id="@+id/edit_seed_quantity"
@@ -64,94 +133,132 @@
                 android:id="@+id/edit_preparation_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Preparation date"
+                android:hint="Planned preparation date"
                 android:inputType="date" />
+
+            <!--Planting name is based on crop name, preparation date,location and block details
+            -->
+            <EditText
+                android:id="@+id/edit_planting_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Planned planting details" />
 
             <EditText
                 android:id="@+id/edit_seedbed_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Seedbed date"
+                android:hint="Planned seedbed date"
                 android:inputType="date" />
 
             <EditText
                 android:id="@+id/edit_transplanting_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Transplanting date"
+                android:hint="Planned transplant date"
                 android:inputType="date" />
 
             <EditText
                 android:id="@+id/edit_harvesting_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Harvesting date"
+                android:hint="Planned harvest date"
                 android:inputType="date" />
 
             <EditText
                 android:id="@+id/edit_sales_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Selling  date"
+                android:hint="Planned sales date"
                 android:inputType="date" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txt_planting_location"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:text="Planting location: "
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spn_planting_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/location_array"
-                    android:prompt="@string/location_prompt" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txt_planting_block"
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    android:text="Select planting block: "
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/spn_planting_block"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/block_array"
-                    android:prompt="@string/block_prompt" />
-            </LinearLayout>
 
             <EditText
                 android:id="@+id/edit_planting_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Total planting cost"
+                android:hint="Estimated cost"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/edit_estimated_sales_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Estimated sales quantity"
                 android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/edit_planting_revenue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Projected revenue"
+                android:hint="Estimated revenue"
                 android:inputType="number|numberDecimal" />
+
+
+            <!--Start of actuals-->
+            <EditText
+                android:id="@+id/edit_actual_preparation_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual preparation date"
+                android:inputType="date"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_seedbed_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual seedbed date"
+                android:inputType="date"
+                android:visibility="invisible" />
+
+
+            <EditText
+                android:id="@+id/edit_actual_transplanting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual transplant date"
+                android:inputType="date"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_harvesting_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual harvest date"
+                android:inputType="date"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_sales_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual sales date"
+                android:inputType="date"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_planting_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual total cost"
+                android:inputType="numberDecimal"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_sales_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual sales quantity"
+                android:inputType="numberDecimal"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_actual_planting_revenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Actual revenue"
+                android:inputType="number|numberDecimal"
+                android:visibility="invisible" />
 
         </LinearLayout>
         <!--</ScrollView>-->
@@ -162,10 +269,10 @@
         layout="@layout/submit_form_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/submit_form_buttons_marginTop"
-        android:layout_alignParentBottom="true"
         android:visibility="visible" />
 </RelativeLayout>

@@ -10,6 +10,7 @@ import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -21,122 +22,212 @@ import java.util.concurrent.ExecutionException;
 public class PlantingProgramItem {
     public static PlantingProgramItem selectedPlantingProgram;
 
-    public String plan_id;
-    public String planting_name;
-    public String planting_produce;
-    public double seed_quantity;
-    public String preparation_date;
-    public String seedbed_date;
-    public String transplanting_date;
-    public String harvesting_date;
-    public String sales_date;
-    public String planting_location;
-    public String planting_block;
-    public double planting_cost;
-    public double planting_revenue;
+    public int id;
+    private double estimated_cost;
+    private String planned_harvest_date;
+    private String planned_preparation_date;
+    private double estimated_revenue;
+    private double seed_quantity;
+    private String planned_seedbed_date;
+    private String planned_sales_date;
+    private String planned_transplant_date;
+    private int block_id;
+    private int location_id;
+    private int product_id;
+    private String planting_name;
+    private String planting_details;
+    private double actual_cost;
+    private double actual_revenue;
+    private double estimated_sales_quantity;
+    private double actual_sales_quantity;
+    private String actual_harvest_date;
+    private String actual_preparation_date;
+    private String actual_seedbed_date;
+    private String actual_transplant_date;
+    private String actual_sales_date;
 
-    public void setSeed_quantity(double seed_quantity) {
-        this.seed_quantity = seed_quantity;
+    public String getActual_sales_date() {
+        return actual_sales_date;
     }
 
-    public void setPlanting_revenue(double planting_revenue) {
-        this.planting_revenue = planting_revenue;
+    public void setActual_sales_date(String actual_sales_date) {
+        this.actual_sales_date = actual_sales_date;
     }
 
-    public void setPlanting_cost(double planting_cost) {
-        this.planting_cost = planting_cost;
+    public int getId() {
+        return id;
     }
 
-    public void setPlan_id(String plan_id) {
-        this.plan_id = plan_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSales_date(String sales_date) {
-        this.sales_date = sales_date;
+    public double getEstimated_cost() {
+        return estimated_cost;
     }
 
-    public void setHarvesting_date(String harvesting_date) {
-        this.harvesting_date = harvesting_date;
+    public void setEstimated_cost(double estimated_cost) {
+        this.estimated_cost = estimated_cost;
     }
 
-    public void setTransplanting_date(String transplanting_date) {
-        this.transplanting_date = transplanting_date;
+    public String getPlanned_harvest_date() {
+        return planned_harvest_date;
     }
 
-    public void setSeedbed_date(String seedbed_date) {
-        this.seedbed_date = seedbed_date;
+    public void setPlanned_harvest_date(String planned_harvest_date) {
+        this.planned_harvest_date = planned_harvest_date;
     }
 
-    public void setPlanting_block(String planting_block) {
-        this.planting_block = planting_block;
+    public String getPlanned_preparation_date() {
+        return planned_preparation_date;
     }
 
-    public void setPlanting_location(String planting_location) {
-        this.planting_location = planting_location;
+    public void setPlanned_preparation_date(String planned_preparation_date) {
+        this.planned_preparation_date = planned_preparation_date;
     }
 
-    public void setPlanting_produce(String planting_produce) {
-        this.planting_produce = planting_produce;
+    public double getEstimated_revenue() {
+        return estimated_revenue;
     }
 
-    public void setPlanting_name(String planting_name) {
-        this.planting_name = planting_name;
-    }
-
-    public void setPreparation_date(String preparation_date) {
-        this.preparation_date = preparation_date;
+    public void setEstimated_revenue(double estimated_revenue) {
+        this.estimated_revenue = estimated_revenue;
     }
 
     public double getSeed_quantity() {
         return seed_quantity;
     }
 
-    public String getPlan_id() {
-        return plan_id;
+    public void setSeed_quantity(double seed_quantity) {
+        this.seed_quantity = seed_quantity;
     }
 
-    public String getPreparation_date() {
-        return preparation_date;
+    public String getPlanned_seedbed_date() {
+        return planned_seedbed_date;
     }
 
-    public double getPlanting_revenue() {
-        return planting_revenue;
+    public void setPlanned_seedbed_date(String planned_seedbed_date) {
+        this.planned_seedbed_date = planned_seedbed_date;
     }
 
-    public double getPlanting_cost() {
-        return planting_cost;
+    public String getPlanned_sales_date() {
+        return planned_sales_date;
     }
 
-    public String getSales_date() {
-        return sales_date;
+    public void setPlanned_sales_date(String planned_sales_date) {
+        this.planned_sales_date = planned_sales_date;
     }
 
-    public String getHarvesting_date() {
-        return harvesting_date;
+    public String getPlanned_transplant_date() {
+        return planned_transplant_date;
     }
 
-    public String getPlanting_block() {
-        return planting_block;
+    public void setPlanned_transplant_date(String planned_transplant_date) {
+        this.planned_transplant_date = planned_transplant_date;
     }
 
-    public String getPlanting_location() {
-        return planting_location;
+    public int getBlock_id() {
+        return block_id;
     }
 
-    public String getTransplanting_date() {
-        return transplanting_date;
+    public void setBlock_id(int block_id) {
+        this.block_id = block_id;
     }
 
-    public String getPlanting_produce() {
-        return planting_produce;
+    public int getLocation_id() {
+        return location_id;
     }
 
-    public String getSeedbed_date() {
-        return seedbed_date;
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     public String getPlanting_name() {
         return planting_name;
+    }
+
+    public void setPlanting_name(String planting_name) {
+        this.planting_name = planting_name;
+    }
+
+    public String getPlanting_details() {
+        return planting_details;
+    }
+
+    public void setPlanting_details(String planting_details) {
+        this.planting_details = planting_details;
+    }
+
+    public double getActual_cost() {
+        return actual_cost;
+    }
+
+    public void setActual_cost(double actual_cost) {
+        this.actual_cost = actual_cost;
+    }
+
+    public double getActual_revenue() {
+        return actual_revenue;
+    }
+
+    public void setActual_revenue(double actual_revenue) {
+        this.actual_revenue = actual_revenue;
+    }
+
+    public double getEstimated_sales_quantity() {
+        return estimated_sales_quantity;
+    }
+
+    public void setEstimated_sales_quantity(double estimated_sales_quantity) {
+        this.estimated_sales_quantity = estimated_sales_quantity;
+    }
+
+    public double getActual_sales_quantity() {
+        return actual_sales_quantity;
+    }
+
+    public void setActual_sales_quantity(double actual_sales_quantity) {
+        this.actual_sales_quantity = actual_sales_quantity;
+    }
+
+    public String getActual_harvest_date() {
+        return actual_harvest_date;
+    }
+
+    public void setActual_harvest_date(String actual_harvest_date) {
+        this.actual_harvest_date = actual_harvest_date;
+    }
+
+    public String getActual_preparation_date() {
+        return actual_preparation_date;
+    }
+
+    public void setActual_preparation_date(String actual_preparation_date) {
+        this.actual_preparation_date = actual_preparation_date;
+    }
+
+    public String getActual_seedbed_date() {
+        return actual_seedbed_date;
+    }
+
+    public void setActual_seedbed_date(String actual_seedbed_date) {
+        this.actual_seedbed_date = actual_seedbed_date;
+    }
+
+    public String getActual_transplant_date() {
+        return actual_transplant_date;
+    }
+
+    public void setActual_transplant_date(String actual_transplant_date) {
+        this.actual_transplant_date = actual_transplant_date;
     }
 
     /**
@@ -146,16 +237,15 @@ public class PlantingProgramItem {
      * @return
      */
 
-    public static PlantingProgramItem getPlantingProgramById(Activity activity, String key_plan_id) {
-
-        List<PlantingProgramItem> plantingProgramItemList=getAllPlantingPrograms(activity);
-        for (PlantingProgramItem plantingProgramItem:plantingProgramItemList) {
-            if(plantingProgramItem.plan_id.equalsIgnoreCase(key_plan_id))
-                return plantingProgramItem;
-        }
-        return null;
-    }
-
+//    public static PlantingProgramItem getPlantingProgramById(Activity activity, String key_plan_id) {
+//
+//        List<PlantingProgramItem> plantingProgramItemList=getAllPlantingPrograms(activity);
+//        for (PlantingProgramItem plantingProgramItem:plantingProgramItemList) {
+//            if(plantingProgramItem.id.equalsIgnoreCase(key_plan_id))
+//                return plantingProgramItem;
+//        }
+//        return null;
+//    }
 
     /**
      * Returns PlantingProgramItem identified by the name
@@ -187,7 +277,8 @@ public class PlantingProgramItem {
                 plantingProgramItemList.size());
 
         for (int i = 0; i < plantingProgramItemList.size(); ++i) {
-            Log.d("Projects|PlanItem", "getPlantingProgramsHashMap(), name " +plantingProgramItemList.get(i).getPlanting_name());
+            Log.d("Projects|PlanItem", "getPlantingProgramsHashMap(), name " +
+                    plantingProgramItemList.get(i).getPlanting_name());
 
                     plantingProgramItemHashMap.put(plantingProgramItemList.get(i).getPlanting_name(),
                     plantingProgramItemList.get(i));
@@ -245,19 +336,19 @@ class GetPlantingPrograms extends AsyncTask<Void, Void, List<PlantingProgramItem
         dbList = plantingProgramDao.getAllPlantingPrograms();
         for (int i = 0; i < dbList.size(); ++i) {
             PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-            plantingProgramItem.setHarvesting_date(dbList.get(i).getHarvesting_date());
-            plantingProgramItem.setPlan_id(dbList.get(i).getPlan_id());
-            plantingProgramItem.setPlanting_block(dbList.get(i).getPlanting_block());
-            plantingProgramItem.setPlanting_cost(dbList.get(i).getPlanting_cost());
-            plantingProgramItem.setPlanting_location(dbList.get(i).getPlanting_location());
+            plantingProgramItem.setPlanned_harvest_date(dbList.get(i).getPlanned_harvest_date());
+            plantingProgramItem.setId(dbList.get(i).getId());
+            plantingProgramItem.setBlock_id(dbList.get(i).getBlock_id());
+            plantingProgramItem.setEstimated_cost(dbList.get(i).getEstimated_cost());
+            plantingProgramItem.setLocation_id(dbList.get(i).getLocation_id());
             plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
-            plantingProgramItem.setPlanting_produce(dbList.get(i).getPlanting_produce());
-            plantingProgramItem.setPlanting_revenue(dbList.get(i).getPlanting_revenue());
-            plantingProgramItem.setPreparation_date(dbList.get(i).getPreparation_date());
-            plantingProgramItem.setSales_date(dbList.get(i).getSales_date());
+            plantingProgramItem.setProduct_id(dbList.get(i).getProduct_id());
+            plantingProgramItem.setEstimated_revenue(dbList.get(i).getEstimated_revenue());
+            plantingProgramItem.setPlanned_preparation_date(dbList.get(i).getPlanned_preparation_date());
+            plantingProgramItem.setPlanned_sales_date(dbList.get(i).getPlanned_sales_date());
             plantingProgramItem.setSeed_quantity(dbList.get(i).getSeed_quantity());
-            plantingProgramItem.setSeedbed_date(dbList.get(i).getSeedbed_date());
-            plantingProgramItem.setTransplanting_date(dbList.get(i).getTransplanting_date());
+            plantingProgramItem.setPlanned_seedbed_date(dbList.get(i).getPlanned_seedbed_date());
+            plantingProgramItem.setPlanned_transplant_date(dbList.get(i).getPlanned_transplant_date());
 
             plantingProgramItems.add(plantingProgramItem);
         }

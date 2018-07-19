@@ -125,7 +125,7 @@ public class TaskSchedulingActuals extends BaseFragment {
         planting_name=(TextView) view.findViewById(R.id.planting_name);
         planting_phase=(TextView) view.findViewById(R.id.planting_phase);
 
-        product_name.setText(plantingProgramItem.getPlanting_produce());
+//        product_name.setText(plantingProgramItem.getPlanting_produce());
         planting_name.setText(plantingProgramItem.getPlanting_name());
         planting_phase.setText(plantingPhaseItem.getPhase_name());
 

@@ -141,7 +141,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
             List<String> locations = new ArrayList<>();
             List<LocationItem> locationItems = BaseFragment.saveLocations();
             for (int i = 0; i < locationItems.size(); ++i) {
-                locations.add(locationItems.get(i).getLocation_name());
+//                locations.add(locationItems.get(i).getLocation_name());
             }
             spn_planting_location = SpinnerUtility.setDynamicSpinner(view.getContext(),
                     spn_planting_location, locations);
@@ -214,12 +214,12 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         List<String> locations = new ArrayList<>();
         List<LocationItem> locationItems = BaseFragment.saveLocations();
         for (int i = 0; i < locationItems.size(); ++i) {
-            locations.add(locationItems.get(i).getLocation_name());
+//            locations.add(locationItems.get(i).getLocation_name());
         }
         spn_planting_location = SpinnerUtility.setDynamicSpinner(view.getContext(),
                 spn_planting_location, locations);
 
-        spn_planting_block = (Spinner) view.findViewById(R.id.spn_planting_block);
+//        spn_planting_block = (Spinner) view.findViewById(R.id.spn_planting_block);
 
         edit_planting_cost = (EditText) view.findViewById(R.id.edit_planting_cost);
         edit_planting_revenue = (EditText) view.findViewById(R.id.edit_planting_revenue);
@@ -241,10 +241,10 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         spn_planting_block.setSelection(3);
         spn_planting_block.setEnabled(false);
 
-        edit_planting_cost.setText((String.valueOf(plantingProgramItem.getPlanting_cost())));
+//        edit_planting_cost.setText((String.valueOf(plantingProgramItem.getPlanting_cost())));
         edit_planting_cost.setEnabled(false);
 
-        edit_planting_revenue.setText((String.valueOf(plantingProgramItem.getPlanting_revenue())));
+//        edit_planting_revenue.setText((String.valueOf(plantingProgramItem.getPlanting_revenue())));
         edit_planting_revenue.setEnabled(false);
 
         save_program.setText("Update Details");

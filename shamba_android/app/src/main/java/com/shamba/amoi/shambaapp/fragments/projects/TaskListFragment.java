@@ -171,10 +171,13 @@ public class TaskListFragment extends BaseFragment {
         @Override
         protected List<TaskItem> doInBackground(Void... voids) {
 
-            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(),
-                    plantingProgramItem.getPlan_id());
+//            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(),
+//                    plantingProgramItem.getPlan_id());
 
-            Log.d("program-id", String.valueOf(plantingProgramItem.getPlan_id()));
+            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(),
+                    "");
+
+//            Log.d("program-id", String.valueOf(plantingProgramItem.getPlan_id()));
             Log.d("program-phase_id", String.valueOf(plantingPhaseItem.getPhase_id()));
             Log.d("program-tasks", String.valueOf(db_tasks.size()));
 

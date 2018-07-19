@@ -50,7 +50,7 @@ public class PlantingProgrammesRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.pItem = plantingProgramItems.get(position);
         holder.program_name.setText(plantingProgramItems.get(position).getPlanting_name());
-        holder.program_ref.setText(plantingProgramItems.get(position).getPreparation_date());
+        holder.program_ref.setText(plantingProgramItems.get(position).getPlanned_preparation_date());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class PlantingProgrammesRecyclerViewAdapter
                     PlantingProgramItem.selectedPlantingProgram=pItem;
                     BaseFragment.plantingProgramItem=pItem;
 
-                    Log.d("program_id", String.valueOf(pItem.getPlan_id()));
+//                    Log.d("program_id", String.valueOf(pItem.getPlan_id()));
                     Log.d("program_name", String.valueOf(pItem.getPlanting_name()));
                     
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,

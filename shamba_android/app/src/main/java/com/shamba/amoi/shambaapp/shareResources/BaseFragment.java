@@ -151,10 +151,10 @@ public abstract class BaseFragment extends Fragment {
 
         HashMap<String, PlantingProgramItem> plantingProgramItemHashMap = new HashMap<>();
 
-        for (int i = 0; i < plantingProgramItemList.size(); ++i) {
-            plantingProgramItemHashMap.put(plantingProgramItemList.get(i).getPlan_id(),
-                    plantingProgramItemList.get(i));
-        }
+//        for (int i = 0; i < plantingProgramItemList.size(); ++i) {
+//            plantingProgramItemHashMap.put(plantingProgramItemList.get(i).getPlan_id(),
+//                    plantingProgramItemList.get(i));
+//        }
 
         return plantingProgramItemHashMap;
     }
@@ -235,11 +235,11 @@ public abstract class BaseFragment extends Fragment {
         for (int i = 0; i < locations_str.length; i++) {
             LocationItem locationItem = new LocationItem();
             locationItem.setLocation_id(Integer.parseInt(locations_str[i][0]));
-            locationItem.setLocation_name(locations_str[i][1]);
-            locationItem.setWard(locations_str[i][2]);
-            locationItem.setSub_county(locations_str[i][3]);
-            locationItem.setCounty(locations_str[i][4]);
-            locationItem.setCountry(locations_str[i][5]);
+//            locationItem.setLocation_name(locations_str[i][1]);
+//            locationItem.setWard(locations_str[i][2]);
+//            locationItem.setSub_county(locations_str[i][3]);
+//            locationItem.setCounty(locations_str[i][4]);
+//            locationItem.setCountry(locations_str[i][5]);
 
             locationItems.add(locationItem);
         }
@@ -361,19 +361,19 @@ class GetTaskAssignment extends AsyncTask<Void, Void, List<TaskAssignmentItem>> 
             dbList = plantingProgramDao.getAllPlantingPrograms();
             for (int i = 0; i < dbList.size(); ++i) {
                 PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-                plantingProgramItem.setHarvesting_date(dbList.get(i).getHarvesting_date());
-                plantingProgramItem.setPlan_id(dbList.get(i).getPlan_id());
-                plantingProgramItem.setPlanting_block(dbList.get(i).getPlanting_block());
-                plantingProgramItem.setPlanting_cost(dbList.get(i).getPlanting_cost());
-                plantingProgramItem.setPlanting_location(dbList.get(i).getPlanting_location());
-                plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
-                plantingProgramItem.setPlanting_produce(dbList.get(i).getPlanting_produce());
-                plantingProgramItem.setPlanting_revenue(dbList.get(i).getPlanting_revenue());
-                plantingProgramItem.setPreparation_date(dbList.get(i).getPreparation_date());
-                plantingProgramItem.setSales_date(dbList.get(i).getSales_date());
-                plantingProgramItem.setSeed_quantity(dbList.get(i).getSeed_quantity());
-                plantingProgramItem.setSeedbed_date(dbList.get(i).getSeedbed_date());
-                plantingProgramItem.setTransplanting_date(dbList.get(i).getTransplanting_date());
+//                plantingProgramItem.setHarvesting_date(dbList.get(i).getHarvesting_date());
+//                plantingProgramItem.setPlan_id(dbList.get(i).getPlan_id());
+//                plantingProgramItem.setPlanting_block(dbList.get(i).getPlanting_block());
+//                plantingProgramItem.setPlanting_cost(dbList.get(i).getPlanting_cost());
+//                plantingProgramItem.setPlanting_location(dbList.get(i).getPlanting_location());
+//                plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
+//                plantingProgramItem.setPlanting_produce(dbList.get(i).getPlanting_produce());
+//                plantingProgramItem.setPlanting_revenue(dbList.get(i).getPlanting_revenue());
+//                plantingProgramItem.setPreparation_date(dbList.get(i).getPreparation_date());
+//                plantingProgramItem.setSales_date(dbList.get(i).getSales_date());
+//                plantingProgramItem.setSeed_quantity(dbList.get(i).getSeed_quantity());
+//                plantingProgramItem.setSeedbed_date(dbList.get(i).getSeedbed_date());
+//                plantingProgramItem.setTransplanting_date(dbList.get(i).getTransplanting_date());
 
                 plantingProgramItems.add(plantingProgramItem);
             }

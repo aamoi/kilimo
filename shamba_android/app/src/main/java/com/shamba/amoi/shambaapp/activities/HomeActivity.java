@@ -339,6 +339,4 @@ public class HomeActivity extends BaseActivity  {
                 new ReportsFragment()).addToBackStack(null).commit();
     }
 
-
-
 }
