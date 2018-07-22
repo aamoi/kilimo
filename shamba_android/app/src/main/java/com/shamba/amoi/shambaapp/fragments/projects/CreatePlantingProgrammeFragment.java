@@ -133,7 +133,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
                 false);
         getViewsByIds(view);
 
-        plantingProgramItem = BaseFragment.plantingProgramItem;
+        plantingProgramItem = PlantingProgramItem.selectedPlantingProgram;
 
         if (view_type.contains("view")) {
             viewPlantingProgramDetails();

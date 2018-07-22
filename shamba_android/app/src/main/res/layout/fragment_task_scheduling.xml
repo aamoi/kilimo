@@ -113,57 +113,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--Number of days required to execute the task.-->
-                <LinearLayout
-                    android:id="@+id/schedule_parameter_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txt_planned_days"
-                            android:layout_width="160dp"
-                            android:layout_height="wrap_content"
-                            android:text="Planned Days: "
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/edit_planned_days"
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:hint="0.00"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txt_actual_days"
-                            android:layout_width="160dp"
-                            android:layout_height="wrap_content"
-                            android:text="Actual Days: "
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/edit_actual_days"
-                            android:layout_width="160dp"
-                            android:layout_height="wrap_content"
-                            android:hint="0.00"
-                            android:inputType="numberDecimal" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
                 <!--Start date to execute the task.-->
                 <LinearLayout
                     android:id="@+id/schedule_parameter_startDate"
@@ -213,7 +162,6 @@
 
                 </LinearLayout>
 
-
                 <!--End date to execute the task.-->
                 <LinearLayout
                     android:id="@+id/schedule_parameter_endDate"
@@ -258,6 +206,56 @@
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
                             android:hint="Actual end date" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Number of days required to execute the task.-->
+                <LinearLayout
+                    android:id="@+id/schedule_parameter_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_planned_days"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="Planned Days: "
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_planned_days"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_actual_days"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="Actual Days: "
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_actual_days"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -361,6 +359,125 @@
 
                 </LinearLayout>
 
+                <!--Revenue expected from the task.-->
+                <LinearLayout
+                    android:id="@+id/schedule_parameter_revenue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_planned_revenue"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="Planned revenue: "
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_planned_revenue"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Est. revenue"
+                            android:inputType="numberDecimal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_actual_revenue"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="Actual revenue: "
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edit_actual_revenue"
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:hint="Actual revenue"
+                            android:inputType="numberDecimal" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Required assets for performing task.-->
+                <LinearLayout
+                    android:id="@+id/schedule_parameter_assets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_required_assets"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Required assets: "
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edit_required_assets"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Required asssets here!"
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!--Required products for performing task.-->
+                <LinearLayout
+                    android:id="@+id/schedule_parameter_products"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_required_products"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Required products: "
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edit_required_products"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Required products here!"
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <!--Details for performing task.-->
+                <LinearLayout
+                    android:id="@+id/schedule_parameter_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_task_details"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Task details: "
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edit_details"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Task details here!"
+                        android:inputType="text" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 
@@ -369,7 +486,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-
             android:orientation="horizontal">
 
             <Button
@@ -387,7 +503,6 @@
                 android:layout_marginLeft="10dp"
                 android:background="@color/flat_green"
                 android:text="Submit" />
-
         </LinearLayout>
 
     </LinearLayout>

@@ -28,11 +28,9 @@ public class PlantingProgrammesRecyclerViewAdapter
     private static final String ARG_plant_program = "key_plant_program";
 
     private final List<PlantingProgramItem> plantingProgramItems;
-//    private final OnListFragmentInteractionListener mListener;
     private final HomeActivity homeActivity;
 
     public PlantingProgrammesRecyclerViewAdapter(List<PlantingProgramItem> items,
-//                                                 OnListFragmentInteractionListener listener,
                                                  HomeActivity homeActivity) {
         plantingProgramItems = items;
 //        mListener = listener;
@@ -85,7 +83,7 @@ public class PlantingProgrammesRecyclerViewAdapter
                 @Override
                 public void onSelectPostiveDialogueOption(){
                     PlantingProgramItem.selectedPlantingProgram=pItem;
-                    BaseFragment.plantingProgramItem=pItem;
+                    PlantingProgramItem.selectedPlantingProgram=pItem;
 
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             CreatePlantingProgrammeFragment.newInstance("view",""));

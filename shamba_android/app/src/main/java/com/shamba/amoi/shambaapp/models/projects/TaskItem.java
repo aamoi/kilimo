@@ -167,15 +167,15 @@ public class TaskItem {
         this.actual_revenue = actual_revenue;
     }
 
-    public static TaskItem getTaskItemById(Activity activity,int task_id){
+    public static TaskItem getTaskItemById(Activity activity, int task_id) {
 
-       List<TaskItem> taskItemList=getAllTask(activity);
+        List<TaskItem> taskItemList = getAllTask(activity);
 
-       TaskItem taskItem1=new TaskItem();
+        TaskItem taskItem1 = new TaskItem();
 
-        for (TaskItem taskItem:taskItemList) {
-            if(taskItem.getId()==task_id)
-                taskItem1=taskItem;
+        for (TaskItem taskItem : taskItemList) {
+            if (taskItem.getId() == task_id)
+                taskItem1 = taskItem;
             break;
         }
         return taskItem1;
@@ -183,14 +183,15 @@ public class TaskItem {
 
     /**
      * Provide public access to all db tasks packaged in hashmap
+     *
      * @param activity
      * @return
      */
-    public static HashMap<String,TaskItem> getAllTaskHashMap(Activity activity){
-        HashMap<String, TaskItem> taskItemHashMap=new HashMap<>();
+    public static HashMap<String, TaskItem> getAllTaskHashMap(Activity activity) {
+        HashMap<String, TaskItem> taskItemHashMap = new HashMap<>();
 
-        List<TaskItem> taskItemList=getAllTask(activity);
-        for(int i=0;i<taskItemList.size();++i){
+        List<TaskItem> taskItemList = getAllTask(activity);
+        for (int i = 0; i < taskItemList.size(); ++i) {
             taskItemHashMap.put(taskItemList.get(i).getTask_name(),
                     taskItemList.get(i));
         }
@@ -201,24 +202,62 @@ public class TaskItem {
     }
 
     /**
-     * Provides public access to all tasks stored in the SQLite database.
+     * Pools all project phase task from local SQL db!
+     *
      * @param activity
      * @return
      */
-    public static List<TaskItem> getAllTask(Activity activity){
-        List<TaskItem> taskItemList=null;
+    public static List<TaskItem> getAllProjectPhaseTasks(Activity activity,
+                                                         int project_id, int phase_id) {
+        Log.d("Projects|", "project id- " + String.valueOf(project_id));
+        Log.d("Projects|", "phase id- " + String.valueOf(phase_id));
+
+
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
 
         try {
-            taskItemList= new GetTaskList(activity).execute().get();
-            Log.d("Projects|", "number of task: "+String.valueOf(taskItemList.size()));
+            allTaskItems = new GetTaskList(activity).execute().get();
+            Log.d("Projects|", "number of all task: " + String.valueOf(allTaskItems.size()));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        return taskItemList;
+        List<TaskItem> project_phase_taskItems = new ArrayList<>();
+        for (int i = 0; i < allTaskItems.size(); ++i) {
+            if ((allTaskItems.get(i).getPhase_id() == phase_id) &&
+                    (allTaskItems.get(i).getProject_id() == project_id)) {
+                project_phase_taskItems.add(allTaskItems.get(i));
+            }
+        }
 
+        Log.d("Projects|", "number of project phase task: " +
+                String.valueOf(project_phase_taskItems.size()));
+
+        return project_phase_taskItems;
+    }
+
+    /**
+     * Provides public access to all tasks stored in the SQLite database.
+     *
+     * @param activity
+     * @return
+     */
+    public static List<TaskItem> getAllTask(Activity activity) {
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
+
+        try {
+            allTaskItems = new GetTaskList(activity).execute().get();
+            Log.d("Projects|", "number of all tasks: " + String.valueOf(allTaskItems.size()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return allTaskItems;
     }
 }
 
@@ -231,15 +270,15 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
     List<TaskItem> taskList;
     Activity activity;
 
-    public GetTaskList(Activity activity){
-        this.activity=activity;
+    public GetTaskList(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
     protected void onPreExecute() {
-        ShambaAppDB db= new DBAdaptor(activity).getDB();
-        taskDao=db.taskDao();
-        taskList=new ArrayList();
+        ShambaAppDB db = new DBAdaptor(activity).getDB();
+        taskDao = db.taskDao();
+        taskList = new ArrayList();
     }
 
     @Override
@@ -247,7 +286,7 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
 
         List<Task> db_tasks = taskDao.getAllTasks();
 
-        if (db_tasks.size() > 0){
+        if (db_tasks.size() > 0) {
 
             for (int count = 0; count < db_tasks.size(); ++count) {
                 TaskItem taskItem = new TaskItem();
@@ -272,7 +311,7 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
                 taskList.add(taskItem);
             }
 
-            TaskItem.staticTaskItems=taskList;
+            TaskItem.staticTaskItems = taskList;
         }
         return taskList;
     }

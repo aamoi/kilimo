@@ -115,9 +115,9 @@ public class TaskSchedulingActuals extends BaseFragment {
         // Inflate the submit_form_details for this fragment
         View view= inflater.inflate(R.layout.fragment_task_scheduling_actuals,
                 container, false);
-
-        plantingProgramItem= BaseFragment.plantingProgramItem;
-        plantingPhaseItem= BaseFragment.plantingPhaseItem;
+//
+//        plantingProgramItem= BaseFragment.plantingProgramItem;
+//        plantingPhaseItem= BaseFragment.plantingPhaseItem;
         taskItem=BaseFragment.taskItem;
 
         product_name=(TextView) view.findViewById(R.id.product_name);

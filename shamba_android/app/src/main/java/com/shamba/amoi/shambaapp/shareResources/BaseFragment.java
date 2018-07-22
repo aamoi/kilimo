@@ -34,20 +34,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 /**
  * Created by amoi on 08/02/2018.
  */
-
 public abstract class BaseFragment extends Fragment {
-    public static PlantingProgramItem plantingProgramItem;
-
-    public static List<PlantingPhaseItem> plantingPhaseItems;
-    public static PlantingPhaseItem plantingPhaseItem;
-
     public static List<CropItem> cropItems;
-    public static List<TaskItem> taskItemList;
-
     public static List<HumanResourceItem> humanResourceItemList;
     public static HumanResourceItem humanResourceItem;
 
@@ -139,13 +130,6 @@ public abstract class BaseFragment extends Fragment {
         return status ;
     }
 
-    public static HashMap<String, ProductItem> getAllProducts() {
-
-        HashMap<String, ProductItem> all_products = new HashMap<>();
-        all_products.putAll(getCrops());
-        return all_products;
-    }
-
     public static HashMap<String, PlantingProgramItem> getAllPlantingPrograms(AppCompatActivity activity) {
         List<PlantingProgramItem> plantingProgramItemList = PlantingProgramItem.getAllPlantingPrograms(activity);
 
@@ -221,31 +205,6 @@ public abstract class BaseFragment extends Fragment {
         return crops;
     }
 
-    public static List<LocationItem> saveLocations() {
-
-        String[][] locations_str = {
-                {"1", "Kangemi", "Kayatta", "Ndunyu", "Machakos", ""},
-                {"2", "Musingu", "Chemche", "Kabras", "Kakamega", ""},
-                {"3", "South Mateka", "Mateka", "Bungoma East", "Bungoma", ""},
-                {"4", "Shivagala", "Shivagala", "Kabras South", "Kakamega", ""}
-        };
-
-        ArrayList<LocationItem> locationItems = new ArrayList();
-
-        for (int i = 0; i < locations_str.length; i++) {
-            LocationItem locationItem = new LocationItem();
-            locationItem.setLocation_id(Integer.parseInt(locations_str[i][0]));
-//            locationItem.setLocation_name(locations_str[i][1]);
-//            locationItem.setWard(locations_str[i][2]);
-//            locationItem.setSub_county(locations_str[i][3]);
-//            locationItem.setCounty(locations_str[i][4]);
-//            locationItem.setCountry(locations_str[i][5]);
-
-            locationItems.add(locationItem);
-        }
-        return locationItems;
-    }
-
     public static HashMap<String, String> getProductType() {
 
         HashMap<String, String> product_types = new HashMap<>();
@@ -264,7 +223,6 @@ public abstract class BaseFragment extends Fragment {
 
         return product_types;
     }
-
     public static List<String> getResourceTypes() {
 
         ArrayList<String> resource_types = new ArrayList<>();
@@ -276,126 +234,12 @@ public abstract class BaseFragment extends Fragment {
 
         return resource_types;
     }
-
     public static List<String> getResourceContractTypes() {
         ArrayList<String> contract_type = new ArrayList<>();
         contract_type.add("Permanent");
         contract_type.add("Casual");
 
         return contract_type;
-    }
-
-}
-
-class GetTaskAssignment extends AsyncTask<Void, Void, List<TaskAssignmentItem>> {
-    TaskAssignmentDao taskAssignmentDao;
-    TaskAssignment taskAssignment;
-    AppCompatActivity activity;
-
-    public GetTaskAssignment(AppCompatActivity activity) {
-        this.activity = activity;
-
-    }
-
-    @Override
-    protected void onPreExecute() {
-        ShambaAppDB db = new DBAdaptor(activity).getDB();
-        taskAssignmentDao = db.taskAssignmentDao();
-        taskAssignment = new TaskAssignment();
-    }
-
-    @Override
-    protected List<TaskAssignmentItem> doInBackground(Void... voids) {
-        List<TaskAssignment> dbList = new ArrayList<>();
-        ArrayList<TaskAssignmentItem> taskAssignmentItems = new ArrayList<>();
-
-
-        dbList = taskAssignmentDao.getAllTaskAssignment();
-        for (int i = 0; i < dbList.size(); ++i) {
-            TaskAssignmentItem taskAssignmentItem = new TaskAssignmentItem();
-            taskAssignmentItem.setAmount_due(dbList.get(i).getAmount_due());
-            taskAssignmentItem.setAssignment_end_date(dbList.get(i).getAssignment_end_date());
-            taskAssignmentItem.setAssignment_id(dbList.get(i).getAssignment_id());
-            taskAssignmentItem.setAssignment_start_date(dbList.get(i).getAssignment_start_date());
-            taskAssignmentItem.setComments(dbList.get(i).getComments());
-            taskAssignmentItem.setComplete_status(dbList.get(i).getComplete_status());
-            taskAssignmentItem.setPay_rate_id(dbList.get(i).getPay_rate_id());
-            taskAssignmentItem.setPhase_id(dbList.get(i).getPhase_id());
-            taskAssignmentItem.setPlan_id(dbList.get(i).getPlan_id());
-            taskAssignmentItem.setQuantity_worked(dbList.get(i).getQuantity_worked());
-            taskAssignmentItem.setResource_id(dbList.get(i).getResource_id());
-            taskAssignmentItem.setTask_id(dbList.get(i).getTask_id());
-            taskAssignmentItems.add(taskAssignmentItem);
-
-        }
-        return taskAssignmentItems;
-    }
-
-    @Override
-    protected void onPostExecute(List<TaskAssignmentItem> result) {
-    }
-
-
-    class GetPlantingPrograms extends AsyncTask<Void, Void, List<PlantingProgramItem>> {
-        PlantingProgramDao plantingProgramDao;
-        PlantingProgram plantingProgram;
-        AppCompatActivity activity;
-        ArrayList<PlantingProgramItem> plantingProgramItems;
-
-        public GetPlantingPrograms(AppCompatActivity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            ShambaAppDB db = new DBAdaptor(activity).getDB();
-            plantingProgramDao = db.plantingProgramDao();
-            plantingProgram = new PlantingProgram();
-            plantingProgramItems = new ArrayList<>();
-        }
-
-        @Override
-        protected List<PlantingProgramItem> doInBackground(Void... voids) {
-            List<PlantingProgram> dbList = new ArrayList<>();
-
-            dbList = plantingProgramDao.getAllPlantingPrograms();
-            for (int i = 0; i < dbList.size(); ++i) {
-                PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-//                plantingProgramItem.setHarvesting_date(dbList.get(i).getHarvesting_date());
-//                plantingProgramItem.setPlan_id(dbList.get(i).getPlan_id());
-//                plantingProgramItem.setPlanting_block(dbList.get(i).getPlanting_block());
-//                plantingProgramItem.setPlanting_cost(dbList.get(i).getPlanting_cost());
-//                plantingProgramItem.setPlanting_location(dbList.get(i).getPlanting_location());
-//                plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
-//                plantingProgramItem.setPlanting_produce(dbList.get(i).getPlanting_produce());
-//                plantingProgramItem.setPlanting_revenue(dbList.get(i).getPlanting_revenue());
-//                plantingProgramItem.setPreparation_date(dbList.get(i).getPreparation_date());
-//                plantingProgramItem.setSales_date(dbList.get(i).getSales_date());
-//                plantingProgramItem.setSeed_quantity(dbList.get(i).getSeed_quantity());
-//                plantingProgramItem.setSeedbed_date(dbList.get(i).getSeedbed_date());
-//                plantingProgramItem.setTransplanting_date(dbList.get(i).getTransplanting_date());
-
-                plantingProgramItems.add(plantingProgramItem);
-            }
-
-            return plantingProgramItems;
-        }
-
-        public HashMap<String, PlantingProgramItem> GetPlantingProgramsHashMap() {
-
-            HashMap<String, PlantingProgramItem> plantingProgramItemHashMap = new HashMap<>();
-
-            for (int i = 0; i < plantingProgramItems.size(); ++i) {
-                plantingProgramItemHashMap.put(plantingProgramItems.get(i).getPlanting_name(),
-                        plantingProgramItems.get(i));
-            }
-            return plantingProgramItemHashMap;
-
-        }
-
-        @Override
-        protected void onPostExecute(List<PlantingProgramItem> result) {
-        }
     }
 }
 

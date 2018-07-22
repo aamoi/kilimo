@@ -52,4 +52,15 @@ public class JavaUtils {
     public static Date formatDate(Date date) {
         return stringToDate(date.toString());
     }
+
+    public static double nullableStringToDouble(String double_string) {
+
+        double double_val = 0.00;
+        String string_val = double_string;
+
+        if (!(double_string == null))
+            double_val = Double.parseDouble(string_val);
+
+        return double_val;
+    }
 }

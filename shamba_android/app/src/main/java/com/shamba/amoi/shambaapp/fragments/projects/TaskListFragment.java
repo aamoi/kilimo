@@ -18,6 +18,7 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.projects.Task;
 import com.shamba.amoi.shambaapp.db.projects.TaskDao;
+import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingPhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
@@ -39,12 +40,10 @@ public class TaskListFragment extends BaseFragment {
     private static final String ARG_crop_name = "key_crop_name";
     private static final String ARG_phase = "key_phase";
     private static PlantingProgramItem plantingProgramItem;
-    private static PlantingPhaseItem plantingPhaseItem;
+    private static PhaseItem phaseItem;
 
 
     public int program_id;
-    public  String program_name;
-    public  String crop_name;
     public String phase;
 
     Button add_task;
@@ -94,21 +93,24 @@ public class TaskListFragment extends BaseFragment {
         getActivity().setTitle(title);
 
         View view = inflater.inflate(R.layout.fragment_tasklist_list, container, false);
-
-        plantingProgramItem=BaseFragment.plantingProgramItem;
-        plantingPhaseItem=BaseFragment.plantingPhaseItem;
+        plantingProgramItem=PlantingProgramItem.selectedPlantingProgram;
+        phaseItem=PhaseItem.selectedPhaseItem;
 
          Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_tasks);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        try {
-            tasks=new GetTaskList().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+            tasks=TaskItem.getAllProjectPhaseTasks(getActivity(),
+                    plantingProgramItem.id,phaseItem.getId());
+
+//        try {
+//            tasks=new GetTaskList().execute().get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
         recyclerView.setAdapter(new TaskListRecyclerViewAdapter((HomeActivity) this.getActivity(),
                 tasks, mListener));
 

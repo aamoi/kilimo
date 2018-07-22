@@ -7,12 +7,15 @@ package com.shamba.amoi.controller;
 import com.shamba.amoi.Repository.TaskRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.Task;
+import com.sun.istack.internal.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static com.shamba.amoi.Utils.JavaUtils.nullableStringToDouble;
 
 @RestController
 public class TaskController {
@@ -57,12 +60,19 @@ public class TaskController {
         int planned_persons = Integer.parseInt(body.get("planned_persons"));
         double estimated_cost=Double.parseDouble(body.get("estimated_cost"));
         double estimated_revenue=Double.parseDouble(body.get("estimated_revenue"));
-        Date actual_start_date= DateUtil.stringToDate(body.get("actual_start_date"));
-        Date actual_end_date= DateUtil.stringToDate(body.get("actual_end_date"));
-        double actual_days=Double.parseDouble(body.get("actual_days"));
-        double actual_persons=Double.parseDouble(body.get("actual_persons"));
-        double actual_cost=Double.parseDouble(body.get("actual_cost"));
-        double actual_revenue=Double.parseDouble(body.get("actual_revenue"));
+
+        @Nullable
+        Date actual_start_date= DateUtil.nullableStringToDate(body.get("actual_start_date"));
+        @Nullable
+        Date actual_end_date= DateUtil.nullableStringToDate(body.get("actual_end_date"));
+        @Nullable
+        double actual_days=nullableStringToDouble(body.get("actual_days"));
+        @Nullable
+        double actual_persons=nullableStringToDouble(body.get("actual_persons"));
+        @Nullable
+        double actual_cost=nullableStringToDouble(body.get("actual_cost"));
+        @Nullable
+        double actual_revenue=nullableStringToDouble(body.get("actual_revenue"));
 
         return taskRepository.save(new Task(project_id,task_name,planned_start_date,planned_end_date,planned_days,
                 phase_id,planned_persons,estimated_cost,estimated_revenue,actual_start_date,actual_end_date,
