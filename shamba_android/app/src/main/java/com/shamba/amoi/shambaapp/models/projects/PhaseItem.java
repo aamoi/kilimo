@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PhaseItem {
     public static List<PhaseItem> staticPhaseItems;
+    public static PhaseItem selectedPhaseItem;
     private int id;
     private String phase_name;
     private String phase_details;

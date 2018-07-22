@@ -61,4 +61,22 @@ public class ProductItem {
     public void setIs_fuel(boolean is_fuel) {
         this.is_fuel = is_fuel;
     }
+
+    /**
+     * get product name by id.
+     * @param productItems
+     * @param id
+     * @return
+     */
+    public static ProductItem getProductItemByID(List<ProductItem> productItems, int id){
+        ProductItem productItem=null;
+
+        for(int i=0;i<productItems.size();++i){
+            if(productItems.get(i).getId()==id){
+                productItem= productItems.get(i);
+                break;
+            }
+        }
+      return productItem;
+    }
 }

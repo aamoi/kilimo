@@ -37,7 +37,6 @@ public class TaskSchedulingActuals extends BaseFragment {
     TextView planting_name;
     TextView planting_phase;
 
-
     EditText taskName;
     EditText planned_days;
     EditText planned_startDate;
@@ -157,11 +156,11 @@ public class TaskSchedulingActuals extends BaseFragment {
         planned_endDate.setEnabled(false);
 
         planned_People=(EditText) view.findViewById(R.id.edit_planned_people);
-        planned_People.setText(taskItem.getPlanned_people());
+        planned_People.setText(taskItem.getPlanned_persons());
         planned_People.setEnabled(false);
 
         planned_cost=(EditText) view.findViewById(R.id.edit_planned_cost);
-        planned_cost.setText(taskItem.getPlanned_cost());
+        planned_cost.setText(String.valueOf(taskItem.getEstimated_cost()));
         planned_cost.setEnabled(false);
 
         btn_submit_task = (Button) view.findViewById(R.id.btn_submit_task);
@@ -261,15 +260,15 @@ public class TaskSchedulingActuals extends BaseFragment {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            task = taskDao.getTask(taskItem.getId()).get(0);//new Task();
-            task.setActual_assets(actuals_assets);
-            task.setActual_cost(actuals_cost);
-            task.setActual_days(actuals_days);
-            task.setActual_start_date(actuals_start_date);
-            task.setActual_end_date(actuals_end_date);
-            task.setActual_people(actuals_people);
-            task.setActual_others(actuals_others);
-            taskDao.updateTask(task);
+//            task = taskDao.getTask(taskItem.getId()).get(0);//new Task();
+//            task.setActual_assets(actuals_assets);
+//            task.setActual_cost(actuals_cost);
+//            task.setActual_days(actuals_days);
+//            task.setActual_start_date(actuals_start_date);
+//            task.setActual_end_date(actuals_end_date);
+//            task.setActual_people(actuals_people);
+//            task.setActual_others(actuals_others);
+//            taskDao.updateTask(task);
             
             Log.d("record saved", "task name: " + task.getTask_name());
             return null;

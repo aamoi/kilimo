@@ -258,9 +258,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         edit_planting_name.setText(plantingProgramItem.getPlanting_name());
         edit_planting_name.setEnabled(false);
 
-        Log.d("produce id++++++",String.valueOf(plantingProgramItem.getProduct_id()));
-
-        spn_planting_produce.setSelection(plantingProgramItem.getProduct_id());
+        spn_planting_produce.setSelection(plantingProgramItem.getProduct_id()-1);
         spn_planting_produce.setEnabled(false);
 
         edit_seed_quantity.setText(String.valueOf(plantingProgramItem.getSeed_quantity()));
@@ -281,8 +279,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         edit_sales_date.setText(plantingProgramItem.getPlanned_sales_date());
         edit_sales_date.setEnabled(false);
 
-        Log.d("location blockId++++++", String.valueOf(plantingProgramItem.getLocation_block_id()));
-        spn_location_block.setSelection(plantingProgramItem.getLocation_block_id());
+        spn_location_block.setSelection(plantingProgramItem.getLocation_block_id()-1);
         spn_location_block.setEnabled(false);
 
         edit_planting_cost.setText(String.valueOf(plantingProgramItem.getEstimated_cost()));

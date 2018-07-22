@@ -10,6 +10,7 @@ import com.shamba.amoi.shambaapp.db.projects.Task;
 import com.shamba.amoi.shambaapp.db.projects.TaskDao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -19,185 +20,161 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class TaskItem {
-    String id;
-    String  planting_program_id;
-    String phase_identity;
-    String task_name;
-    double planned_days;
-    double actual_days;
+    public static List<TaskItem> staticTaskItems;
+    public static TaskItem selectedTaskItem;
+    private int id;
+    private int project_id;
+    private String task_name;
+    private String planned_start_date;
+    private String planned_end_date;
+    private double planned_days;
+    private int phase_id;
+    private int planned_persons;
+    private double estimated_cost;
+    private double estimated_revenue;
+    private String actual_start_date;
+    private String actual_end_date;
+    private double actual_days;
+    private double actual_persons;
+    private double actual_cost;
+    private double actual_revenue;
 
-    String planned_start_date;
-    String actual_start_date;
-
-    String planned_end_date;
-    String actual_end_date;
-
-    String planned_people;
-    String actual_people;
-
-    String planned_assets;
-    String actual_assets;
-
-    String planned_cost;
-    String actual_cost;
-
-    String planned_others;
-    String actual_others;
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setPhase_identity(String phase_identity) {
-        this.phase_identity = phase_identity;
-    }
-
-    public void setActual_days(double actual_days) {
-        this.actual_days = actual_days;
-    }
-
-    public void setActual_end_date(String actual_end_date) {
-        this.actual_end_date = actual_end_date;
-    }
-
-    public void setActual_assets(String actual_assets) {
-        this.actual_assets = actual_assets;
-    }
-
-    public void setPlanned_days(double planned_days) {
-        this.planned_days = planned_days;
-    }
-
-    public void setActual_cost(String actual_cost) {
-        this.actual_cost = actual_cost;
-    }
-
-    public void setActual_people(String actual_people) {
-        this.actual_people = actual_people;
-    }
-
-    public void setActual_start_date(String actual_start_date) {
-        this.actual_start_date = actual_start_date;
-    }
-
-    public void setPlanned_assets(String planned_assets) {
-        this.planned_assets = planned_assets;
-    }
-
-    public void setPlanned_end_date(String planned_end_date) {
-        this.planned_end_date = planned_end_date;
-    }
-
-    public void setPlanned_start_date(String planned_start_date) {
-        this.planned_start_date = planned_start_date;
-    }
-
-    public void setPlanting_program_id(String planting_program_id) {
-        this.planting_program_id = planting_program_id;
-    }
-
-    public void setActual_others(String actual_others) {
-        this.actual_others = actual_others;
-    }
-
-    public void setPlanned_cost(String planned_cost) {
-        this.planned_cost = planned_cost;
-    }
-
-    public void setPlanned_others(String planned_others) {
-        this.planned_others = planned_others;
-    }
-
-    public void setPlanned_people(String planned_people) {
-        this.planned_people = planned_people;
-    }
-
-    public void setTask_name(String task_name) {
-        this.task_name = task_name;
-    }
-
-    public String getActual_assets() {
-        return actual_assets;
-    }
-
-    public String getPlanned_assets() {
-        return planned_assets;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public double getActual_days() {
-        return actual_days;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public double getPlanned_days() {
-        return planned_days;
+    public int getProject_id() {
+        return project_id;
     }
 
-    public String getPlanting_program_id() {
-        return planting_program_id;
-    }
-
-    public String getActual_cost() {
-        return actual_cost;
-    }
-
-    public String getActual_end_date() {
-        return actual_end_date;
-    }
-
-    public String getActual_others() {
-        return actual_others;
-    }
-
-    public String getActual_people() {
-        return actual_people;
-    }
-
-    public String getActual_start_date() {
-        return actual_start_date;
-    }
-
-    public String getPhase_identity() {return phase_identity;}
-
-    public String getPlanned_cost() {
-        return planned_cost;
-    }
-
-    public String getPlanned_end_date() {
-        return planned_end_date;
-    }
-
-    public String getPlanned_others() {
-        return planned_others;
-    }
-
-    public String getPlanned_people() {
-        return planned_people;
-    }
-
-    public String getPlanned_start_date() {
-        return planned_start_date;
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 
     public String getTask_name() {
         return task_name;
     }
 
-    public static TaskItem getTaskItem(Activity activity,String key_task_name){
-        return getAllTaskHashMap(activity).get(key_task_name);
+    public void setTask_name(String task_name) {
+        this.task_name = task_name;
     }
 
-    public static TaskItem getTaskItemById(Activity activity,String task_id){
+    public String getPlanned_start_date() {
+        return planned_start_date;
+    }
+
+    public void setPlanned_start_date(String planned_start_date) {
+        this.planned_start_date = planned_start_date;
+    }
+
+    public String getPlanned_end_date() {
+        return planned_end_date;
+    }
+
+    public void setPlanned_end_date(String planned_end_date) {
+        this.planned_end_date = planned_end_date;
+    }
+
+    public double getPlanned_days() {
+        return planned_days;
+    }
+
+    public void setPlanned_days(double planned_days) {
+        this.planned_days = planned_days;
+    }
+
+    public int getPhase_id() {
+        return phase_id;
+    }
+
+    public void setPhase_id(int phase_id) {
+        this.phase_id = phase_id;
+    }
+
+    public int getPlanned_persons() {
+        return planned_persons;
+    }
+
+    public void setPlanned_persons(int planned_persons) {
+        this.planned_persons = planned_persons;
+    }
+
+    public double getEstimated_cost() {
+        return estimated_cost;
+    }
+
+    public void setEstimated_cost(double estimated_cost) {
+        this.estimated_cost = estimated_cost;
+    }
+
+    public double getEstimated_revenue() {
+        return estimated_revenue;
+    }
+
+    public void setEstimated_revenue(double estimated_revenue) {
+        this.estimated_revenue = estimated_revenue;
+    }
+
+    public String getActual_start_date() {
+        return actual_start_date;
+    }
+
+    public void setActual_start_date(String actual_start_date) {
+        this.actual_start_date = actual_start_date;
+    }
+
+    public String getActual_end_date() {
+        return actual_end_date;
+    }
+
+    public void setActual_end_date(String actual_end_date) {
+        this.actual_end_date = actual_end_date;
+    }
+
+    public double getActual_days() {
+        return actual_days;
+    }
+
+    public void setActual_days(double actual_days) {
+        this.actual_days = actual_days;
+    }
+
+    public double getActual_persons() {
+        return actual_persons;
+    }
+
+    public void setActual_persons(double actual_persons) {
+        this.actual_persons = actual_persons;
+    }
+
+    public double getActual_cost() {
+        return actual_cost;
+    }
+
+    public void setActual_cost(double actual_cost) {
+        this.actual_cost = actual_cost;
+    }
+
+    public double getActual_revenue() {
+        return actual_revenue;
+    }
+
+    public void setActual_revenue(double actual_revenue) {
+        this.actual_revenue = actual_revenue;
+    }
+
+    public static TaskItem getTaskItemById(Activity activity,int task_id){
 
        List<TaskItem> taskItemList=getAllTask(activity);
 
        TaskItem taskItem1=new TaskItem();
 
         for (TaskItem taskItem:taskItemList) {
-            if(taskItem.getId().equalsIgnoreCase(task_id))
+            if(taskItem.getId()==task_id)
                 taskItem1=taskItem;
             break;
         }
@@ -274,28 +251,29 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
 
             for (int count = 0; count < db_tasks.size(); ++count) {
                 TaskItem taskItem = new TaskItem();
-                taskItem.setActual_assets(db_tasks.get(count).getActual_assets());
+
                 taskItem.setActual_cost(db_tasks.get(count).getActual_cost());
                 taskItem.setActual_days(db_tasks.get(count).getActual_days());
                 taskItem.setActual_end_date(db_tasks.get(count).getActual_end_date());
-                taskItem.setActual_others(db_tasks.get(count).getActual_others());
-                taskItem.setActual_people(db_tasks.get(count).getActual_people());
+                taskItem.setActual_persons(db_tasks.get(count).getActual_persons());
+                taskItem.setActual_revenue(db_tasks.get(count).getActual_revenue());
                 taskItem.setActual_start_date(db_tasks.get(count).getActual_start_date());
-                taskItem.setId(db_tasks.get(count).getTask_id());
-                taskItem.setPhase_identity(db_tasks.get(count).getPhase_id());
-                taskItem.setPlanned_assets(db_tasks.get(count).getPlanned_assets());
-                taskItem.setPlanned_cost(db_tasks.get(count).getPlanned_cost());
+                taskItem.setEstimated_cost(db_tasks.get(count).getEstimated_cost());
+                taskItem.setEstimated_revenue(db_tasks.get(count).getEstimated_revenue());
+                taskItem.setId(db_tasks.get(count).getId());
+                taskItem.setPhase_id(db_tasks.get(count).getPhase_id());
                 taskItem.setPlanned_days(db_tasks.get(count).getPlanned_days());
                 taskItem.setPlanned_end_date(db_tasks.get(count).getPlanned_end_date());
-                taskItem.setPlanned_others(db_tasks.get(count).getPlanned_others());
-                taskItem.setPlanned_people(db_tasks.get(count).getPlanned_people());
+                taskItem.setPlanned_persons(db_tasks.get(count).getPlanned_persons());
                 taskItem.setPlanned_start_date(db_tasks.get(count).getPlanned_start_date());
-                taskItem.setPlanting_program_id(db_tasks.get(count).getPlanting_program_id());
+                taskItem.setProject_id(db_tasks.get(count).getProject_id());
                 taskItem.setTask_name(db_tasks.get(count).getTask_name());
+
                 taskList.add(taskItem);
             }
-        }
 
+            TaskItem.staticTaskItems=taskList;
+        }
         return taskList;
     }
 

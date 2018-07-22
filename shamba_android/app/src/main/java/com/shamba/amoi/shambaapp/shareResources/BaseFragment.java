@@ -159,13 +159,13 @@ public abstract class BaseFragment extends Fragment {
         return plantingProgramItemHashMap;
     }
 
-    public static HashMap<String, TaskItem> getAllProjectsTasks(AppCompatActivity activity) {
+    public static HashMap<Integer, TaskItem> getAllProjectsTasks(AppCompatActivity activity) {
         List<TaskItem> taskItemList = TaskItem.getAllTask(activity);
 
         Log.d("Projectsss|", "number of task: " + String.valueOf(taskItemList.size()));
 
 
-        HashMap<String, TaskItem> taskItemHashMap = new HashMap<>();
+        HashMap<Integer, TaskItem> taskItemHashMap = new HashMap<>();
 
         for (int i = 0; i < taskItemList.size(); ++i) {
             taskItemHashMap.put(taskItemList.get(i).getId(), taskItemList.get(i));

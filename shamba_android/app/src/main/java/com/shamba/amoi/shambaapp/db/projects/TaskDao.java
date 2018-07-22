@@ -26,13 +26,13 @@ public interface TaskDao {
     @Query("select * from Task")
     public List<Task> getAllTasks();
 
-    @Query("select * from Task where task_id in (:task_id)")
-    public List<Task> getTask(String task_id);
+    @Query("select * from Task where id in (:id)")
+    public List<Task> getTaskById(String id);
 
-    @Query("select * from Task where planting_program_id in (:planting_program_id)")
-    public List<Task> getProgramTasks(String planting_program_id);
+    @Query("select * from Task where project_id in (:project_id)")
+    public List<Task> getTasksByProject(int project_id);
 
-    @Query("select * from Task where phase_id in (:phase_id) and planting_program_id in (:planting_program_id)")
-    public List<Task> getProgramPhaseTasks(String phase_id, String planting_program_id);
+    @Query("select * from Task where phase_id in (:phase_id) and project_id in (:project_id)")
+    public List<Task> getTasksByProjectPhase(int phase_id, String project_id);
 
 }

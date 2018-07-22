@@ -168,9 +168,9 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
                         getPlantingPhaseItemsHashMap().keySet()));
 
         spn_plan_task= SharedUtilities.getSpinnerById(view, R.id.spn_plan_task);
-        SpinnerUtility.setDynamicSpinner(view.getContext(),spn_plan_task,
-                SharedUtilities.getHashMapStringKeySetList(BaseFragment.
-                        getAllProjectsTasks((AppCompatActivity)this.getActivity()).keySet()));
+//        SpinnerUtility.setDynamicSpinner(view.getContext(),spn_plan_task,
+//                SharedUtilities.getHashMapStringKeySetList(BaseFragment.
+//                        getAllProjectsTasks((AppCompatActivity)this.getActivity()).keySet()));
 
         spn_pay_rate= SharedUtilities.getSpinnerById(view, R.id.spn_pay_rate);
         SpinnerUtility.setDynamicSpinner(view.getContext(),spn_pay_rate,

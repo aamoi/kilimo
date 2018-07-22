@@ -189,7 +189,6 @@ public class PlantingProgrammesFragment extends BaseFragment {
                     int product_id=jsonObject.getInt("product_id");
                     planting.setProduct_id(product_id);
 
-
                     String planned_preparation_date=jsonObject.getString("planned_preparation_date").substring(0,10);
                     planting.setPlanned_preparation_date(planned_preparation_date);
 
@@ -251,24 +250,6 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                     double actual_revenue=jsonObject.getDouble("actual_revenue");
                     planting.setActual_revenue(actual_revenue);
-
-
-
-//                    PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-//                    plantingProgramItem.setPlan_id(String.valueOf(jsonObject.get("id")));
-//                    plantingProgramItem.setPlanting_block(String.valueOf(jsonObject.get("block_id")));
-//                    plantingProgramItem.setPlanting_location(String.valueOf(jsonObject.get("location_id")));
-//                    plantingProgramItem.setPlanting_name(String.valueOf(jsonObject.get("planting_name")));
-//                    plantingProgramItem.setPlanting_produce(String.valueOf(jsonObject.get("product_id")));
-//
-//                    plantingProgramItem.setPreparation_date(db_planting_programs.get(count).getPreparation_date());
-//                    plantingProgramItem.setSeedbed_date(db_planting_programs.get(count).getSeedbed_date());
-//                    plantingProgramItem.setTransplanting_date(db_planting_programs.get(count).getTransplanting_date());
-//                    plantingProgramItem.setHarvesting_date(db_planting_programs.get(count).getHarvesting_date());
-//                    plantingProgramItem.setSales_date(db_planting_programs.get(count).getSales_date());
-//                    plantingProgramItem.setSeed_quantity(db_planting_programs.get(count).getSeed_quantity());
-//                    plantingProgramItem.setPlanting_cost(db_planting_programs.get(count).getPlanting_cost());
-//                    plantingProgramItem.setPlanting_revenue(db_planting_programs.get(count).getPlanting_revenue());
 
                     plantingProgramItems.add(planting);
                 }

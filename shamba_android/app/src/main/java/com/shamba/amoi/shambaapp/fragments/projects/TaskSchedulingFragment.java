@@ -197,10 +197,10 @@ public class TaskSchedulingFragment extends BaseFragment {
         planned_endDate.setText(taskItem.getPlanned_end_date());
         planned_endDate.setEnabled(false);
 
-        planned_People.setText(taskItem.getPlanned_people());
+        planned_People.setText(taskItem.getPlanned_persons());
         planned_People.setEnabled(false);
 
-        planned_cost.setText(taskItem.getPlanned_cost());
+        planned_cost.setText(String.valueOf(taskItem.getEstimated_cost()));
         planned_cost.setEnabled(false);
 
         actual_days.setText(String.valueOf(taskItem.getActual_days()));
@@ -212,7 +212,7 @@ public class TaskSchedulingFragment extends BaseFragment {
         actual_endDate.setText(String.valueOf(taskItem.getActual_end_date()));
         actual_endDate.setEnabled(false);
 
-        actual_People.setText(String.valueOf(taskItem.getActual_people()));
+        actual_People.setText(String.valueOf(taskItem.getActual_persons()));
         actual_People.setEnabled(false);
 
         actual_cost.setText(String.valueOf(taskItem.getActual_cost()));
@@ -305,18 +305,18 @@ public class TaskSchedulingFragment extends BaseFragment {
             taskDao = db.taskDao();
             task = new Task();
 
-            String task_id=planting_program_id+"-"+phase_identity+"-"+task_name;
-            task.setTask_id(task_id);
-            task.setTask_name(task_name);
-            task.setPhase_id(phase_identity);
-            task.setPlanting_program_id(planting_program_id);
-            task.setPlanned_assets(planned_assets);
-            task.setPlanned_cost(planned_cost);
-            task.setPlanned_days(planned_days);
-            task.setPlanned_start_date(planned_start_date);
-            task.setPlanned_end_date(planned_end_date);
-            task.setPlanned_people(planned_people);
-            task.setPlanned_others(planned_others);
+//            String task_id=planting_program_id+"-"+phase_identity+"-"+task_name;
+//            task.setTask_id(task_id);
+//            task.setTask_name(task_name);
+//            task.setPhase_id(phase_identity);
+//            task.setPlanting_program_id(planting_program_id);
+//            task.setPlanned_assets(planned_assets);
+//            task.setPlanned_cost(planned_cost);
+//            task.setPlanned_days(planned_days);
+//            task.setPlanned_start_date(planned_start_date);
+//            task.setPlanned_end_date(planned_end_date);
+//            task.setPlanned_people(planned_people);
+//            task.setPlanned_others(planned_others);
         }
 
         @Override

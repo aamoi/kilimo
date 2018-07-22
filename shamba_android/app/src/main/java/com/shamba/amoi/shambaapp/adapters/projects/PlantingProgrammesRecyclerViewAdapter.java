@@ -75,7 +75,6 @@ public class PlantingProgrammesRecyclerViewAdapter
                 @Override
                 public void onSelectNegativeDialogueOption(){
                     PlantingProgramItem.selectedPlantingProgram=pItem;
-                    BaseFragment.plantingProgramItem=pItem;
 
 //                    Log.d("program_id", String.valueOf(pItem.getPlan_id()));
                     Log.d("program_name", String.valueOf(pItem.getPlanting_name()));

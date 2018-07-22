@@ -23,6 +23,8 @@ import com.shamba.amoi.shambaapp.db.power.PowerSourceStock;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStockDao;
 import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlan;
 import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlanDao;
+import com.shamba.amoi.shambaapp.db.projects.Phase;
+import com.shamba.amoi.shambaapp.db.projects.PhaseDao;
 import com.shamba.amoi.shambaapp.db.projects.PlantingPhase;
 import com.shamba.amoi.shambaapp.db.projects.PlantingPhaseDao;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
@@ -38,7 +40,7 @@ import com.shamba.amoi.shambaapp.db.projects.TaskDao;
         Asset.class,PlantingProgram.class, HumanResource.class,
         PowerSource.class, Task.class, PlantingPhase.class, ProductStock.class,
         TaskAssignment.class, InventoryUtilization.class, TaskPayment.class, PowerSourceStock.class,
-        AssetFueling.class},
+        AssetFueling.class, Phase.class},
         version = 4)
 public abstract class ShambaAppDB extends RoomDatabase {
     public abstract ProductDao productDao();
@@ -56,5 +58,6 @@ public abstract class ShambaAppDB extends RoomDatabase {
     public abstract TaskPaymentDao taskPaymentDao();
     public abstract PowerSourceStockDao powerSourceStockDao();
     public abstract AssetFuelingDao assetFuelingDao();
+    public abstract PhaseDao phaseDao();
 }
 

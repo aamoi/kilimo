@@ -10,6 +10,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingPhasesFragment.OnListFragmentInteractionListener;
 import com.shamba.amoi.shambaapp.fragments.projects.TaskListFragment;
+import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingPhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
@@ -36,11 +37,11 @@ public class PlantingPhasesRecyclerViewAdapter extends
     public  String crop_name;
     public String phase;
 
-    private final List<PlantingPhaseItem> phases;
+    private final List<PhaseItem> phases;
     private final OnListFragmentInteractionListener mListener;
     private final HomeActivity homeActivity;
 
-    public PlantingPhasesRecyclerViewAdapter(HomeActivity homeActivity, List<PlantingPhaseItem> items,
+    public PlantingPhasesRecyclerViewAdapter(HomeActivity homeActivity, List<PhaseItem> items,
                                              OnListFragmentInteractionListener listener) {
         phases = items;
         mListener = listener;
@@ -79,7 +80,7 @@ public class PlantingPhasesRecyclerViewAdapter extends
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public PlantingPhaseItem mItem;
+        public PhaseItem mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -87,14 +88,13 @@ public class PlantingPhasesRecyclerViewAdapter extends
             mIdView = (TextView) view.findViewById(R.id.phase_name);
             mContentView = (TextView) view.findViewById(R.id.phase_stage);
 
-            DialogUtility dialogUtility= new DialogUtility(homeActivity,"Planting phase Action?",
+            DialogUtility dialogUtility= new DialogUtility(homeActivity,"Phase action?",
                     "Tasks","Details", ""){
                 @Override
                 public void onSelectNegativeDialogueOption(){
 
-                    PlantingPhaseItem.selectedplantingPhaseItem=mItem;
-
-                    BaseFragment.plantingPhaseItem=mItem;
+                    PhaseItem.selectedPhaseItem=mItem;
+//                    BaseFragment.plantingPhaseItem=mItem;
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             new TaskListFragment());
                 }

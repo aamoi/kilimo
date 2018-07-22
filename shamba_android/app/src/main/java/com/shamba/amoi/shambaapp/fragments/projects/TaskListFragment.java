@@ -174,38 +174,37 @@ public class TaskListFragment extends BaseFragment {
 //            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(),
 //                    plantingProgramItem.getPlan_id());
 
-            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(),
-                    "");
+//            List<Task> db_tasks = taskDao.getProgramPhaseTasks(plantingPhaseItem.getPhase_id(), "");
 
 //            Log.d("program-id", String.valueOf(plantingProgramItem.getPlan_id()));
-            Log.d("program-phase_id", String.valueOf(plantingPhaseItem.getPhase_id()));
-            Log.d("program-tasks", String.valueOf(db_tasks.size()));
+//            Log.d("program-phase_id", String.valueOf(plantingPhaseItem.getPhase_id()));
+//            Log.d("program-tasks", String.valueOf(db_tasks.size()));
 
-            if (db_tasks.size() > 0){
-
-                for (int count = 0; count < db_tasks.size(); ++count) {
-                    TaskItem taskItem = new TaskItem();
-                    taskItem.setActual_assets(db_tasks.get(count).getActual_assets());
-                    taskItem.setActual_cost(db_tasks.get(count).getActual_cost());
-                    taskItem.setActual_days(db_tasks.get(count).getActual_days());
-                    taskItem.setActual_end_date(db_tasks.get(count).getActual_end_date());
-                    taskItem.setActual_others(db_tasks.get(count).getActual_others());
-                    taskItem.setActual_people(db_tasks.get(count).getActual_people());
-                    taskItem.setActual_start_date(db_tasks.get(count).getActual_start_date());
-                    taskItem.setId(db_tasks.get(count).getTask_id());
-                    taskItem.setPhase_identity(db_tasks.get(count).getPhase_id());
-                    taskItem.setPlanned_assets(db_tasks.get(count).getPlanned_assets());
-                    taskItem.setPlanned_cost(db_tasks.get(count).getPlanned_cost());
-                    taskItem.setPlanned_days(db_tasks.get(count).getPlanned_days());
-                    taskItem.setPlanned_end_date(db_tasks.get(count).getPlanned_end_date());
-                    taskItem.setPlanned_others(db_tasks.get(count).getPlanned_others());
-                    taskItem.setPlanned_people(db_tasks.get(count).getPlanned_people());
-                    taskItem.setPlanned_start_date(db_tasks.get(count).getPlanned_start_date());
-                    taskItem.setPlanting_program_id(db_tasks.get(count).getPlanting_program_id());
-                    taskItem.setTask_name(db_tasks.get(count).getTask_name());
-                    taskList.add(taskItem);
-                }
-            }
+//            if (db_tasks.size() > 0){
+//
+//                for (int count = 0; count < db_tasks.size(); ++count) {
+//                    TaskItem taskItem = new TaskItem();
+//                    taskItem.setActual_assets(db_tasks.get(count).getActual_assets());
+//                    taskItem.setActual_cost(db_tasks.get(count).getActual_cost());
+//                    taskItem.setActual_days(db_tasks.get(count).getActual_days());
+//                    taskItem.setActual_end_date(db_tasks.get(count).getActual_end_date());
+//                    taskItem.setActual_others(db_tasks.get(count).getActual_others());
+//                    taskItem.setActual_people(db_tasks.get(count).getActual_people());
+//                    taskItem.setActual_start_date(db_tasks.get(count).getActual_start_date());
+//                    taskItem.setId(db_tasks.get(count).getTask_id());
+//                    taskItem.setPhase_identity(db_tasks.get(count).getPhase_id());
+//                    taskItem.setPlanned_assets(db_tasks.get(count).getPlanned_assets());
+//                    taskItem.setPlanned_cost(db_tasks.get(count).getPlanned_cost());
+//                    taskItem.setPlanned_days(db_tasks.get(count).getPlanned_days());
+//                    taskItem.setPlanned_end_date(db_tasks.get(count).getPlanned_end_date());
+//                    taskItem.setPlanned_others(db_tasks.get(count).getPlanned_others());
+//                    taskItem.setPlanned_people(db_tasks.get(count).getPlanned_people());
+//                    taskItem.setPlanned_start_date(db_tasks.get(count).getPlanned_start_date());
+//                    taskItem.setPlanting_program_id(db_tasks.get(count).getPlanting_program_id());
+//                    taskItem.setTask_name(db_tasks.get(count).getTask_name());
+//                    taskList.add(taskItem);
+//                }
+//            }
 
             return taskList;
         }
