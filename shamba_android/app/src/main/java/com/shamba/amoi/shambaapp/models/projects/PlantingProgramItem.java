@@ -31,8 +31,7 @@ public class PlantingProgramItem {
     private String planned_seedbed_date;
     private String planned_sales_date;
     private String planned_transplant_date;
-    private int block_id;
-    private int location_id;
+    private int location_block_id;
     private int product_id;
     private String planting_name;
     private String planting_details;
@@ -126,20 +125,12 @@ public class PlantingProgramItem {
         this.planned_transplant_date = planned_transplant_date;
     }
 
-    public int getBlock_id() {
-        return block_id;
+    public int getLocation_block_id() {
+        return location_block_id;
     }
 
-    public void setBlock_id(int block_id) {
-        this.block_id = block_id;
-    }
-
-    public int getLocation_id() {
-        return location_id;
-    }
-
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
+    public void setLocation_block_id(int location_block_id) {
+        this.location_block_id = location_block_id;
     }
 
     public int getProduct_id() {
@@ -338,9 +329,8 @@ class GetPlantingPrograms extends AsyncTask<Void, Void, List<PlantingProgramItem
             PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
             plantingProgramItem.setPlanned_harvest_date(dbList.get(i).getPlanned_harvest_date());
             plantingProgramItem.setId(dbList.get(i).getId());
-            plantingProgramItem.setBlock_id(dbList.get(i).getBlock_id());
             plantingProgramItem.setEstimated_cost(dbList.get(i).getEstimated_cost());
-            plantingProgramItem.setLocation_id(dbList.get(i).getLocation_id());
+            plantingProgramItem.setLocation_block_id(dbList.get(i).getLocation_block_id());
             plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
             plantingProgramItem.setProduct_id(dbList.get(i).getProduct_id());
             plantingProgramItem.setEstimated_revenue(dbList.get(i).getEstimated_revenue());

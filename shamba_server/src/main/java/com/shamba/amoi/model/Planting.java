@@ -42,8 +42,6 @@ public class Planting {
     private Date actual_transplant_date;
     private Date actual_sales_date;
 
-
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

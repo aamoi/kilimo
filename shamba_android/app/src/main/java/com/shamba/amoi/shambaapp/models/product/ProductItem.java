@@ -1,9 +1,12 @@
 package com.shamba.amoi.shambaapp.models.product;
 
+import java.util.List;
+
 /**
  * Created by amoi on 13/02/2018.
  */
 public class ProductItem {
+    public static List<ProductItem> staticProductItemList;
     private int id ;
     private String product_name;
     private boolean is_asset;

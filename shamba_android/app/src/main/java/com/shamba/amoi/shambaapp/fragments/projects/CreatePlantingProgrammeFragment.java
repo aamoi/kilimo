@@ -1,17 +1,15 @@
 package com.shamba.amoi.shambaapp.fragments.projects;
 
-import android.app.FragmentTransaction;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,11 +18,10 @@ import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlan;
-import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlanDao;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
-import com.shamba.amoi.shambaapp.models.projects.CropItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
+import com.shamba.amoi.shambaapp.models.projects.LocationBlockItem;
 import com.shamba.amoi.shambaapp.models.projects.LocationItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
@@ -52,33 +49,45 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
     private static final String ARG_PARAM2 = "param2";
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static String key_view_type = "view_type";
-    static List<CropItem> crops;
     static PlantingProgramItem plantingProgramItem;
     private EditText edit_planting_name;
-    private Spinner spn_planting_produce;
+    private Spinner  spn_planting_produce;
     private EditText edit_seed_quantity;
     private EditText edit_preparation_date;
     private EditText edit_seedbed_date;
     private EditText edit_transplanting_date;
     private EditText edit_harvesting_date;
     private EditText edit_sales_date;
-    private Spinner spn_planting_location;
-    private Spinner spn_planting_block;
+    private Spinner  spn_location_block;
     private EditText edit_planting_cost;
     private EditText edit_planting_revenue;
+
     private Button save_program;
-    private String str_planting_name;
-    private String str_planting_produce;
-    private double seed_quantity;
-    private String str_preparation_date;
-    private String str_seedbed_date;
-    private String str_transplanting_date;
-    private String str_harvesting_date;
-    private String str_sales_date;
-    private String str_planting_location;
-    private String str_planting_block;
-    private double planting_cost;
-    private double planting_revenue;
+
+    int id;
+    double estimated_cost;
+    String planned_harvest_date;
+    String planned_preparation_date;
+    double estimated_revenue;
+    double seed_quantity;
+    String planned_seedbed_date;
+    String planned_sales_date;
+    String planned_transplant_date;
+    int location_block_id;
+    int product_id;
+    String planting_name;
+    String planting_details;
+
+    double actual_cost;
+    double actual_revenue;
+    double estimated_sales_quantity;
+    double actual_sales_quantity;
+    String actual_harvest_date;
+    String actual_preparation_date;
+    String actual_seedbed_date;
+    String actual_transplant_date;
+    String actual_sales_date;
+
     // TODO: Rename and change types of parameters
     private String view_type;
     private String mParam2;
@@ -130,46 +139,66 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
             viewPlantingProgramDetails();
         } else if (view_type.contains("new")) {
 
-            List<String> list = new ArrayList<>();
-            crops = BaseFragment.saveCrops();
-            for (int i = 0; i < BaseFragment.cropItems.size(); ++i) {
-                list.add(crops.get(i).getCrop_name());
+            List<String> product_names = new ArrayList<>();
+            List<ProductItem> productItemList = ProductItem.staticProductItemList;
+            for (int i = 0; i < productItemList.size(); ++i) {
+                product_names.add(productItemList.get(i).getProduct_name());
             }
             spn_planting_produce = SpinnerUtility.setDynamicSpinner(view.getContext(),
-                    spn_planting_produce, list);
+                    spn_planting_produce, product_names);
 
-            List<String> locations = new ArrayList<>();
-            List<LocationItem> locationItems = BaseFragment.saveLocations();
-            for (int i = 0; i < locationItems.size(); ++i) {
-//                locations.add(locationItems.get(i).getLocation_name());
+            List<String> location_blks = new ArrayList<>();
+            List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockList;
+            for (int i = 0; i < locationBlockItems.size(); ++i) {
+                location_blks.add(locationBlockItems.get(i).getLocation_block_name());
             }
-            spn_planting_location = SpinnerUtility.setDynamicSpinner(view.getContext(),
-                    spn_planting_location, locations);
+            spn_location_block = SpinnerUtility.setDynamicSpinner(view.getContext(),
+                    spn_location_block, location_blks);
 
         } else {
-
         }
 
         save_program.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                 str_planting_name=edit_planting_name.getText().toString();
-//                 str_planting_produce=spn_planting_produce.getSelectedItem().toString();
-//                 seed_quantity= Double.parseDouble(edit_seed_quantity.getText().toString());
-//                 str_preparation_date=edit_preparation_date.getText().toString();
-//                 str_seedbed_date=edit_seedbed_date.getText().toString();
-//                 str_transplanting_date=edit_transplanting_date.getText().toString();
-//                 str_harvesting_date=edit_harvesting_date.getText().toString();
-//                 str_sales_date=edit_sales_date.getText().toString();
-//                 str_planting_location=spn_planting_location.getSelectedItem().toString();
-//                 str_planting_block=spn_planting_block.getSelectedItem().toString();
-//                 planting_cost= Double.parseDouble(edit_planting_cost.getText().toString());
-//                 planting_revenue= Double.parseDouble(edit_planting_revenue.getText().toString());
+                String produce_name = spn_planting_produce.getSelectedItem().toString();
+                for (int i = 0; i < ProductItem.staticProductItemList.size(); i++) {
+                    if (ProductItem.staticProductItemList.get(i).getProduct_name().
+                            equalsIgnoreCase(produce_name)) {
+                        product_id = ProductItem.staticProductItemList.get(i).getId();
+                        break;
+                    }
+                }
+                seed_quantity = Double.parseDouble(edit_seed_quantity.getText().toString());
 
-                SavePlantingProgram savePlantingProgram = new SavePlantingProgram(str_planting_name,
-                        str_planting_produce, seed_quantity, str_preparation_date, str_seedbed_date,
-                        str_transplanting_date, str_harvesting_date, str_sales_date,
-                        str_planting_location, str_planting_block, planting_cost, planting_revenue);
+                planned_preparation_date = edit_preparation_date.getText().toString();
+                planned_seedbed_date = edit_seedbed_date.getText().toString();
+                planned_transplant_date = edit_transplanting_date.getText().toString();
+                planned_harvest_date = edit_harvesting_date.getText().toString();
+                planned_sales_date = edit_sales_date.getText().toString();
+
+                String location_block_str = spn_location_block.getSelectedItem().toString();
+                for (int i = 0; i < LocationBlockItem.staticLocationBlockList.size(); i++) {
+                    if (LocationBlockItem.staticLocationBlockList.get(i).getLocation_block_name().
+                            equalsIgnoreCase(location_block_str)) {
+                        location_block_id = LocationBlockItem.staticLocationBlockList.get(i).getId();
+                        break;
+                    }
+                }
+
+                planting_name = location_block_str + ":" + produce_name + ":" + SharedUtilities.getMonthStamp();
+
+                estimated_cost = Double.parseDouble(edit_planting_cost.getText().toString());
+                estimated_revenue = Double.parseDouble(edit_planting_revenue.getText().toString());
+
+                SavePlantingProgram savePlantingProgram = new SavePlantingProgram(estimated_cost,
+                        planned_harvest_date, planned_preparation_date,
+                        estimated_revenue, seed_quantity, planned_seedbed_date, planned_sales_date,
+                        planned_transplant_date, location_block_id, product_id, planting_name,
+                        planting_details, actual_cost, actual_revenue, estimated_sales_quantity,
+                        actual_sales_quantity, actual_harvest_date, actual_preparation_date,
+                        actual_seedbed_date, actual_transplant_date, actual_sales_date);
+
                 savePlantingProgram.execute();
 
                 BaseFragment.changeFragment((AppCompatActivity) getActivity(),
@@ -185,13 +214,13 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         edit_planting_name = (EditText) view.findViewById(R.id.edit_planting_name);
 
         spn_planting_produce = (Spinner) view.findViewById(R.id.spn_planting_produce);
-        List<String> list = new ArrayList<>();
-        crops = BaseFragment.saveCrops();
-        for (int i = 0; i < BaseFragment.cropItems.size(); ++i) {
-            list.add(crops.get(i).getCrop_name());
+        List<String> product_names = new ArrayList<>();
+        List<ProductItem> productItemList = ProductItem.staticProductItemList;
+        for (int i = 0; i < productItemList.size(); ++i) {
+            product_names.add(productItemList.get(i).getProduct_name());
         }
         spn_planting_produce = SpinnerUtility.setDynamicSpinner(view.getContext(),
-                spn_planting_produce, list);
+                spn_planting_produce, product_names);
 
         edit_seed_quantity = (EditText) view.findViewById(R.id.edit_seed_quantity);
 
@@ -210,16 +239,14 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         edit_sales_date = (EditText) view.findViewById(R.id.edit_sales_date);
         new DatePickerUtility(edit_sales_date);
 
-        spn_planting_location = (Spinner) view.findViewById(R.id.spn_planting_location);
-        List<String> locations = new ArrayList<>();
-        List<LocationItem> locationItems = BaseFragment.saveLocations();
-        for (int i = 0; i < locationItems.size(); ++i) {
-//            locations.add(locationItems.get(i).getLocation_name());
+        spn_location_block = (Spinner) view.findViewById(R.id.spn_planting_location);
+        List<String> location_block_names = new ArrayList<>();
+        List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockList;
+        for (int i = 0; i < locationBlockItems.size(); ++i) {
+            location_block_names.add(locationBlockItems.get(i).getLocation_block_name());
         }
-        spn_planting_location = SpinnerUtility.setDynamicSpinner(view.getContext(),
-                spn_planting_location, locations);
-
-//        spn_planting_block = (Spinner) view.findViewById(R.id.spn_planting_block);
+        spn_location_block = SpinnerUtility.setDynamicSpinner(view.getContext(),
+                spn_location_block, location_block_names);
 
         edit_planting_cost = (EditText) view.findViewById(R.id.edit_planting_cost);
         edit_planting_revenue = (EditText) view.findViewById(R.id.edit_planting_revenue);
@@ -228,23 +255,40 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
     }
 
     private void viewPlantingProgramDetails() {
-
         edit_planting_name.setText(plantingProgramItem.getPlanting_name());
         edit_planting_name.setEnabled(false);
 
-        spn_planting_produce.setSelection(2);
+        Log.d("produce id++++++",String.valueOf(plantingProgramItem.getProduct_id()));
+
+        spn_planting_produce.setSelection(plantingProgramItem.getProduct_id());
         spn_planting_produce.setEnabled(false);
 
-        spn_planting_location.setSelection(1);
-        spn_planting_location.setEnabled(false);
+        edit_seed_quantity.setText(String.valueOf(plantingProgramItem.getSeed_quantity()));
+        edit_seed_quantity.setEnabled(false);
 
-        spn_planting_block.setSelection(3);
-        spn_planting_block.setEnabled(false);
+        edit_preparation_date.setText(plantingProgramItem.getPlanned_preparation_date());
+        edit_preparation_date.setEnabled(false);
 
-//        edit_planting_cost.setText((String.valueOf(plantingProgramItem.getPlanting_cost())));
+        edit_seedbed_date.setText(plantingProgramItem.getPlanned_seedbed_date());
+        edit_seedbed_date.setEnabled(false);
+
+        edit_transplanting_date.setText(plantingProgramItem.getPlanned_transplant_date());
+        edit_transplanting_date.setEnabled(false);
+
+        edit_harvesting_date.setText(plantingProgramItem.getPlanned_harvest_date());
+        edit_harvesting_date.setEnabled(false);
+
+        edit_sales_date.setText(plantingProgramItem.getPlanned_sales_date());
+        edit_sales_date.setEnabled(false);
+
+        Log.d("location blockId++++++", String.valueOf(plantingProgramItem.getLocation_block_id()));
+        spn_location_block.setSelection(plantingProgramItem.getLocation_block_id());
+        spn_location_block.setEnabled(false);
+
+        edit_planting_cost.setText(String.valueOf(plantingProgramItem.getEstimated_cost()));
         edit_planting_cost.setEnabled(false);
 
-//        edit_planting_revenue.setText((String.valueOf(plantingProgramItem.getPlanting_revenue())));
+        edit_planting_revenue.setText(String.valueOf(plantingProgramItem.getEstimated_revenue()));
         edit_planting_revenue.setEnabled(false);
 
         save_program.setText("Update Details");
@@ -289,143 +333,159 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * Saves planting record into both server and local db
+     * It only saves on local db after the record is saved to server!
+     */
     class SavePlantingProgram extends AsyncTask<Void, Void, Integer> {
-
-        public String planting_id;
-        public String str_planting_name;
-        public String str_planting_produce;
+        public int id;
+        public double estimated_cost;
+        public String planned_harvest_date;
+        public String planned_preparation_date;
+        public double estimated_revenue;
         public double seed_quantity;
-        public String str_preparation_date;
-        public String str_seedbed_date;
-        public String str_transplanting_date;
-        public String str_harvesting_date;
-        public String str_sales_date;
-        public String str_planting_location;
-        public String str_planting_block;
-        public double planting_cost;
-        public double planting_revenue;
+        public String planned_seedbed_date;
+        public String planned_sales_date;
+        public String planned_transplant_date;
+        public int location_block_id;
+        public int product_id;
+        public String planting_name;
+        public String planting_details;
+        public double actual_cost;
+        public double actual_revenue;
+        public double estimated_sales_quantity;
+        public double actual_sales_quantity;
+        public String actual_harvest_date;
+        public String actual_preparation_date;
+        public String actual_seedbed_date;
+        public String actual_transplant_date;
+        public String actual_sales_date;
+
+        JSONObject request_object = new JSONObject();
+        JSONObject response_object = new JSONObject();
 
         PlantingProgram plantingProgram;
         PlantingProgramDao plantingProgramDao;
+        int planting_id;
 
-        public SavePlantingProgram(String str_planting_name, String str_planting_produce,
-                                   double seed_quantity, String str_preparation_date, String str_seedbed_date,
-                                   String str_transplanting_date, String str_harvesting_date, String str_sales_date,
-                                   String str_planting_location, String str_planting_block, double planting_cost,
-                                   double planting_revenue) {
-            this.str_planting_name = str_planting_name;
-            this.str_planting_produce = str_planting_produce;
+        int success=0;
+
+        public SavePlantingProgram(double estimated_cost, String planned_harvest_date, String planned_preparation_date,
+                                   double estimated_revenue, double seed_quantity, String planned_seedbed_date, String planned_sales_date,
+                                   String planned_transplant_date, int location_block_id, int product_id, String planting_name,
+                                   String planting_details, double actual_cost, double actual_revenue, double estimated_sales_quantity,
+                                   double actual_sales_quantity, String actual_harvest_date, String actual_preparation_date,
+                                   String actual_seedbed_date, String actual_transplant_date, String actual_sales_date) {
+
+            this.estimated_cost = estimated_cost;
+            this.planned_harvest_date = planned_harvest_date;
+            this.planned_preparation_date = planned_preparation_date;
+            this.estimated_revenue = estimated_revenue;
             this.seed_quantity = seed_quantity;
-            this.str_preparation_date = str_preparation_date;
-            this.str_seedbed_date = str_seedbed_date;
-            this.str_transplanting_date = str_transplanting_date;
-            this.str_harvesting_date = str_harvesting_date;
-            this.str_sales_date = str_sales_date;
-            this.str_planting_location = str_planting_location;
-            this.str_planting_block = str_planting_block;
-            this.planting_cost = planting_cost;
-            this.planting_revenue = planting_revenue;
+            this.planned_seedbed_date = planned_seedbed_date;
+            this.planned_sales_date = planned_sales_date;
+            this.planned_transplant_date = planned_transplant_date;
+            this.location_block_id = location_block_id;
+            this.product_id = product_id;
+            this.planting_name = planting_name;
+            this.planting_details = planting_details;
+            this.actual_cost = actual_cost;
+            this.actual_revenue = actual_revenue;
+            this.estimated_sales_quantity = estimated_sales_quantity;
+            this.actual_sales_quantity = actual_sales_quantity;
+            this.actual_harvest_date = actual_harvest_date;
+            this.actual_preparation_date = actual_preparation_date;
+            this.actual_seedbed_date = actual_seedbed_date;
+            this.actual_transplant_date = actual_transplant_date;
+            this.actual_sales_date = actual_sales_date;
         }
 
         @Override
         public void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-//            plantingProgramDao=db.plantingProgramDao();
-//            plantingProgram=new PlantingProgram();
-//
-//            String program_id=str_planting_location+"/"+str_planting_block+"/"+str_planting_produce+
-//                    "/"+str_preparation_date.replaceAll("/","").substring(0,4);
-//
-//            Log.d("planting-id",program_id);
-//
-//            plantingProgram.setPlanting_cost(planting_cost);
-//            plantingProgram.setPlanting_revenue(planting_revenue);
-//            plantingProgram.setPlanting_block(str_planting_block);
-//            plantingProgram.setPlanting_location(str_planting_location);
-//            plantingProgram.setPlanting_name(str_planting_name);
-//            plantingProgram.setPlanting_produce(str_planting_produce);
+            plantingProgramDao=db.plantingProgramDao();
+            plantingProgram=new PlantingProgram();
 
-////            plantingProgram.setPlan_id(str_planting_name+"-"+SharedUtilities.getMonthStamp());
-//            plantingProgram.setPlan_id(program_id);
+            try {
+                request_object.put("planting_name", planting_name);
+                request_object.put("planting_details", planting_details);
+                request_object.put("product_id", product_id);
+                request_object.put("seed_quantity", seed_quantity);
+                request_object.put("planned_preparation_date", planned_preparation_date);
+                request_object.put("planned_seedbed_date", planned_seedbed_date);
+                request_object.put("planned_transplant_date", planned_transplant_date);
+                request_object.put("planned_harvest_date", planned_harvest_date);
+                request_object.put("planned_sales_date", planned_sales_date);
+                request_object.put("location_block_id", location_block_id);
+                request_object.put("estimated_cost", estimated_cost);
+                request_object.put("estimated_sales_quantity", estimated_sales_quantity);
+                request_object.put("estimated_revenue", estimated_revenue);
 
-//            plantingProgram.setPlanting_cost(planting_cost);
-//            plantingProgram.setPlanting_revenue(planting_revenue);
-//            plantingProgram.setSeed_quantity(seed_quantity);
-//
-//            plantingProgram.setPreparation_date(str_preparation_date);
-//            plantingProgram.setSeedbed_date(str_seedbed_date);
-//            plantingProgram.setTransplanting_date(str_transplanting_date);
-//            plantingProgram.setHarvesting_date(str_harvesting_date);
-//            plantingProgram.setSales_date(str_sales_date);
+                Log.d("Planting request...",request_object.toString());
 
+            } catch (JSONException e) {
+                Log.d("Error preparing request",e.getMessage());
+                e.printStackTrace();
+            }
+            try{
+                plantingProgram.setPlanting_name(planting_name);
+                plantingProgram.setPlanting_details(planting_details);
+                plantingProgram.setProduct_id(product_id);
+                plantingProgram.setSeed_quantity(seed_quantity);
+                plantingProgram.setPlanned_preparation_date(planned_preparation_date);
+                plantingProgram.setPlanned_seedbed_date(planned_seedbed_date);
+                plantingProgram.setPlanned_transplant_date(planned_transplant_date);
+                plantingProgram.setPlanned_harvest_date(planned_harvest_date);
+                plantingProgram.setActual_sales_date(planned_sales_date);
+                plantingProgram.setLocation_block_id(location_block_id);
+                plantingProgram.setEstimated_cost(estimated_cost);
+                plantingProgram.setEstimated_sales_quantity(estimated_sales_quantity);
+                plantingProgram.setEstimated_revenue(estimated_revenue);
+
+                Log.d("Planting db request...",plantingProgram.toString());
+            }
+            catch(Exception e){
+                Log.d("Error creating request",e.getMessage());
+            }
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
-
-
-            JSONObject obj = new JSONObject();
-
+            /**
+             * Saving planting record to the server!
+             */
             try {
-//
-//                {"planting_name":"KwaGeorge Sianda", "planting_details":"Maize to be sold when green!",
-//                        "product_id":1,"seed_quantity":6,
-//                        "planned_preparation_date":"08-0-2018", "planned_seedbed_date":"08-08-2018"
-//                        ,"planned_transplant_date":"08-08-2018", "planned_harvest_date":"0-08-2018",
-//                        "planned_sales_date":"08-08-2018", "location_id":2,
-//                        "block_id":1, "estimated_cost":14000,
-//                        "estimated_sales_quantity":1000, "estimated_revenue":44000.0
-//                }
+                response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
+                        "createPlanting/",request_object.toString());
 
-                obj.put("planting_name", "KwaGeorge Mrende");
-                obj.put("planting_details", "To sell to Susan Mama Mboga");
-                obj.put("product_id", 6);
-                obj.put("seed_quantity", 600);
-                obj.put("planned_preparation_date", "08-08-2018");
-                obj.put("planned_seedbed_date", "08-08-2018");
-                obj.put("planned_transplant_date", "08-08-2018");
-                obj.put("planned_harvest_date", "0-08-2018");
-                obj.put("planned_sales_date", "08-08-2018");
-                obj.put("location_id", 2);
-                obj.put("block_id", 1);
-                obj.put("estimated_cost", 14000);
-                obj.put("estimated_sales_quantity", 16000);
-                obj.put("estimated_revenue", 12000);
+                Log.d("Planting response...", response_object.toString());
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-//            String payload = obj.toString();
-//            JSONObject response= null;
-
-            JSONObject response = null;
-
-            Log.d("post request++ ", obj.toString());
-
-            try {
-                response = CommonHelper.sendPostRequestWithJsonResponse(
-                        BuildConfig.SERVER_URL, "createPlanting/",
-//                        " {\"planting_name\":\"KwaGeorge Cabbagesss\"," +
-//                                "\"planting_details\":\"Maize to be sold when green!\",\"product_id\":1,\"seed_quantity\":6," +
-//                                "\"planned_preparation_date\":\"08-0-2018\",\"planned_seedbed_date\":\"08-08-2018\",\"planned_transplant_date\":\"08-08-2018\",\n" +
-//                                " \"planned_harvest_date\":\"0-08-2018\",\"planned_sales_date\":\"08-08-2018\",\"location_id\":2,\"block_id\":1,\"estimated_cost\":14000,\n" +
-//                                " \"estimated_sales_quantity\":1000,\"estimated_revenue\":44000.0\n" + " }");
-
-                        obj.toString());
-
-                Log.d("plantings", response.getString("planting_name"));
+                planting_id=response_object.getInt("id");
 
             } catch (IOException e) {
+                Log.d("Error posting request",e.getMessage());
                 e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+            }catch(JSONException jsonException){
+                Log.d("Error getting response",jsonException.getMessage());
+                jsonException.printStackTrace();
             }
 
-
-//            plantingProgramDao.insertPlantingProgram(plantingProgram);
-//            Log.d("record saved", "planting name: "+str_planting_name);
-            return null;
+            /**
+             * Saving planting record to local db only if the record is send to the server!
+             */
+            if(planting_id>0){
+                try{
+                    plantingProgram.setId(planting_id);
+                    plantingProgramDao.insertPlantingProgram(plantingProgram);
+                    Log.d("Record saved", "planting name: "+planting_name);
+                    success=1;
+                } catch(Exception e){
+                    success=0;
+                    Log.d("Error saving record",e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+            return success;
         }
 
         @Override

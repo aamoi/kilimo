@@ -13,7 +13,8 @@ public class DateUtil {
         Date date = null;
 
         try {
-            date = new SimpleDateFormat("dd-MM-yyyy").parse(date_string);
+
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(date_string);
         } catch (ParseException e) {
             e.printStackTrace();
         }

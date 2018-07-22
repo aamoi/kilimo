@@ -1,5 +1,6 @@
 package com.shamba.amoi.shambaapp.activities;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
+import com.shamba.amoi.shambaapp.db.DBAdaptor;
+import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
+import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
 import com.shamba.amoi.shambaapp.fragments.HomeFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFragment;
 import com.shamba.amoi.shambaapp.fragments.inventory.ProductStockFragment;
@@ -29,7 +35,12 @@ import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.TaskListFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.TaskSchedulingFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -338,5 +349,4 @@ public class HomeActivity extends BaseActivity  {
         fragmentManager.beginTransaction().replace(R.id.fragment_placeholder_home,
                 new ReportsFragment()).addToBackStack(null).commit();
     }
-
 }

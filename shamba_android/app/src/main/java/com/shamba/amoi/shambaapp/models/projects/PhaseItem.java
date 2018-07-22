@@ -1,6 +1,9 @@
 package com.shamba.amoi.shambaapp.models.projects;
 
+import java.util.List;
+
 public class PhaseItem {
+    public static List<PhaseItem> staticPhaseItems;
     private int id;
     private String phase_name;
     private String phase_details;

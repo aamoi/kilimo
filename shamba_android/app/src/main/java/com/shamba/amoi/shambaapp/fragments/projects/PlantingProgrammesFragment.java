@@ -183,6 +183,13 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                     JSONObject jsonObject = jArray.getJSONObject(i);
 
+                    int id=jsonObject.getInt("id");
+                    planting.setId(id);
+
+                    int product_id=jsonObject.getInt("product_id");
+                    planting.setProduct_id(product_id);
+
+
                     String planned_preparation_date=jsonObject.getString("planned_preparation_date").substring(0,10);
                     planting.setPlanned_preparation_date(planned_preparation_date);
 
@@ -211,8 +218,7 @@ public class PlantingProgrammesFragment extends BaseFragment {
                     planting.setSeed_quantity(seed_quantity);
 
                     int location_block_id=jsonObject.getInt("location_block_id");
-//                    int location_id=jsonObject.getInt("location_id");
-//                    int product_id=jsonObject.getInt("product_id");
+                    planting.setLocation_block_id(location_block_id);
 
                     String planting_name=jsonObject.getString("planting_name");
                     planting.setPlanting_name(planting_name);
@@ -245,6 +251,8 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                     double actual_revenue=jsonObject.getDouble("actual_revenue");
                     planting.setActual_revenue(actual_revenue);
+
+
 
 //                    PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
 //                    plantingProgramItem.setPlan_id(String.valueOf(jsonObject.get("id")));

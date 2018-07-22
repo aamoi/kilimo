@@ -1,14 +1,18 @@
 package com.shamba.amoi.shambaapp.models.projects;
+
+import java.util.List;
+
 /**
  * Created by amoi on 09/02/2018.
  */
     public class LocationBlockItem {
+        public static List<LocationBlockItem> staticLocationBlockList;
         private int id;
         private int location_id;
         private int block_id;
         private String details;
         private String location_block_name;
-        private int acreage;
+        private double acreage;
 
         public int getId() {
             return id;
@@ -50,11 +54,11 @@ package com.shamba.amoi.shambaapp.models.projects;
             this.location_block_name = location_block_name;
         }
 
-        public int getAcreage() {
+        public double getAcreage() {
             return acreage;
         }
 
-        public void setAcreage(int acreage) {
+        public void setAcreage(double acreage) {
             this.acreage = acreage;
         }
     }

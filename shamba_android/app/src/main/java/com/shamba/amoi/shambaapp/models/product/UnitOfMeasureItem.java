@@ -1,6 +1,9 @@
 package com.shamba.amoi.shambaapp.models.product;
 
+import java.util.List;
+
 public class UnitOfMeasureItem {
+    public static List<UnitOfMeasureItem> staticUnitOfMeasureItemList;
     private int id;
     private String uom_name;
     private String details;

@@ -8,7 +8,7 @@ package com.shamba.amoi.shambaapp.models.projects;
         private int block_id;
         private String details;
         private String location_block_name;
-        private int acreage;
+        private double acreage;
 
         public int getId() {
             return id;
@@ -50,11 +50,11 @@ package com.shamba.amoi.shambaapp.models.projects;
             this.location_block_name = location_block_name;
         }
 
-        public int getAcreage() {
+        public double getAcreage() {
             return acreage;
         }
 
-        public void setAcreage(int acreage) {
+        public void setAcreage(double acreage) {
             this.acreage = acreage;
         }
     }

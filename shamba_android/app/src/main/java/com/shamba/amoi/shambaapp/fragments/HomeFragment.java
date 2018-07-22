@@ -2,22 +2,40 @@ package com.shamba.amoi.shambaapp.fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
+import com.shamba.amoi.shambaapp.db.DBAdaptor;
+import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFragment;
 import com.shamba.amoi.shambaapp.fragments.inventory.ProductsFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
+import com.shamba.amoi.shambaapp.models.product.UnitOfMeasureItem;
+import com.shamba.amoi.shambaapp.models.projects.LocationBlockItem;
+import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +81,15 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            new GetSetUpData().execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -157,4 +184,228 @@ public class HomeFragment extends BaseFragment {
 //        // TODO: Update argument type and name
 //        void onFragmentInteraction(Uri uri);
 //    }
+
+
+    private void loadSetUpData(){
+
+    }
+    /**
+     * Get setup data from server and save in the android local db.
+     */
+    class GetSetUpData extends AsyncTask<Void, Void, Integer> {
+
+        public GetSetUpData() {
+        }
+
+        @Override
+        public void onPreExecute() {
+            ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
+
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            getAllProductsFromServer();
+            getAllPhasesFromServer();
+            getAllLocationBlockFromServer();
+            getAllUnitOfMeasureFromServer();
+
+            return 1;
+        }
+
+        /**
+         * Pools all products from server application!
+         * @return
+         */
+        private List<ProductItem> getAllProductsFromServer(){
+
+            List<ProductItem> productItemList=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"product/","");
+
+                Log.d("# of products pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    ProductItem productItem=new ProductItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+                    int id=jsonObject.getInt("id");
+                    productItem.setId(id);
+                    String product_name=jsonObject.getString("product_name");
+                    productItem.setProduct_name(product_name);
+                    int category_id=jsonObject.getInt("category_id");
+                    productItem.setCategory_id(category_id);
+                    int uom_id=jsonObject.getInt("uom_id");
+                    productItem.setUom_id(uom_id);
+                    boolean is_asset= jsonObject.getBoolean("_asset");
+                    productItem.setIs_asset(is_asset);
+                    boolean is_fuel= jsonObject.getBoolean("_fuel");
+                    productItem.setIs_fuel(is_fuel);
+                    productItemList.add(productItem);
+                    }
+
+                ProductItem.staticProductItemList=productItemList;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return productItemList;
+        }
+        /**
+         * Pools all projects phases from server application!
+         * @return
+         */
+        private List<PhaseItem> getAllPhasesFromServer(){
+
+            List<PhaseItem> phaseItemList=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"phase/","");
+
+                Log.d("# of phases pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    PhaseItem phaseItem=new PhaseItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+                    int id=jsonObject.getInt("id");
+                    phaseItem.setId(id);
+
+                    String phase_name=jsonObject.getString("phase_name");
+                    phaseItem.setPhase_name(phase_name);
+
+                    String phase_details=jsonObject.getString("phase_details");
+                    phaseItem.setPhase_details(phase_details);
+
+                    boolean is_planting_phase=jsonObject.getBoolean("_planting_phase");
+                    phaseItem.setIs_planting_phase(is_planting_phase);
+
+                    boolean is_poultry_phase=jsonObject.getBoolean("_poultry_phase");
+                    phaseItem.setIs_poultry_phase(is_poultry_phase);
+
+                    boolean is_fishing_phase=jsonObject.getBoolean("_fishing_phase");
+                    phaseItem.setIs_fishing_phase(is_fishing_phase);
+
+                    boolean is_dairy_phase=jsonObject.getBoolean("_dairy_phase");
+                    phaseItem.setIs_dairy_phase(is_dairy_phase);
+
+                    phaseItemList.add(phaseItem);
+                }
+
+                PhaseItem.staticPhaseItems=phaseItemList;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return phaseItemList;
+        }
+
+        /**
+         * Pools all location blocks phases from server application!
+         * @return
+         */
+        private List<LocationBlockItem> getAllLocationBlockFromServer(){
+
+            List<LocationBlockItem> locationBlockItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"locationBlock/","");
+
+                Log.d("location blocks pooled-", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+
+                    LocationBlockItem locationItem=new LocationBlockItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    locationItem.setId(id);
+
+                    int location_id=jsonObject.getInt("location_id");
+                    locationItem.setLocation_id(location_id);
+
+                    int block_id=jsonObject.getInt("block_id");
+                    locationItem.setBlock_id(block_id);
+
+                    String details=jsonObject.getString("details");
+                    locationItem.setDetails(details);
+
+                    String location_block_name=jsonObject.getString("location_block_name");
+                    locationItem.setLocation_block_name(location_block_name);
+
+                    double acreage=jsonObject.getDouble("acreage");
+                    locationItem.setAcreage(acreage);
+
+                    locationBlockItems.add(locationItem);
+                }
+                LocationBlockItem.staticLocationBlockList=locationBlockItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return locationBlockItems;
+        }
+
+        /**
+         * Pools all unitOfMeasure from server application!
+         * @return
+         */
+        private List<UnitOfMeasureItem> getAllUnitOfMeasureFromServer(){
+
+            List<UnitOfMeasureItem> unitOfMeasureItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"unitOfMeasure/","");
+
+                Log.d("UnitOfMeasures pooled-", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    UnitOfMeasureItem unitOfMeasureItem=new UnitOfMeasureItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    unitOfMeasureItem.setId(id);
+
+                    String uom_name=jsonObject.getString("uom_name");
+                    unitOfMeasureItem.setUom_name(uom_name);
+
+                    String details=jsonObject.getString("details");
+                    unitOfMeasureItem.setDetails(details);
+
+                    String symbol=jsonObject.getString("symbol");
+                    unitOfMeasureItem.setSymbol(symbol);
+
+                    unitOfMeasureItems.add(unitOfMeasureItem);
+                }
+                UnitOfMeasureItem.staticUnitOfMeasureItemList=unitOfMeasureItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return unitOfMeasureItems;
+        }
+
+        @Override
+        public void onPostExecute(Integer i) {
+        }
+    }
 }

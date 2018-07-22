@@ -56,8 +56,8 @@ public class DatePickerUtility  {
 
     private void updateLabel() {
 //        String myFormat = "MM/dd/yy";
-        String myFormat = "dd/MM/yyyy";
-
+//        String myFormat = "dd/MM/yyyy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editText.setText(sdf.format(myCalendar.getTime()));
     }
