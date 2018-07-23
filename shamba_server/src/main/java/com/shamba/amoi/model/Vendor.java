@@ -25,10 +25,79 @@ public class Vendor {
     private String email;
     private String directions;
 
-    public Vendor() {  }
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
-    public Vendor(String vendor_name,String vendor_phone,String county,String town,String map,
-                  String email,String directions) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getVendor_name() {
+        return vendor_name;
+    }
+
+    public void setVendor_name(String vendor_name) {
+        this.vendor_name = vendor_name;
+    }
+
+    public String getVendor_phone() {
+        return vendor_phone;
+    }
+
+    public void setVendor_phone(String vendor_phone) {
+        this.vendor_phone = vendor_phone;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDirections() {
+        return directions;
+    }
+
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+
+    public Vendor() {
+    }
+
+    public Vendor(String vendor_name, String vendor_phone, String county, String town, String map,
+                  String email, String directions) {
         this.vendor_name = vendor_name;
         this.vendor_phone = vendor_phone;
         this.county = county;
@@ -47,8 +116,8 @@ public class Vendor {
                 ", county='" + county + '\'' +
                 ", town='" + town + '\'' +
                 ", map='" + map + '\'' +
-                ", email='" + email  + '\'' +
-                ", directions='" + directions  + '\'' +
+                ", email='" + email + '\'' +
+                ", directions='" + directions + '\'' +
                 '}';
     }
 }
