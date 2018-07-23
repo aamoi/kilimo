@@ -1,0 +1,1082 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.18
+-- Dumped by pg_dump version 9.4.18
+-- Started on 2018-07-23 08:48:44 EAT
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+DROP DATABASE shambadb;
+--
+-- TOC entry 2463 (class 1262 OID 24576)
+-- Name: shambadb; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE shambadb WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'C' LC_CTYPE = 'C';
+
+
+ALTER DATABASE shambadb OWNER TO postgres;
+
+\connect shambadb
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 12123)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2466 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 173 (class 1259 OID 24577)
+-- Name: asset; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.asset (
+    id integer NOT NULL,
+    name character varying,
+    vendor character varying,
+    uom_id integer,
+    capacity double precision,
+    purchase_price double precision,
+    asset_details character varying,
+    service_frequency_in_month integer,
+    service_description character varying,
+    fuel_type character varying,
+    purchase_date date,
+    total_hours_worked double precision DEFAULT 0,
+    hours_to_next_service double precision,
+    is_serviceable boolean,
+    last_service_date date,
+    next_service_date date,
+    is_serviced_upto_date boolean,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.asset OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 24586)
+-- Name: block; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.block (
+    id integer NOT NULL,
+    block_name character varying,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.block OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 24594)
+-- Name: resource; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.resource (
+    id bigint NOT NULL,
+    resource_name character varying(100) NOT NULL,
+    phone character varying(100) NOT NULL,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    comments character varying,
+    joining_date date,
+    skillset character varying,
+    resource_type_id integer,
+    contract_type_id integer,
+    pay_rate_id integer
+);
+
+
+ALTER TABLE public.resource OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 24602)
+-- Name: customer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.customer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.customer_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2467 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.customer_id_seq OWNED BY public.resource.id;
+
+
+--
+-- TOC entry 177 (class 1259 OID 24604)
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hibernate_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hibernate_sequence OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 24606)
+-- Name: location; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.location (
+    id integer NOT NULL,
+    location_name character varying,
+    location_details character varying,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    "County" character varying
+);
+
+
+ALTER TABLE public.location OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 24614)
+-- Name: location_block; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.location_block (
+    id integer NOT NULL,
+    location_id integer,
+    block_id integer,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    details character varying,
+    location_block_name character varying NOT NULL,
+    acreage double precision
+);
+
+
+ALTER TABLE public.location_block OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 24808)
+-- Name: manufacturer; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.manufacturer (
+    id integer,
+    manufacturer_name character varying,
+    phone character varying,
+    email character varying,
+    map character varying,
+    directions character varying,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    details character varying
+);
+
+
+ALTER TABLE public.manufacturer OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 24622)
+-- Name: payment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.payment (
+    id integer NOT NULL,
+    date timestamp with time zone NOT NULL,
+    resource_id integer NOT NULL,
+    amount double precision NOT NULL,
+    date_created timestamp with time zone DEFAULT now() NOT NULL,
+    date_updated timestamp with time zone DEFAULT now() NOT NULL,
+    project_id integer NOT NULL,
+    details character varying,
+    payment_name character varying
+);
+
+
+ALTER TABLE public.payment OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 24630)
+-- Name: phase; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.phase (
+    id integer NOT NULL,
+    phase_name character varying,
+    phase_details character varying,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    is_planting_phase boolean DEFAULT true,
+    is_poultry_phase boolean DEFAULT false,
+    is_fishing_phase boolean DEFAULT false,
+    is_dairy_phase boolean DEFAULT false
+);
+
+
+ALTER TABLE public.phase OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 24642)
+-- Name: planting; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.planting (
+    id bigint NOT NULL,
+    estimated_cost double precision,
+    planned_harvest_date date,
+    planned_preparation_date date,
+    estimated_revenue double precision,
+    seed_quantity double precision,
+    planned_seedbed_date date,
+    planned_sales_date date,
+    planned_transplant_date date,
+    block_id integer,
+    location_id integer,
+    product_id integer,
+    planting_name character varying(255) NOT NULL,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    planting_details character varying,
+    actual_cost double precision,
+    actual_revenue double precision,
+    estimated_sales_quantity double precision,
+    actual_sales_quantity double precision,
+    actual_harvest_date date,
+    actual_preparation_date date,
+    actual_seedbed_date date,
+    actual_transplant_date date,
+    actual_sales_date date,
+    location_block_id integer
+);
+
+
+ALTER TABLE public.planting OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 24650)
+-- Name: pre_order; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.pre_order (
+    id integer NOT NULL,
+    pre_order_name character varying NOT NULL,
+    product_id integer,
+    quantity double precision NOT NULL,
+    details character varying,
+    date_created timestamp with time zone,
+    date_updated timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.pre_order OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 24657)
+-- Name: product; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.product (
+    id bigint NOT NULL,
+    product_name character varying NOT NULL,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    is_asset boolean,
+    category_id integer NOT NULL,
+    uom_id integer NOT NULL,
+    is_fuel boolean,
+    details character varying,
+    sales_uom_id integer,
+    internet_information character varying
+);
+
+
+ALTER TABLE public.product OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 24665)
+-- Name: product_category; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.product_category (
+    id integer NOT NULL,
+    category_name character varying NOT NULL,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    details character varying
+);
+
+
+ALTER TABLE public.product_category OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 24673)
+-- Name: product_stock; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.product_stock (
+    id integer NOT NULL,
+    product_id integer,
+    vendor_name character varying,
+    vendor_phone character varying,
+    vendor_location character varying,
+    manufacturer character varying,
+    purchase_quantity double precision,
+    purchase_price double precision,
+    purchase_details character varying,
+    purchase_date date,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    location_id integer,
+    location_balance double precision,
+    mpesa_txn_number character varying
+);
+
+
+ALTER TABLE public.product_stock OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 24681)
+-- Name: stock_utilization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.stock_utilization (
+    id integer NOT NULL,
+    stock_id integer,
+    project_id integer,
+    phase_id integer,
+    task_id integer,
+    utilized_quantity integer,
+    utilized_date date,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    details character varying
+);
+
+
+ALTER TABLE public.stock_utilization OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 24689)
+-- Name: task; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.task (
+    id integer NOT NULL,
+    project_id integer NOT NULL,
+    task_name character varying,
+    planned_start_date date,
+    planned_end_date date,
+    planned_days double precision,
+    phase_id integer,
+    planned_persons integer,
+    estimated_cost double precision,
+    estimated_revenue double precision,
+    actual_start_date date,
+    actual_end_date date,
+    actual_days double precision,
+    actual_persons double precision,
+    actual_cost double precision,
+    actual_revenue double precision,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.task OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 24697)
+-- Name: unit_of_measure; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.unit_of_measure (
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    id integer NOT NULL,
+    uom_name character varying NOT NULL,
+    details character varying,
+    symbol character varying
+);
+
+
+ALTER TABLE public.unit_of_measure OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 24705)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    age integer NOT NULL,
+    email character varying(255),
+    name character varying(255)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 191 (class 1259 OID 24711)
+-- Name: users_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_sequence OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 24713)
+-- Name: vendor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE public.vendor (
+    id integer NOT NULL,
+    vendor_name character varying,
+    vendor_phone character varying,
+    county character varying,
+    town character varying,
+    date_created timestamp with time zone DEFAULT now(),
+    date_updated timestamp with time zone DEFAULT now(),
+    map character varying,
+    email character varying,
+    directions character varying
+);
+
+
+ALTER TABLE public.vendor OWNER TO postgres;
+
+--
+-- TOC entry 2244 (class 2604 OID 24801)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.resource ALTER COLUMN id SET DEFAULT nextval('public.customer_id_seq'::regclass);
+
+
+--
+-- TOC entry 2437 (class 0 OID 24577)
+-- Dependencies: 173
+-- Data for Name: asset; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.asset (id, name, vendor, uom_id, capacity, purchase_price, asset_details, service_frequency_in_month, service_description, fuel_type, purchase_date, total_hours_worked, hours_to_next_service, is_serviceable, last_service_date, next_service_date, is_serviced_upto_date, date_created, date_updated) VALUES (22, 'Water pump', 'Davis & ShitLiff', 1, 809.700000000000045, 33500, '70m head, 800m length,2in', 2, 'Change oil, plugs and oil filter', 'Petrol', '2018-01-01', 890, 75, true, '2018-01-01', '2018-01-01', true, '2018-07-10 20:12:43.012281+03', '2018-07-10 20:12:43.012281+03');
+
+
+--
+-- TOC entry 2438 (class 0 OID 24586)
+-- Dependencies: 174
+-- Data for Name: block; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.block (id, block_name, date_created, date_updated) VALUES (1, 'A', '2018-07-12 18:34:56.390751+03', '2018-07-12 18:34:56.390751+03');
+INSERT INTO public.block (id, block_name, date_created, date_updated) VALUES (2, 'B', '2018-07-12 18:34:56.390751+03', '2018-07-12 18:34:56.390751+03');
+INSERT INTO public.block (id, block_name, date_created, date_updated) VALUES (3, 'C', '2018-07-12 18:34:56.390751+03', '2018-07-12 18:34:56.390751+03');
+INSERT INTO public.block (id, block_name, date_created, date_updated) VALUES (4, 'D', '2018-07-12 18:34:56.390751+03', '2018-07-12 18:34:56.390751+03');
+
+
+--
+-- TOC entry 2468 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.customer_id_seq', 1, false);
+
+
+--
+-- TOC entry 2469 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hibernate_sequence', 108, true);
+
+
+--
+-- TOC entry 2442 (class 0 OID 24606)
+-- Dependencies: 178
+-- Data for Name: location; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.location (id, location_name, location_details, date_created, date_updated, "County") VALUES (1, 'Kangemi', NULL, '2018-07-12 19:16:31.230037+03', '2018-07-12 19:16:31.230037+03', 'Machakos');
+INSERT INTO public.location (id, location_name, location_details, date_created, date_updated, "County") VALUES (3, 'Bungoma', NULL, '2018-07-12 19:16:31.230037+03', '2018-07-12 19:16:31.230037+03', 'Bungoma');
+INSERT INTO public.location (id, location_name, location_details, date_created, date_updated, "County") VALUES (4, 'Malava', NULL, '2018-07-12 19:16:31.230037+03', '2018-07-12 19:16:31.230037+03', 'Kakamega');
+INSERT INTO public.location (id, location_name, location_details, date_created, date_updated, "County") VALUES (2, 'KwaGeorge', NULL, '2018-07-12 19:16:31.230037+03', '2018-07-12 19:16:31.230037+03', 'Machakos');
+
+
+--
+-- TOC entry 2443 (class 0 OID 24614)
+-- Dependencies: 179
+-- Data for Name: location_block; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.location_block (id, location_id, block_id, date_created, date_updated, details, location_block_name, acreage) VALUES (1, 2, 1, '2018-07-19 11:19:36.637707+03', '2018-07-19 11:19:36.637707+03', '', 'KwaGeorge-blkA', 1);
+INSERT INTO public.location_block (id, location_id, block_id, date_created, date_updated, details, location_block_name, acreage) VALUES (3, 2, 1, '2018-07-19 11:19:36.637707+03', '2018-07-19 11:19:36.637707+03', '', 'KwaGeorge-blkC', 0.5);
+INSERT INTO public.location_block (id, location_id, block_id, date_created, date_updated, details, location_block_name, acreage) VALUES (4, 2, 1, '2018-07-19 11:19:36.637707+03', '2018-07-19 11:19:36.637707+03', '', 'KwaGeorge-blkC', 0.75);
+INSERT INTO public.location_block (id, location_id, block_id, date_created, date_updated, details, location_block_name, acreage) VALUES (2, 2, 1, '2018-07-19 11:19:36.637707+03', '2018-07-19 11:19:36.637707+03', '', 'KwaGeorge-blkB', 1.5);
+
+
+--
+-- TOC entry 2457 (class 0 OID 24808)
+-- Dependencies: 193
+-- Data for Name: manufacturer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2444 (class 0 OID 24622)
+-- Dependencies: 180
+-- Data for Name: payment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2445 (class 0 OID 24630)
+-- Dependencies: 181
+-- Data for Name: phase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (1, 'Preparation', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, true, true, true);
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (2, 'Seedbed', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, false, false, false);
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (4, 'Management', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, true, true, true);
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (6, 'Sales', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, true, true, true);
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (3, 'Transplanting', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, false, false, false);
+INSERT INTO public.phase (id, phase_name, phase_details, date_created, date_updated, is_planting_phase, is_poultry_phase, is_fishing_phase, is_dairy_phase) VALUES (5, 'Harvesting', '', '2018-07-19 23:48:00.964109+03', '2018-07-19 23:48:00.964109+03', true, true, true, true);
+
+
+--
+-- TOC entry 2446 (class 0 OID 24642)
+-- Dependencies: 182
+-- Data for Name: planting; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.planting (id, estimated_cost, planned_harvest_date, planned_preparation_date, estimated_revenue, seed_quantity, planned_seedbed_date, planned_sales_date, planned_transplant_date, block_id, location_id, product_id, planting_name, date_created, date_updated, planting_details, actual_cost, actual_revenue, estimated_sales_quantity, actual_sales_quantity, actual_harvest_date, actual_preparation_date, actual_seedbed_date, actual_transplant_date, actual_sales_date, location_block_id) VALUES (92, 8900, '2018-07-21', '2018-07-21', 760, 790, '2018-07-21', '2018-07-21', '2018-07-21', NULL, NULL, 8, 'KwaGeorge-blockC:Mishiri, Samantha:201807', '2018-07-22 09:02:01.383362+03', '2018-07-22 09:02:01.383362+03', NULL, 0, 0, 0, 0, '0027-01-08', NULL, NULL, NULL, NULL, 3);
+
+
+--
+-- TOC entry 2447 (class 0 OID 24650)
+-- Dependencies: 183
+-- Data for Name: pre_order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2448 (class 0 OID 24657)
+-- Dependencies: 184
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (1, 'Maize', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (2, 'Yellow, Beans', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (3, 'Roscoco, Beans', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (4, 'Roscoco, Others', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (5, 'Mishiri, Serengeti', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (6, 'Mishiri, Vanilla', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (7, 'Mishiri, Star', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (8, 'Mishiri, Samantha', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (9, 'Mishiri, Teresa', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (10, 'Mishiri, Others', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (11, 'Onion, Fortune', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (12, 'Onion, Red Pinoi', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (13, 'Onion, Njamba', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (14, 'Onion, RedQueen', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (15, 'Onion, Neptune', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (16, 'Onion, RedCreole', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (17, 'Onion, RedPombei', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (18, 'Onion, Others', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (19, 'Cabbage, Baraka', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (20, 'Cabbage, Gloria', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (21, 'Cabbage', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (22, 'Spinach', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (23, 'Managu', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (24, 'Sukuma', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (25, 'Saga', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (26, 'Mito', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (27, 'Malenge', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (28, 'Mrende', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (29, 'Hoho, CalifoniaWonders', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (30, 'Hoho', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (31, 'Dhania', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (32, 'Nyanya, Bawito', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (33, 'Nyanya, Milele', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (34, 'Nyanya, Rio Grande', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (35, 'Nyanya, Commando', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (36, 'Nyanya', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (37, 'Cucumber, Others', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (38, 'Courgette, Others', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (39, 'Minji, SimLaw', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (40, 'Minji, EA', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (41, 'Minji', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (42, 'Chilly, BadEye', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (43, 'WaterMelon', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (44, 'Butter Nuts', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (45, 'Egg Plant', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 1, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (46, 'Pilipili, BadEye', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (47, 'Pilipili', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 1, 2, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (81, 'Barbed Wire', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 8, 6, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (82, 'Mesh Wire', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 8, 6, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (83, 'Diesel Water Pump', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 5, 10, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (84, 'Petrol Water Pump', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 5, 10, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (85, 'Spray pump', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 13, 4, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (86, 'Horse Pipe', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 7, 6, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (87, 'Delivery Pipe', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 6, 6, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (101, 'Petrol', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 14, 4, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (102, 'Diesel', '2018-07-13 21:22:12.151419+03', '2018-07-13 21:22:12.151419+03', false, 14, 4, false, '', NULL, NULL);
+INSERT INTO public.product (id, product_name, date_created, date_updated, is_asset, category_id, uom_id, is_fuel, details, sales_uom_id, internet_information) VALUES (56, 'Chilly Bullets', '2018-07-15 12:35:06.374078+03', '2018-07-15 12:35:06.374078+03', true, 1, 1, false, NULL, NULL, NULL);
+
+
+--
+-- TOC entry 2449 (class 0 OID 24665)
+-- Dependencies: 185
+-- Data for Name: product_category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (1, 'Crop', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (2, 'Animal', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (3, 'Animal Product', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (4, 'Crop Product', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (5, 'Water Pump', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (6, 'Delivery Pipe', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (7, 'Horse Pipe', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (8, 'Wire', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (9, 'Pesticide', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (10, 'Fungicide', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (11, 'Fertilizer', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (12, 'Foliar', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (13, 'Spray Pump', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (14, 'Fuel', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (15, 'Engine Oil', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (16, 'Engine plug', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (17, 'Water jet', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (18, 'Cement', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+INSERT INTO public.product_category (id, category_name, date_created, date_updated, details) VALUES (19, 'Others', '2018-07-13 21:01:39.515192+03', '2018-07-13 21:01:39.515192+03', NULL);
+
+
+--
+-- TOC entry 2450 (class 0 OID 24673)
+-- Dependencies: 186
+-- Data for Name: product_stock; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.product_stock (id, product_id, vendor_name, vendor_phone, vendor_location, manufacturer, purchase_quantity, purchase_price, purchase_details, purchase_date, date_created, date_updated, location_id, location_balance, mpesa_txn_number) VALUES (36, 1, 'Cherry farmer, Makongeni', '0728067003', 'Nairobi, Industrial Area', 'Twiga Chemicals', 100, 450, 'Pest controls: Thrips,Aphids,Bean Flies. Applied to: Beans, Onions,WaterMelon', '2018-04-01', NULL, NULL, 0, 4500, NULL);
+INSERT INTO public.product_stock (id, product_id, vendor_name, vendor_phone, vendor_location, manufacturer, purchase_quantity, purchase_price, purchase_details, purchase_date, date_created, date_updated, location_id, location_balance, mpesa_txn_number) VALUES (37, 1, 'Cherry farmer, Makongeni', '0728067003', 'Nairobi, Industrial Area', 'Twiga Chemicals', 100, 450, 'Pest controls: Thrips,Aphids,Bean Flies. Applied to: Beans, Onions,WaterMelon', '2018-04-01', NULL, NULL, NULL, 4500, NULL);
+
+
+--
+-- TOC entry 2439 (class 0 OID 24594)
+-- Dependencies: 175
+-- Data for Name: resource; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.resource (id, resource_name, phone, date_created, date_updated, comments, joining_date, skillset, resource_type_id, contract_type_id, pay_rate_id) VALUES (48, 'Alex Amoi', '0728067003', NULL, NULL, 'Experienced', '2018-01-01', 'Weeding, planting', 8, 9, 6);
+INSERT INTO public.resource (id, resource_name, phone, date_created, date_updated, comments, joining_date, skillset, resource_type_id, contract_type_id, pay_rate_id) VALUES (49, 'Alex Amoi', '0728067003', NULL, NULL, 'Experienced', '2018-01-01', 'Weeding, planting', 8, 9, 6);
+
+
+--
+-- TOC entry 2451 (class 0 OID 24681)
+-- Dependencies: 187
+-- Data for Name: stock_utilization; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.stock_utilization (id, stock_id, project_id, phase_id, task_id, utilized_quantity, utilized_date, date_created, date_updated, details) VALUES (38, 1, 1, 1, 1, 57, '2019-03-20', NULL, NULL, 'To prevent pests.');
+INSERT INTO public.stock_utilization (id, stock_id, project_id, phase_id, task_id, utilized_quantity, utilized_date, date_created, date_updated, details) VALUES (50, 1, 1, 1, 1, 57, '2019-03-20', NULL, NULL, 'To prevent pests.');
+
+
+--
+-- TOC entry 2452 (class 0 OID 24689)
+-- Dependencies: 188
+-- Data for Name: task; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.task (id, project_id, task_name, planned_start_date, planned_end_date, planned_days, phase_id, planned_persons, estimated_cost, estimated_revenue, actual_start_date, actual_end_date, actual_days, actual_persons, actual_cost, actual_revenue, date_created, date_updated) VALUES (52, 1, 'First plough', '2012-12-12', '2012-12-14', 2, 7, 3, 6000, 20000, '2012-12-12', '2012-12-14', 2, 3, 6000, 20000, '2018-07-12 22:44:34.391186+03', '2018-07-12 22:44:34.391186+03');
+INSERT INTO public.task (id, project_id, task_name, planned_start_date, planned_end_date, planned_days, phase_id, planned_persons, estimated_cost, estimated_revenue, actual_start_date, actual_end_date, actual_days, actual_persons, actual_cost, actual_revenue, date_created, date_updated) VALUES (105, 92, 'Plough9 1', '2018-07-23', '2018-07-23', 9, 1, 8, 700, 8788, NULL, NULL, 0, 0, 0, 0, '2018-07-23 00:12:16.596825+03', '2018-07-23 00:12:16.596825+03');
+INSERT INTO public.task (id, project_id, task_name, planned_start_date, planned_end_date, planned_days, phase_id, planned_persons, estimated_cost, estimated_revenue, actual_start_date, actual_end_date, actual_days, actual_persons, actual_cost, actual_revenue, date_created, date_updated) VALUES (106, 92, 'Plough2', '2018-07-23', '2018-07-23', 6, 1, 5, 555, 555, NULL, NULL, 0, 0, 0, 0, '2018-07-23 00:13:22.714786+03', '2018-07-23 00:13:22.714786+03');
+INSERT INTO public.task (id, project_id, task_name, planned_start_date, planned_end_date, planned_days, phase_id, planned_persons, estimated_cost, estimated_revenue, actual_start_date, actual_end_date, actual_days, actual_persons, actual_cost, actual_revenue, date_created, date_updated) VALUES (108, 92, 'Plough 3', '2018-07-23', '2018-07-23', 99, 1, 88, 99, 99, NULL, NULL, 0, 0, 0, 0, '2018-07-23 00:20:43.045726+03', '2018-07-23 00:20:43.045726+03');
+
+
+--
+-- TOC entry 2453 (class 0 OID 24697)
+-- Dependencies: 189
+-- Data for Name: unit_of_measure; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 1, 'KiloGrams', NULL, 'kg');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 2, 'Grams', NULL, 'g');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 3, 'Pieces', NULL, 'PCS');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 4, 'Litres', NULL, 'ltr');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 5, 'Mililiter', NULL, 'ml');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 6, 'Meter', NULL, 'm');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 7, 'Inch', NULL, 'in');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 8, 'Foot', NULL, 'ft');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 9, 'Kilometer', NULL, 'km');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 10, 'Horsepower', NULL, 'hp');
+INSERT INTO public.unit_of_measure (date_created, date_updated, id, uom_name, details, symbol) VALUES ('2018-07-12 20:20:05.629783+03', '2018-07-12 20:20:05.629783+03', 11, 'Cubic Centimeters', 'Vehicle engine capacity', 'cc');
+
+
+--
+-- TOC entry 2454 (class 0 OID 24705)
+-- Dependencies: 190
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users (id, age, email, name) VALUES (1, 24, 'alex.amoi@m.com', 'Alex');
+
+
+--
+-- TOC entry 2470 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: users_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_sequence', 1, false);
+
+
+--
+-- TOC entry 2456 (class 0 OID 24713)
+-- Dependencies: 192
+-- Data for Name: vendor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2277 (class 2606 OID 24723)
+-- Name: asset_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.asset
+    ADD CONSTRAINT asset_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 2279 (class 2606 OID 24725)
+-- Name: asset_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.asset
+    ADD CONSTRAINT asset_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2281 (class 2606 OID 24727)
+-- Name: block_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.block
+    ADD CONSTRAINT block_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2283 (class 2606 OID 24729)
+-- Name: customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.resource
+    ADD CONSTRAINT customer_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2287 (class 2606 OID 24731)
+-- Name: location_block_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.location_block
+    ADD CONSTRAINT location_block_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2285 (class 2606 OID 24733)
+-- Name: location_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.location
+    ADD CONSTRAINT location_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2289 (class 2606 OID 24735)
+-- Name: phase_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.phase
+    ADD CONSTRAINT phase_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2291 (class 2606 OID 24737)
+-- Name: planting_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2293 (class 2606 OID 24739)
+-- Name: planting_planting_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_planting_name_key UNIQUE (planting_name);
+
+
+--
+-- TOC entry 2299 (class 2606 OID 24741)
+-- Name: product_category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.product_category
+    ADD CONSTRAINT product_category_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2295 (class 2606 OID 24743)
+-- Name: product_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2297 (class 2606 OID 24745)
+-- Name: product_product_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_product_name_key UNIQUE (product_name);
+
+
+--
+-- TOC entry 2301 (class 2606 OID 24747)
+-- Name: product_stock_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.product_stock
+    ADD CONSTRAINT product_stock_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2303 (class 2606 OID 24749)
+-- Name: stock_utilization_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.stock_utilization
+    ADD CONSTRAINT stock_utilization_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2305 (class 2606 OID 24751)
+-- Name: task_phase_id_project_id_task_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_phase_id_project_id_task_name_key UNIQUE (phase_id, project_id, task_name);
+
+
+--
+-- TOC entry 2307 (class 2606 OID 24753)
+-- Name: task_phase_id_project_id_task_name_key1; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_phase_id_project_id_task_name_key1 UNIQUE (phase_id, project_id, task_name);
+
+
+--
+-- TOC entry 2309 (class 2606 OID 24755)
+-- Name: task_phase_id_project_id_task_name_key2; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_phase_id_project_id_task_name_key2 UNIQUE (phase_id, project_id, task_name);
+
+
+--
+-- TOC entry 2311 (class 2606 OID 24757)
+-- Name: task_phase_id_project_id_task_name_key3; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_phase_id_project_id_task_name_key3 UNIQUE (phase_id, project_id, task_name);
+
+
+--
+-- TOC entry 2313 (class 2606 OID 24759)
+-- Name: task_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2315 (class 2606 OID 24761)
+-- Name: unit_of_measure_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.unit_of_measure
+    ADD CONSTRAINT unit_of_measure_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2317 (class 2606 OID 24763)
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2319 (class 2606 OID 24765)
+-- Name: vendor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY public.vendor
+    ADD CONSTRAINT vendor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2320 (class 2606 OID 24766)
+-- Name: location_block_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.location_block
+    ADD CONSTRAINT location_block_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.block(id);
+
+
+--
+-- TOC entry 2321 (class 2606 OID 24771)
+-- Name: location_block_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.location_block
+    ADD CONSTRAINT location_block_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id);
+
+
+--
+-- TOC entry 2322 (class 2606 OID 24776)
+-- Name: planting_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.block(id);
+
+
+--
+-- TOC entry 2325 (class 2606 OID 24803)
+-- Name: planting_location_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_location_block_id_fkey FOREIGN KEY (location_block_id) REFERENCES public.location_block(id);
+
+
+--
+-- TOC entry 2323 (class 2606 OID 24781)
+-- Name: planting_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id);
+
+
+--
+-- TOC entry 2324 (class 2606 OID 24786)
+-- Name: planting_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.planting
+    ADD CONSTRAINT planting_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.product(id);
+
+
+--
+-- TOC entry 2326 (class 2606 OID 24791)
+-- Name: product_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.product_category(id);
+
+
+--
+-- TOC entry 2327 (class 2606 OID 24796)
+-- Name: product_uom_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.product
+    ADD CONSTRAINT product_uom_id_fkey FOREIGN KEY (uom_id) REFERENCES public.unit_of_measure(id);
+
+
+--
+-- TOC entry 2465 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-07-23 08:48:44 EAT
+
+--
+-- PostgreSQL database dump complete
+--
+
