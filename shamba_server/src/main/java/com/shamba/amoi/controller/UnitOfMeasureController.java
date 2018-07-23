@@ -10,6 +10,7 @@ import com.shamba.amoi.model.Planting;
 import com.shamba.amoi.model.Product;
 import com.shamba.amoi.model.UnitOfMeasure;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,8 @@ public class UnitOfMeasureController {
 
     @GetMapping("/unitOfMeasure")
     public List<UnitOfMeasure> index() {
-        return unitOfMeasureRepository.findAll();
+        return unitOfMeasureRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/unitOfMeasure/{id}")

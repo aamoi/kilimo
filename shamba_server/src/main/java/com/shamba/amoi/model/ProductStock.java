@@ -18,15 +18,29 @@ public class ProductStock {
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private  int product_id;
-    private String vendor_name;
-    private String vendor_phone;
-    private String vendor_location;
-    private String manufacturer;
+    private int vendor_id;
+    private int manufacturer_id;
     private double purchase_quantity;
     private double purchase_price ;
     private String purchase_details;
     private Date purchase_date ;
     private double location_balance;
+
+    public int getManufacturer_id() {
+        return manufacturer_id;
+    }
+
+    public void setManufacturer_id(int manufacturer_id) {
+        this.manufacturer_id = manufacturer_id;
+    }
+
+    public int getVendor_id() {
+        return vendor_id;
+    }
+
+    public void setVendor_id(int vendor_id) {
+        this.vendor_id = vendor_id;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -46,38 +60,6 @@ public class ProductStock {
 
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
-    }
-
-    public String getVendor_name() {
-        return vendor_name;
-    }
-
-    public void setVendor_name(String vendor_name) {
-        this.vendor_name = vendor_name;
-    }
-
-    public String getVendor_phone() {
-        return vendor_phone;
-    }
-
-    public void setVendor_phone(String vendor_phone) {
-        this.vendor_phone = vendor_phone;
-    }
-
-    public String getVendor_location() {
-        return vendor_location;
-    }
-
-    public void setVendor_location(String vendor_location) {
-        this.vendor_location = vendor_location;
-    }
-
-    public String getManafacturer() {
-        return manufacturer;
-    }
-
-    public void setManafacturer(String manafacturer) {
-        this.manufacturer = manafacturer;
     }
 
     public double getPurchase_quantity() {
@@ -122,14 +104,11 @@ public class ProductStock {
 
     public ProductStock() {  }
 
-    public ProductStock(int product_id,String vendor_name,String vendor_phone,String vendor_location,
-                        String manafacturer,double purchase_quantity,double purchase_price,String purchase_details,
-                        Date purchase_date ,double location_balance) {
+    public ProductStock(int product_id,int vendor_id,int manufacturer_id,double purchase_quantity,double purchase_price,
+                        String purchase_details,Date purchase_date ,double location_balance) {
         this.product_id = product_id;
-        this.vendor_name = vendor_name;
-        this.vendor_phone = vendor_phone;
-        this.vendor_location = vendor_location;
-        this.manufacturer = manafacturer;
+        this.vendor_id = vendor_id;
+        this.manufacturer_id = manufacturer_id;
         this.purchase_quantity = purchase_quantity;
         this.purchase_price = purchase_price;
         this.purchase_details = purchase_details;
@@ -142,10 +121,8 @@ public class ProductStock {
         return "Productstock{" +
                 "id=" + id +
                 ", product_id='" + product_id + '\'' +
-                ", vendor_name='" + vendor_name + '\'' +
-                ", vendor_phone='" + vendor_phone + '\'' +
-                ", vendor_location='" + vendor_location + '\'' +
-                ", manafacturer='" + manufacturer + '\'' +
+                ", vendor_id='" + vendor_id + '\'' +
+                ", manufacturer_id='" + manufacturer_id + '\'' +
                 ", purchase_quantity='" + purchase_quantity + '\'' +
                 ", purchase_price='" + purchase_price + '\'' +
                 ", purchase_details='" + purchase_details  + '\''+

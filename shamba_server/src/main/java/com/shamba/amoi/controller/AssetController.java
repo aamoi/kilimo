@@ -8,6 +8,7 @@ import com.shamba.amoi.Repository.AssetRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.Asset;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -29,7 +30,7 @@ public class AssetController {
 
     @GetMapping("/asset")
     public List<Asset> index() {
-        return assetRepository.findAll();
+        return assetRepository.findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/asset/{id}")

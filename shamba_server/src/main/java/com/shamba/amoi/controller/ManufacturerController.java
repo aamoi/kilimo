@@ -9,6 +9,7 @@ import com.shamba.amoi.Repository.VendorRepository;
 import com.shamba.amoi.model.Manufacturer;
 import com.shamba.amoi.model.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,8 @@ public class ManufacturerController {
 
     @GetMapping("/manufacturer")
     public List<Manufacturer> index() {
-        return manufacturerRepository.findAll();
+        return manufacturerRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/manufacturer/{id}")

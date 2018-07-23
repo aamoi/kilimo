@@ -9,6 +9,7 @@ import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.ProductStock;
 import com.shamba.amoi.model.StockUtilization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,8 @@ public class StockUtilizationController {
 
     @GetMapping("/stockUtilization")
     public List<StockUtilization> index() {
-        return stockUtilization.findAll();
+        return stockUtilization.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/stockUtilization/{id}")

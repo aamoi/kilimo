@@ -29,8 +29,12 @@ public class PhaseController {
 
     @GetMapping("/phase")
     public List<Phase> index() {
-        return phaseRepository.findAll();
+        return phaseRepository.findAll(new Sort(Sort.Order.asc("id")) );
     }
+
+//    public List<Phase> index() {
+//    return phaseRepository.findAll( );
+//    }
 
     @GetMapping("/phase/{id}")
     public Phase show(@PathVariable String id) {

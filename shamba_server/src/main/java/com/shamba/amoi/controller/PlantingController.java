@@ -9,6 +9,7 @@ import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.Utils.JavaUtils;
 import com.shamba.amoi.model.Planting;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -30,7 +31,8 @@ public class PlantingController {
 
     @GetMapping("/planting")
     public List<Planting> index() {
-        return plantingRepository.findAll();
+        return plantingRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/planting/{id}")

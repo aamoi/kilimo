@@ -8,6 +8,7 @@ import com.shamba.amoi.Repository.ProductRepository;
 import com.shamba.amoi.model.Planting;
 import com.shamba.amoi.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,8 @@ public class ProductController {
 
     @GetMapping("/product")
     public List<Product> index() {
-        return productRepository.findAll();
+        return productRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/product/{id}")

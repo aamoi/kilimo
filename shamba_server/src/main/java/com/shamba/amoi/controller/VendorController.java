@@ -7,6 +7,7 @@ package com.shamba.amoi.controller;
 import com.shamba.amoi.Repository.VendorRepository;
 import com.shamba.amoi.model.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class VendorController {
 
     @GetMapping("/vendor")
     public List<Vendor> index() {
-        return vendorRepository.findAll();
+        return vendorRepository.findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/vendor/{id}")

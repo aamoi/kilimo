@@ -9,6 +9,7 @@ import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.Task;
 import com.sun.istack.internal.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -32,7 +33,8 @@ public class TaskController {
 
     @GetMapping("/task")
     public List<Task> index() {
-        return taskRepository.findAll();
+        return taskRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/task/{id}")

@@ -8,6 +8,7 @@ import com.shamba.amoi.Repository.ProductStockRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.ProductStock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -29,7 +30,8 @@ public class ProductStockController {
 
     @GetMapping("/productstock")
     public List<ProductStock> index() {
-        return productStockRepository.findAll();
+        return productStockRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/productstock/{id}")
@@ -48,18 +50,16 @@ public class ProductStockController {
     @PostMapping("/createProductStock")
     public ProductStock create(@RequestBody Map<String, String> body) {
         int product_id = Integer.parseInt(body.get("product_id"));
-        String vendor_name = body.get("vendor_name");
-        String vendor_phone = body.get("vendor_phone");
-        String vendor_location = body.get("vendor_location");
-        String manufacturer = body.get("manufacturer");
+        int vendor_id = Integer.parseInt(body.get("vendor_id"));
+        int manufacturer_id = Integer.parseInt(body.get("manufacturer_id"));
         double purchase_quantity = Double.parseDouble(body.get("purchase_quantity"));
         double purchase_price = Double.parseDouble(body.get("purchase_price"));
         String purchase_details = body.get("purchase_details");
         Date purchase_date = DateUtil.stringToDate((body.get("purchase_date")));
         double location_balance = Double.parseDouble(body.get("location_balance"));
 
-        return productStockRepository.save(new ProductStock(product_id,vendor_name,vendor_phone,vendor_location,manufacturer,
-         purchase_quantity,purchase_price ,purchase_details,purchase_date  ,location_balance));
+        return productStockRepository.save(new ProductStock(product_id,vendor_id,manufacturer_id,purchase_quantity,
+                purchase_price ,purchase_details,purchase_date  ,location_balance));
     }
 
     @PutMapping("/updateProductStock/{id}")

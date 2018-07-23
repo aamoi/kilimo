@@ -3,6 +3,7 @@ import com.shamba.amoi.Repository.ResourceRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -23,7 +24,8 @@ public class ResourceController {
 
     @GetMapping("/resource")
     public List<Resource> index() {
-        return resourceRepository.findAll();
+        return resourceRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/resource/{id}")
