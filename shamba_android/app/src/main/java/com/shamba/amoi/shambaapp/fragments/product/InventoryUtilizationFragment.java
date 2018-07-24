@@ -1,4 +1,4 @@
-package com.shamba.amoi.shambaapp.fragments.inventory;
+package com.shamba.amoi.shambaapp.fragments.product;
 
 import android.content.Context;
 import android.net.Uri;
@@ -94,10 +94,12 @@ public class InventoryUtilizationFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String stock_item="Utilize "+BaseFragment.productItem.getProduct_name()+"("+
-                BaseFragment.productStockItem.getStock_quantity()+
-                BaseFragment.productItem.getUnit_of_measure()+" on "+
-                BaseFragment.productStockItem.getStock_date().substring(0,5)+")";
+        String stock_item=null;
+
+//        String stock_item="Utilize "+BaseFragment.productItem.getProduct_name()+"("+
+//                BaseFragment.productStockItem.getStock_quantity()+
+//                BaseFragment.productItem.getUnit_of_measure()+" on "+
+//                BaseFragment.productStockItem.getStock_date().substring(0,5)+")";
 
         getActivity().setTitle(stock_item);
 

@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.adapters.power.PowerSourceStockListRecyclerViewAdapter;
-import com.shamba.amoi.shambaapp.fragments.inventory.RestockProductFragment;
 import com.shamba.amoi.shambaapp.models.power.PowerSourceItem;
 import com.shamba.amoi.shambaapp.models.power.PowerSourceStockItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;

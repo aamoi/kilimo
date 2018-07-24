@@ -19,12 +19,48 @@ public class ProductStock {
     private int id;
     private  int product_id;
     private int vendor_id;
+    private int distributor_id;
     private int manufacturer_id;
     private double purchase_quantity;
     private double purchase_price ;
     private String purchase_details;
     private Date purchase_date ;
+    private int location_id;
     private double location_balance;
+    private String mpesa_txn_number;
+    private String receipt_upload;
+
+    public int getDistributor_id() {
+        return distributor_id;
+    }
+
+    public void setDistributor_id(int distributor_id) {
+        this.distributor_id = distributor_id;
+    }
+
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
+    }
+
+    public String getMpesa_txn_number() {
+        return mpesa_txn_number;
+    }
+
+    public void setMpesa_txn_number(String mpesa_txn_number) {
+        this.mpesa_txn_number = mpesa_txn_number;
+    }
+
+    public String getReceipt_upload() {
+        return receipt_upload;
+    }
+
+    public void setReceipt_upload(String receipt_upload) {
+        this.receipt_upload = receipt_upload;
+    }
 
     public int getManufacturer_id() {
         return manufacturer_id;
@@ -104,16 +140,21 @@ public class ProductStock {
 
     public ProductStock() {  }
 
-    public ProductStock(int product_id,int vendor_id,int manufacturer_id,double purchase_quantity,double purchase_price,
-                        String purchase_details,Date purchase_date ,double location_balance) {
+    public ProductStock(int product_id,int vendor_id,int manufacturer_id,int distributor_id,double purchase_quantity,
+                        double purchase_price,String purchase_details,Date purchase_date ,int location_id,
+                        double location_balance,String mpesa_txn_number,String receipt_upload) {
         this.product_id = product_id;
         this.vendor_id = vendor_id;
         this.manufacturer_id = manufacturer_id;
+        this.distributor_id = distributor_id;
         this.purchase_quantity = purchase_quantity;
         this.purchase_price = purchase_price;
         this.purchase_details = purchase_details;
         this.purchase_date = purchase_date;
+        this.location_id=location_id;
         this.location_balance = location_balance;
+        this.mpesa_txn_number = mpesa_txn_number;
+        this.receipt_upload = receipt_upload;
     }
 
     @Override
@@ -122,13 +163,17 @@ public class ProductStock {
                 "id=" + id +
                 ", product_id='" + product_id + '\'' +
                 ", vendor_id='" + vendor_id + '\'' +
+                ", distributor_id='" + distributor_id + '\'' +
                 ", manufacturer_id='" + manufacturer_id + '\'' +
                 ", purchase_quantity='" + purchase_quantity + '\'' +
                 ", purchase_price='" + purchase_price + '\'' +
                 ", purchase_details='" + purchase_details  + '\''+
                 ", purchase_date='" + purchase_date + '\'' +
+                ", location_id='" + location_id + '\'' +
                 ", location_balance='" + location_balance + '\'' +
+                ", location_balance='" + location_balance + '\'' +
+                ", mpesa_txn_number='" + mpesa_txn_number + '\'' +
+                ", receipt_upload='" + receipt_upload + '\'' +
                 + '}';
-
     }
 }

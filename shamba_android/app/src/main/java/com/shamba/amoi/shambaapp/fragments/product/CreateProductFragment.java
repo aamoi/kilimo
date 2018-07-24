@@ -1,17 +1,14 @@
-package com.shamba.amoi.shambaapp.fragments.inventory;
+package com.shamba.amoi.shambaapp.fragments.product;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,13 +16,8 @@ import android.widget.Toast;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
-import com.shamba.amoi.shambaapp.db.Product;
-import com.shamba.amoi.shambaapp.db.ProductDao;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
-import com.shamba.amoi.shambaapp.shareResources.SpinnerUtility;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,15 +44,6 @@ public class CreateProductFragment extends BaseFragment implements AdapterView.O
     public CreateProductFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param name   product_name.
-     * @param vendor product_vendor.
-     * @return A new instance of fragment CreateInventoryFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static CreateProductFragment newInstance(String name, String vendor) {
         CreateProductFragment fragment = new CreateProductFragment();
@@ -148,17 +131,6 @@ public class CreateProductFragment extends BaseFragment implements AdapterView.O
 
     }
 
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -173,8 +145,8 @@ public class CreateProductFragment extends BaseFragment implements AdapterView.O
         String product_vendor;
         String product_unitOfMeasure;
         String product_size;
-        ProductDao product_dao;
-        Product product;
+//        ProductDao product_dao;
+//        Product product;
 
         public SaveProductService(String name, String vendor, String unit, String size) {
             product_name = name;
@@ -186,8 +158,8 @@ public class CreateProductFragment extends BaseFragment implements AdapterView.O
         @Override
         protected void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-            product_dao = db.productDao();
-            product = new Product();
+//            product_dao = db.productDao();
+//            product = new Product();
 //            product.setProductName(product_name);
 //            product.setProductVendor(product_vendor);
 //            product.setUnitOfMeasure(product_unitOfMeasure);
@@ -197,8 +169,10 @@ public class CreateProductFragment extends BaseFragment implements AdapterView.O
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            product_dao.insertProduct(product);
-            return product_dao.getProducts().size();
+//            product_dao.insertProduct(product);
+//            return product_dao.getProducts().size();
+
+            return 0;
         }
 
         @Override

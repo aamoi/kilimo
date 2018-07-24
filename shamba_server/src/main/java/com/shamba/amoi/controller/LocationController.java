@@ -3,9 +3,8 @@ package com.shamba.amoi.controller;
 /**
  * Created by amoi on 09/07/2018.
  */
-
-import com.shamba.amoi.Repository.VendorRepository;
-import com.shamba.amoi.model.Vendor;
+import com.shamba.amoi.Repository.LocationRepository;
+import com.shamba.amoi.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class VendorController {
+public class LocationController {
 
     @Autowired
-    VendorRepository vendorRepository;
+    LocationRepository locationRepository;
 
 //    @RequestMapping("/")
 //    public String index() {
@@ -26,49 +25,53 @@ public class VendorController {
 
 //    PlantingMockedData blogMockedData = PlantingMockedData.getInstance();
 
-    @GetMapping("/vendor")
-    public List<Vendor> index() {
-        return vendorRepository.findAll(new Sort(Sort.Order.asc("id")));
+    @GetMapping("/location")
+    public List<Location> index() {
+        return locationRepository.
+                findAll(new Sort(Sort.Order.asc("id")));
     }
 
-    @GetMapping("/vendor/{id}")
-    public Vendor show(@PathVariable String id) {
-        int vendor_id = Integer.parseInt(id);
-        return vendorRepository.getOne(vendor_id);
+    @GetMapping("/location/{id}")
+    public Location show(@PathVariable String id) {
+        int l_id = Integer.parseInt(id);
+        return locationRepository.getOne(l_id);
     }
 
-    @PostMapping("/vendor/search")
-    public List<Vendor> search(@RequestBody Map<String, String> body) {
+    @PostMapping("/location/search")
+    public List<Location> search(@RequestBody Map<String, String> body) {
         String searchTerm = body.get("text");
 //        return plantingRepository.findByTitleContainingOrContentContaining(searchTerm, searchTerm);
         return null;
     }
 
-    @PostMapping("/createVendor")
-    public Vendor create(@RequestBody Map<String, String> body) {
-        String vendor_name = body.get("vendor_name");
-        String vendor_phone = body.get("vendor_phone");
+    @PostMapping("/createLocation")
+    public Location create(@RequestBody Map<String, String> body) {
+
+        String location_name = body.get("location_name");
+        String location_details = body.get("location_details");
         String county = body.get("county");
         String town = body.get("town");
         String map = body.get("map");
-        String email = body.get("email");
         String directions = body.get("directions");
-        String details = body.get("details");
 
-        return vendorRepository.save(new Vendor(vendor_name,vendor_phone,county,town,map,email,directions,details));
+        return locationRepository.save(new Location(location_name, location_details,county,town,map,directions ));
     }
 
-    @PutMapping("/updateVendor/{id}")
-    public Vendor update(@PathVariable String id, @RequestBody Map<String, String> body) {
-        int vendor_id = Integer.parseInt(id);
-        Vendor vendor = vendorRepository.getOne(vendor_id);
+    @PutMapping("/updateLocation/{id}")
+    public Location update(@PathVariable String id, @RequestBody Map<String, String> body) {
+
+        int lb_id = Integer.parseInt(id);
+        Location location  = locationRepository.getOne(lb_id);
+
 //        String name = body.get("name");
 //        product.setName(name);
+//
 //        double seed_quantity = Double.parseDouble(body.get("seed_quantity"));
 //        planting.setSeed_quantity(seed_quantity);
 //        return plantingRepository.save(planting);
-        return vendor;
+        return null;
     }
+//
 //    @DeleteMapping("/deleteProduct/{id}")
 //    public void delete(@PathVariable String id) {
 //        int planting_id = Integer.parseInt(id);

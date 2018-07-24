@@ -1,4 +1,4 @@
-package com.shamba.amoi.shambaapp.fragments.inventory;
+package com.shamba.amoi.shambaapp.fragments.product;
 
 import android.content.Context;
 import android.net.Uri;

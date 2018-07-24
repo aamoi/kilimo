@@ -40,4 +40,23 @@ public class UnitOfMeasureItem {
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
+
+    /**
+     * get unitOfMeasure by id.
+     * @param unitOfMeasureItems
+     * @param id
+     * @return
+     */
+    public static UnitOfMeasureItem getUnitOfMeasureItemByID(List<UnitOfMeasureItem>
+                                                                         unitOfMeasureItems, int id){
+        UnitOfMeasureItem unitOfMeasureItem=null;
+
+        for(int i=0;i<unitOfMeasureItems.size();++i){
+            if(unitOfMeasureItems.get(i).getId()==id){
+                unitOfMeasureItem= unitOfMeasureItems.get(i);
+                break;
+            }
+        }
+        return unitOfMeasureItem;
+    }
 }

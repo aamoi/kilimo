@@ -148,7 +148,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
                     spn_planting_produce, product_names);
 
             List<String> location_blks = new ArrayList<>();
-            List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockList;
+            List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockItemList;
             for (int i = 0; i < locationBlockItems.size(); ++i) {
                 location_blks.add(locationBlockItems.get(i).getLocation_block_name());
             }
@@ -178,10 +178,10 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
                 planned_sales_date = edit_sales_date.getText().toString();
 
                 String location_block_str = spn_location_block.getSelectedItem().toString();
-                for (int i = 0; i < LocationBlockItem.staticLocationBlockList.size(); i++) {
-                    if (LocationBlockItem.staticLocationBlockList.get(i).getLocation_block_name().
+                for (int i = 0; i < LocationBlockItem.staticLocationBlockItemList.size(); i++) {
+                    if (LocationBlockItem.staticLocationBlockItemList.get(i).getLocation_block_name().
                             equalsIgnoreCase(location_block_str)) {
-                        location_block_id = LocationBlockItem.staticLocationBlockList.get(i).getId();
+                        location_block_id = LocationBlockItem.staticLocationBlockItemList.get(i).getId();
                         break;
                     }
                 }
@@ -241,7 +241,7 @@ public class CreatePlantingProgrammeFragment extends BaseFragment {
 
         spn_location_block = (Spinner) view.findViewById(R.id.spn_planting_location);
         List<String> location_block_names = new ArrayList<>();
-        List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockList;
+        List<LocationBlockItem> locationBlockItems = LocationBlockItem.staticLocationBlockItemList;
         for (int i = 0; i < locationBlockItems.size(); ++i) {
             location_block_names.add(locationBlockItems.get(i).getLocation_block_name());
         }

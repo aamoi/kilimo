@@ -1,5 +1,4 @@
 package com.shamba.amoi.shambaapp.models.product;
-
 import java.util.List;
 
 /**
@@ -7,6 +6,7 @@ import java.util.List;
  */
 public class ProductItem {
     public static List<ProductItem> staticProductItemList;
+    public static ProductItem selectedProductItem;
     private int id ;
     private String product_name;
     private boolean is_asset;
@@ -79,4 +79,40 @@ public class ProductItem {
         }
       return productItem;
     }
+
+//    /**
+//     * get all products from database
+//     */
+//    class GetProductsService extends AsyncTask<Void, Void, List<Product>> {
+//
+//        ProductDao product_dao;
+//        Product product;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            String message = getString(R.string.message_processing_products);
+//            Log.d("aaaa", "fetching products");
+//
+//            ((BaseActivity) getActivity()).createDialog(message, null);
+//
+//            ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
+//            product_dao = db.productDao();
+//            product = new Product();
+//        }
+//
+//        @Override
+//        protected List<Product> doInBackground(Void... voids) {
+//            saved_products = product_dao.getProducts();
+//
+//            return product_dao.getProducts();
+//        }
+//        @Override
+//        protected void onPostExecute(List<Product> result) {
+//            ((BaseActivity) getActivity()).clearDialog();
+//        }
+//
+//        public List<Product> getProducts() {
+//            return saved_products;
+//        }
+//    }
 }

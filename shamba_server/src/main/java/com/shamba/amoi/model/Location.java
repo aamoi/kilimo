@@ -10,29 +10,19 @@ import javax.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Table(name = "vendor")
-public class Vendor {
+@Table(name = "location")
+public class Location {
     private static final long serialVersionUID = -3009157732242241808L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-    private String vendor_name;
-    private String vendor_phone;
-    private String county;
-    private String town;
-    private String map;
-    private String email;
-    private String directions;
-    private String details;
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
+    int id;
+    String location_name;
+    String location_details;
+    String county;
+    String town;
+    String map;
+    String directions;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -46,20 +36,20 @@ public class Vendor {
         this.id = id;
     }
 
-    public String getVendor_name() {
-        return vendor_name;
+    public String getLocation_name() {
+        return location_name;
     }
 
-    public void setVendor_name(String vendor_name) {
-        this.vendor_name = vendor_name;
+    public void setLocation_name(String location_name) {
+        this.location_name = location_name;
     }
 
-    public String getVendor_phone() {
-        return vendor_phone;
+    public String getLocation_details() {
+        return location_details;
     }
 
-    public void setVendor_phone(String vendor_phone) {
-        this.vendor_phone = vendor_phone;
+    public void setLcation_details(String location_details) {
+        this.location_details = location_details;
     }
 
     public String getCounty() {
@@ -86,14 +76,6 @@ public class Vendor {
         this.map = map;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getDirections() {
         return directions;
     }
@@ -102,33 +84,28 @@ public class Vendor {
         this.directions = directions;
     }
 
-    public Vendor() {
-    }
+    public Location() {  }
 
-    public Vendor(String vendor_name, String vendor_phone, String county, String town, String map,
-                  String email, String directions, String details) {
-        this.vendor_name = vendor_name;
-        this.vendor_phone = vendor_phone;
+    public Location(String location_name,String location_details,String county,String town,String map,
+                    String directions) {
+
+        this.location_name = location_name;
+        this.location_details = location_details;
         this.county = county;
         this.town = town;
         this.map = map;
-        this.email = email;
         this.directions = directions;
-        this.details=details;
     }
 
     @Override
     public String toString() {
-        return "Vendor{" +
+        return "Location{" +
                 "id=" + id +
-                ", vendor_name='" + vendor_name + '\'' +
-                ", vendor_phone='" + vendor_phone + '\'' +
+                ", location_name='" + location_name + '\'' +
+                ", location_details='" + location_details + '\'' +
                 ", county='" + county + '\'' +
                 ", town='" + town + '\'' +
-                ", map='" + map + '\'' +
-                ", email='" + email + '\'' +
                 ", directions='" + directions + '\'' +
-                ", details='" + details + '\'' +
-                '}';
+                ", map='" + map  + '\'' + '}';
     }
 }

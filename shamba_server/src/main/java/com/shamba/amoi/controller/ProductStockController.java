@@ -28,19 +28,19 @@ public class ProductStockController {
 
 //    PlantingMockedData blogMockedData = PlantingMockedData.getInstance();
 
-    @GetMapping("/productstock")
+    @GetMapping("/productStock")
     public List<ProductStock> index() {
         return productStockRepository.
                 findAll(new Sort(Sort.Order.asc("id")));
     }
 
-    @GetMapping("/productstock/{id}")
+    @GetMapping("/productStock/{id}")
     public ProductStock show(@PathVariable String id) {
         int Id = Integer.parseInt(id);
         return productStockRepository.getOne(Id);
     }
 
-    @PostMapping("/productstock/search")
+    @PostMapping("/productStock/search")
     public List<ProductStock> search(@RequestBody Map<String, String> body) {
         String searchTerm = body.get("text");
 //        return plantingRepository.findByTitleContainingOrContentContaining(searchTerm, searchTerm);
@@ -51,15 +51,21 @@ public class ProductStockController {
     public ProductStock create(@RequestBody Map<String, String> body) {
         int product_id = Integer.parseInt(body.get("product_id"));
         int vendor_id = Integer.parseInt(body.get("vendor_id"));
+        int distributor_id = Integer.parseInt(body.get("distributor_id"));
         int manufacturer_id = Integer.parseInt(body.get("manufacturer_id"));
         double purchase_quantity = Double.parseDouble(body.get("purchase_quantity"));
         double purchase_price = Double.parseDouble(body.get("purchase_price"));
         String purchase_details = body.get("purchase_details");
         Date purchase_date = DateUtil.stringToDate((body.get("purchase_date")));
-        double location_balance = Double.parseDouble(body.get("location_balance"));
+        int location_id = Integer.parseInt(body.get("location_id"));
+        String location_balance_str=body.get("location_balance");
+        double location_balance = location_balance_str==null?0:Double.parseDouble(location_balance_str);
+        String mpesa_txn_number = body.get("mpesa_txn_number");
+        String receipt_upload = body.get("receipt_upload");
 
-        return productStockRepository.save(new ProductStock(product_id,vendor_id,manufacturer_id,purchase_quantity,
-                purchase_price ,purchase_details,purchase_date  ,location_balance));
+        return productStockRepository.save(new ProductStock(product_id,vendor_id,distributor_id,manufacturer_id,
+                purchase_quantity,purchase_price ,purchase_details,purchase_date ,location_id,location_balance,
+                mpesa_txn_number,receipt_upload));
     }
 
     @PutMapping("/updateProductStock/{id}")

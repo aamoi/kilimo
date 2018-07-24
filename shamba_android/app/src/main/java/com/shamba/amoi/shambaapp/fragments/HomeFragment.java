@@ -4,46 +4,40 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.db.product.Manufacturer;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFragment;
-import com.shamba.amoi.shambaapp.fragments.inventory.ProductsFragment;
+import com.shamba.amoi.shambaapp.fragments.product.ProductsFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
+import com.shamba.amoi.shambaapp.models.product.DistributorItem;
+import com.shamba.amoi.shambaapp.models.product.ManufacturerItem;
+import com.shamba.amoi.shambaapp.models.product.ProductCategoryItem;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.UnitOfMeasureItem;
+import com.shamba.amoi.shambaapp.models.product.VendorItem;
 import com.shamba.amoi.shambaapp.models.projects.LocationBlockItem;
+import com.shamba.amoi.shambaapp.models.projects.LocationItem;
 import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,20 +48,6 @@ public class HomeFragment extends BaseFragment {
     private String mParam1;
     private String mParam2;
 
-//    private OnFragmentInteractionListener mListener;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -156,12 +136,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -170,22 +144,6 @@ public class HomeFragment extends BaseFragment {
 //        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
-
-
     private void loadSetUpData(){
 
     }
@@ -193,22 +151,25 @@ public class HomeFragment extends BaseFragment {
      * Get setup data from server and save in the android local db.
      */
     class GetSetUpData extends AsyncTask<Void, Void, Integer> {
-
         public GetSetUpData() {
         }
 
         @Override
         public void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
             getAllProductsFromServer();
+            getAllProductCategoriesFromServer();
             getAllPhasesFromServer();
             getAllLocationBlockFromServer();
             getAllUnitOfMeasureFromServer();
+            getAllVendorFromServer();
+            getAllLocationFromServer();
+            getAllManufacturerFromServer();
+            getAllDistributorFromServer();
 
             return 1;
         }
@@ -255,6 +216,46 @@ public class HomeFragment extends BaseFragment {
                 e.printStackTrace();
             }
             return productItemList;
+        }
+        /**
+         * Pools all product categories from server application!
+         * @return
+         */
+        private List<ProductCategoryItem> getAllProductCategoriesFromServer(){
+
+            List<ProductCategoryItem> productCategories=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"productCategory/","");
+
+                Log.d("# product categories:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    ProductCategoryItem productCategoryItem=new ProductCategoryItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+                    int id=jsonObject.getInt("id");
+                    productCategoryItem.setId(id);
+
+                    String category_name=jsonObject.getString("category_name");
+                    productCategoryItem.setCategory_name(category_name);
+
+                    String details=jsonObject.getString("details");
+                    productCategoryItem.setDetails(details);
+
+                    productCategories.add(productCategoryItem);
+                }
+
+                ProductCategoryItem.staticProductCategoryItemList=productCategories;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return productCategories;
         }
         /**
          * Pools all projects phases from server application!
@@ -308,7 +309,6 @@ public class HomeFragment extends BaseFragment {
             }
             return phaseItemList;
         }
-
         /**
          * Pools all location blocks phases from server application!
          * @return
@@ -350,7 +350,7 @@ public class HomeFragment extends BaseFragment {
 
                     locationBlockItems.add(locationItem);
                 }
-                LocationBlockItem.staticLocationBlockList=locationBlockItems;
+                LocationBlockItem.staticLocationBlockItemList=locationBlockItems;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -359,7 +359,6 @@ public class HomeFragment extends BaseFragment {
             }
             return locationBlockItems;
         }
-
         /**
          * Pools all unitOfMeasure from server application!
          * @return
@@ -404,6 +403,235 @@ public class HomeFragment extends BaseFragment {
             return unitOfMeasureItems;
         }
 
+        /**
+         * Pools all vendor from server application!
+         * @return
+         */
+        private List<VendorItem> getAllVendorFromServer(){
+
+            List<VendorItem> vendorItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"vendor/","");
+
+                Log.d("# of vendors pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    VendorItem vendorItem=new VendorItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+                    int id=jsonObject.getInt("id");
+                    vendorItem.setId(id);
+                    String vendor_name=jsonObject.getString("vendor_name");
+                    vendorItem.setVendor_name(vendor_name);
+
+                    String vendor_phone=jsonObject.getString("vendor_phone");
+                    vendorItem.setVendor_phone(vendor_phone);
+
+                    String county=jsonObject.getString("county");
+                    vendorItem.setCounty(county);
+
+                    String town=jsonObject.getString("town");
+                    vendorItem.setTown(town);
+
+                    String map=jsonObject.getString("map");
+                    vendorItem.setMap(map);
+
+                    String email=jsonObject.getString("email");
+                    vendorItem.setEmail(email);
+
+                    String directions=jsonObject.getString("directions");
+                    vendorItem.setDirections(directions);
+
+                    String details=jsonObject.getString("details");
+                    vendorItem.setDetails(details);
+
+                    vendorItems.add(vendorItem);
+                }
+
+                VendorItem.staticVendorItemList=vendorItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return vendorItems;
+        }
+        /**
+         * Pools all locations from server application!
+         * @return
+         */
+        private List<LocationItem> getAllLocationFromServer(){
+
+            List<LocationItem> locationItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"location/","");
+
+                Log.d("#locations pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    LocationItem locationItem=new LocationItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    locationItem.setId(id);
+
+                    String location_name=jsonObject.getString("location_name");
+                    locationItem.setLocation_name(location_name);
+
+                    String location_details=jsonObject.getString("location_details");
+                    locationItem.setLocation_details(location_details);
+
+                    String county=jsonObject.getString("county");
+                    locationItem.setCounty(county);
+
+                    String town=jsonObject.getString("town");
+                    locationItem.setTown(town);
+
+                    String map=jsonObject.getString("map");
+                    locationItem.setMap(map);
+
+                    String directions=jsonObject.getString("directions");
+                    locationItem.setDirections(directions);
+
+                    locationItems.add(locationItem);
+                }
+
+                LocationItem.staticLocationItemList=locationItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return locationItems;
+        }
+
+        /**
+         * Pools all distributor from server application!
+         * @return
+         */
+        private List<DistributorItem> getAllDistributorFromServer(){
+
+            List<DistributorItem> distributorItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"distributor/","");
+
+                Log.d("#distributor pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    DistributorItem distributorItem=new DistributorItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    distributorItem.setId(id);
+
+                    String distributor_name=jsonObject.getString("distributor_name");
+                    distributorItem.setDistributor_name(distributor_name);
+
+                    String phone=jsonObject.getString("phone");
+                    distributorItem.setPhone(phone);
+
+                    String email=jsonObject.getString("email");
+                    distributorItem.setEmail(email);
+
+                    String map=jsonObject.getString("map");
+                    distributorItem.setMap(map);
+
+                    String directions=jsonObject.getString("directions");
+                    distributorItem.setDirections(directions);
+
+                    String county=jsonObject.getString("county");
+                    distributorItem.setCounty(county);
+
+                    String town=jsonObject.getString("town");
+                    distributorItem.setTown(town);
+
+                    String details=jsonObject.getString("details");
+                    distributorItem.setDetails(details);
+                   distributorItems.add(distributorItem);
+                }
+
+                DistributorItem.staticDistributorItems=distributorItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return distributorItems;
+        }
+
+        /**
+         * Pools all manufacturer from server application!
+         * @return
+         */
+        private List<ManufacturerItem> getAllManufacturerFromServer(){
+
+            List<ManufacturerItem> manufacturerItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"manufacturer/","");
+
+                Log.d("#manufacturer pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    ManufacturerItem manufacturerItem=new ManufacturerItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    manufacturerItem.setId(id);
+
+                    String manufacturer_name=jsonObject.getString("manufacturer_name");
+                    manufacturerItem.setManufacturer_name(manufacturer_name);
+
+                    String phone=jsonObject.getString("phone");
+                    manufacturerItem.setPhone(phone);
+
+                    String email=jsonObject.getString("email");
+                    manufacturerItem.setEmail(email);
+
+                    String map=jsonObject.getString("map");
+                    manufacturerItem.setMap(map);
+
+                    String directions=jsonObject.getString("directions");
+                    manufacturerItem.setDirections(directions);
+
+                    String county=jsonObject.getString("county");
+                    manufacturerItem.setCounty(county);
+
+                    String town=jsonObject.getString("town");
+                    manufacturerItem.setTown(town);
+
+                    String details=jsonObject.getString("details");
+                    manufacturerItem.setDetails(details);
+
+                    manufacturerItems.add(manufacturerItem);
+                }
+
+                ManufacturerItem.staticManufacturerItemList=manufacturerItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return manufacturerItems;
+        }
         @Override
         public void onPostExecute(Integer i) {
         }

@@ -18,6 +18,22 @@
         <item>Maize</item>
     </string-array>
 
+    <string-array name="dummy_vendor">
+        <item>Select vendor</item>
+    </string-array>
+
+    <string-array name="dummy_distributor">
+        <item>Select distributor</item>
+    </string-array>
+
+    <string-array name="dummy_manufacturer">
+        <item>Select manufacturer</item>
+    </string-array>
+
+    <string-array name="dummy_location">
+        <item>Select location</item>
+    </string-array>
+
     <string name="location_prompt">Select location</string>
     <string-array name="location_array">
         <item>Kangemi</item>

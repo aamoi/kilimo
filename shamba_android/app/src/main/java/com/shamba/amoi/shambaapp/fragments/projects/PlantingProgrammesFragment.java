@@ -48,10 +48,6 @@ public class PlantingProgrammesFragment extends BaseFragment {
 //    private OnListFragmentInteractionListener mListener;
     List<PlantingProgramItem> planting_programmes;
     Button add_plant_program;
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public PlantingProgrammesFragment() {
     }
 
@@ -125,12 +121,6 @@ public class PlantingProgrammesFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -140,20 +130,8 @@ public class PlantingProgrammesFragment extends BaseFragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Get all plantings from server.
      */
-//    public interface OnListFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onListFragmentInteraction(PlantingProgramItem item);
-//    }
-
     class GetPlantingProgrammes extends AsyncTask<Void, Void, List<PlantingProgramItem>> {
 
         PlantingProgramDao plantingProgramDao;
@@ -253,7 +231,6 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                     plantingProgramItems.add(planting);
                 }
-
 
             } catch (IOException e) {
                 e.printStackTrace();

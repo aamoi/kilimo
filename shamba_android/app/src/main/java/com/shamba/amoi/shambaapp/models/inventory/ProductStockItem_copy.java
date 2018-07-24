@@ -1,36 +1,41 @@
-package com.shamba.amoi.shambaapp.db;
-
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+package com.shamba.amoi.shambaapp.models.inventory;
 
 /**
- * Created by amoi on 28/12/2017.
+ * Created by amoi on 27/12/2017.
  */
-@Entity
-public class Stock {
-    @PrimaryKey(autoGenerate = true)
-    private int stock_id;
-    private int product_id;
+
+public class ProductStockItem_copy {
+    private String product_id;
+    private String vendor_name;
+    private String produce_name;
     private String stock_ref;
     private String stock_date;
-    private String stock_quantity;
-    private String stock_price;
+    private double stock_quantity;
+    private double stock_price;
     private String stock_description;
 
-    public void setStock_id(int stock_id) {
-        this.stock_id = stock_id;
+    public void setVendor_name(String vendor_name) {
+        this.vendor_name = vendor_name;
     }
 
-    public int getStock_id() {
-        return stock_id;
+    public String getVendor_name() {
+        return vendor_name;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(String product_id) {
         this.product_id = product_id;
     }
 
-    public int getProduct_id() {
+    public String getProduct_id() {
         return product_id;
+    }
+
+    public void setProduce_name(String produce_name) {
+        this.produce_name = produce_name;
+    }
+
+    public String getProduce_name() {
+        return produce_name;
     }
 
     public void setStock_ref(String stock_ref) {
@@ -49,19 +54,19 @@ public class Stock {
         return stock_date;
     }
 
-    public void setStock_quantity(String stock_quantity) {
+    public void setStock_quantity(double stock_quantity) {
         this.stock_quantity = stock_quantity;
     }
 
-    public String getStock_quantity() {
+    public double getStock_quantity() {
         return stock_quantity;
     }
 
-    public void setStock_price(String stock_price) {
+    public void setStock_price(double stock_price) {
         this.stock_price = stock_price;
     }
 
-    public String getStock_price() {
+    public double getStock_price() {
         return stock_price;
     }
 

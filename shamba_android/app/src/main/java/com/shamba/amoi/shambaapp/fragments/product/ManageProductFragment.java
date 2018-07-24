@@ -1,6 +1,5 @@
-package com.shamba.amoi.shambaapp.fragments.inventory;
+package com.shamba.amoi.shambaapp.fragments.product;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;

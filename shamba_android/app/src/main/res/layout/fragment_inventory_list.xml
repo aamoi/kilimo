@@ -22,7 +22,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.shamba.amoi.shambaapp.fragments.inventory.InventoryFragment"
+        tools:context="com.shamba.amoi.shambaapp.fragments.product.InventoryFragment"
         tools:listitem="@layout/fragment_inventory"
 
         android:clickable="true"

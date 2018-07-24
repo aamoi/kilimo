@@ -1,7 +1,15 @@
 package com.shamba.amoi.shambaapp.db.product;
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+import android.support.annotation.NonNull;
+
+import java.util.List;
 
 /**
  * Created by amoi on 13/02/2018.

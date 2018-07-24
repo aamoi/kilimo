@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.fragments.inventory.InventoryUtilizationFragment;
-import com.shamba.amoi.shambaapp.fragments.inventory.ProductStockFragment.OnListFragmentInteractionListener;
-import com.shamba.amoi.shambaapp.models.inventory.ProductStockItem;
+import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
+import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment.OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
+import com.shamba.amoi.shambaapp.models.product.VendorItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.List;
@@ -45,9 +46,13 @@ public class ProductStockRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.inv_stock_Item = product_stock_list.get(position);
 
-        holder.supplier_name.setText(product_stock_list.get(position).getVendor_name());
-        holder.stock_date.setText(product_stock_list.get(position).getStock_date());
-        holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).getStock_quantity()));
+        String vendor= VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
+                product_stock_list.get(position).getVendor_id()).getVendor_name();
+        holder.supplier_name.setText(vendor);
+
+        String purchase_date=product_stock_list.get(position).getPurchase_date().substring(0,10);
+        holder.stock_date.setText(purchase_date);
+        holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).getPurchase_quantity()));
 
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +66,7 @@ public class ProductStockRecyclerViewAdapter extends
 
     @Override
     public int getItemCount() {
-        return product_stock_list.size();
+        return product_stock_list!=null?product_stock_list.size():0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,7 +88,7 @@ public class ProductStockRecyclerViewAdapter extends
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BaseFragment.productStockItem=inv_stock_Item;
+                    ProductStockItem.selectedProductStockItem=inv_stock_Item;
                     String product_name=BaseFragment.productItem.getProduct_name();
 
                     try {

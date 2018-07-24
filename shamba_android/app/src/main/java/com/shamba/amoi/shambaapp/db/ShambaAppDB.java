@@ -9,8 +9,6 @@ import com.shamba.amoi.shambaapp.db.assets.AssetFueling;
 import com.shamba.amoi.shambaapp.db.assets.AssetFuelingDao;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilization;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilizationDao;
-import com.shamba.amoi.shambaapp.db.inventory.ProductStock;
-import com.shamba.amoi.shambaapp.db.inventory.ProductStockDao;
 import com.shamba.amoi.shambaapp.db.labor.HumanResource;
 import com.shamba.amoi.shambaapp.db.labor.HumanResourceDao;
 import com.shamba.amoi.shambaapp.db.labor.TaskAssignment;
@@ -21,6 +19,10 @@ import com.shamba.amoi.shambaapp.db.power.PowerSource;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceDao;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStock;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStockDao;
+import com.shamba.amoi.shambaapp.db.product.Product;
+import com.shamba.amoi.shambaapp.db.product.ProductDao;
+import com.shamba.amoi.shambaapp.db.product.ProductStock;
+import com.shamba.amoi.shambaapp.db.product.ProductStockDao;
 import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlan;
 import com.shamba.amoi.shambaapp.db.projects.MasterPlantingPlanDao;
 import com.shamba.amoi.shambaapp.db.projects.Phase;
@@ -36,7 +38,7 @@ import com.shamba.amoi.shambaapp.db.projects.TaskDao;
  * Created by amoi on 24/12/2017.
  */
 
-@Database(entities ={Product.class,Stock.class, MasterPlantingPlan.class,
+@Database(entities ={Product.class,MasterPlantingPlan.class,
         Asset.class,PlantingProgram.class, HumanResource.class,
         PowerSource.class, Task.class, PlantingPhase.class, ProductStock.class,
         TaskAssignment.class, InventoryUtilization.class, TaskPayment.class, PowerSourceStock.class,
@@ -44,7 +46,6 @@ import com.shamba.amoi.shambaapp.db.projects.TaskDao;
         version = 4)
 public abstract class ShambaAppDB extends RoomDatabase {
     public abstract ProductDao productDao();
-    public abstract StockDao stockDao();
     public abstract MasterPlantingPlanDao masterPlantPlanDao();
     public abstract PlantingProgramDao plantingProgramDao();
     public abstract AssetDao assetDao();
@@ -52,12 +53,12 @@ public abstract class ShambaAppDB extends RoomDatabase {
     public abstract PowerSourceDao powerSourceDao();
     public abstract TaskDao taskDao();
     public abstract PlantingPhaseDao plantingPhaseDao();
-    public abstract ProductStockDao productStockDao();
     public abstract TaskAssignmentDao taskAssignmentDao();
     public abstract InventoryUtilizationDao inventoryUtilizationDao();
     public abstract TaskPaymentDao taskPaymentDao();
     public abstract PowerSourceStockDao powerSourceStockDao();
     public abstract AssetFuelingDao assetFuelingDao();
     public abstract PhaseDao phaseDao();
+    public abstract ProductStockDao productStockDao();
 }
 

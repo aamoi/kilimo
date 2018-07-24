@@ -13,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.fragments.inventory.ProductStockFragment;
-import com.shamba.amoi.shambaapp.models.inventory.ProductItem;
+import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment;
+import com.shamba.amoi.shambaapp.models.product.ProductCategoryItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.List;
@@ -48,7 +49,13 @@ public class ProductsRecyclerViewAdapter
         holder.productItem = product_list.get(position);
         product_name=product_list.get(position).getProduct_name();
         holder.product_name.setText(product_name);
-        product_type=product_list.get(position).getProduct_type();
+
+        int product_category=product_list.get(position).getCategory_id();
+
+        product_type= ProductCategoryItem.getProductCategoryItemByID(
+                ProductCategoryItem.staticProductCategoryItemList,
+                product_list.get(position).getCategory_id()).getCategory_name();
+
         holder.product_type.setText(product_type);
     }
     @Override
@@ -73,7 +80,7 @@ public class ProductsRecyclerViewAdapter
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BaseFragment.productItem=productItem;
+                    ProductItem.selectedProductItem=productItem;
                     try {
                         AlertDialog.Builder builder = new AlertDialog.Builder(homeActivity);
 
