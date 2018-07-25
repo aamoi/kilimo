@@ -13,6 +13,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
 import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment.OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.fragments.product.RestockProductFragment;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.VendorItem;
@@ -35,12 +36,12 @@ public class ProductStockRecyclerViewAdapter extends
     public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
                                            HomeActivity homeActivity) {
         product_stock_list = items;
-        this.homeActivity=homeActivity;
+        this.homeActivity = homeActivity;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        productItem=ProductItem.selectedProductItem;
+        productItem = ProductItem.selectedProductItem;
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_productstock, parent, false);
@@ -51,11 +52,11 @@ public class ProductStockRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.inv_stock_Item = product_stock_list.get(position);
 
-        String vendor= VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
+        String vendor = VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
                 product_stock_list.get(position).getVendor_id()).getVendor_name();
         holder.supplier_name.setText(vendor);
 
-        String purchase_date=product_stock_list.get(position).getPurchase_date().substring(0,10);
+        String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
         holder.stock_date.setText(purchase_date);
         holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).getPurchase_quantity()));
 
@@ -71,7 +72,7 @@ public class ProductStockRecyclerViewAdapter extends
 
     @Override
     public int getItemCount() {
-        return product_stock_list!=null?product_stock_list.size():0;
+        return product_stock_list != null ? product_stock_list.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,22 +87,22 @@ public class ProductStockRecyclerViewAdapter extends
             super(view);
             stock_view = view;
 
-            stock_date=(TextView) view.findViewById(R.id.txt_first_column);
-            stock_quantity= (TextView) view.findViewById(R.id.txt_second_column);
-             supplier_name= (TextView) view.findViewById(R.id.txt_third_column);
+            stock_date = (TextView) view.findViewById(R.id.txt_first_column);
+            stock_quantity = (TextView) view.findViewById(R.id.txt_second_column);
+            supplier_name = (TextView) view.findViewById(R.id.txt_third_column);
 
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProductStockItem.selectedProductStockItem=inv_stock_Item;
-                    String product_name=productItem.getProduct_name();
+                    ProductStockItem.selectedProductStockItem = inv_stock_Item;
+                    String product_name = productItem.getProduct_name();
 
                     try {
                         AlertDialog.Builder builder = new AlertDialog.Builder(homeActivity);
 
                         builder.setTitle(Html.fromHtml(
-                                "<font color='#FF7000'>Action on "+product_name +" stock dated  "+
-                                        stock_date.getText().toString()+"? </font>"));
+                                "<font color='#FF7000'>Action on " + product_name + " stock dated  " +
+                                        stock_date.getText().toString() + "? </font>"));
 
                         builder.setNegativeButton(Html.fromHtml("<font color='#FF7000'>Utilize stock</font>"),
                                 new DialogInterface.OnClickListener() {
@@ -109,16 +110,15 @@ public class ProductStockRecyclerViewAdapter extends
                                         BaseFragment.changeFragment(homeActivity,
                                                 R.id.fragment_placeholder_home,
                                                 new InventoryUtilizationFragment());
-
-                                        BaseFragment.changeFragment(homeActivity,
-                                                R.id.fragment_placeholder_home,new InventoryUtilizationFragment());
                                     }
                                 });
 
-                        builder.setPositiveButton( Html.fromHtml("<font color='#FF7000'>Details</font>")
+                        builder.setPositiveButton(Html.fromHtml("<font color='#FF7000'>Details</font>")
                                 , new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
 
+                                        BaseFragment.changeFragment(homeActivity,
+                                                R.id.fragment_placeholder_home, RestockProductFragment.newInstance());
                                     }
                                 });
 
