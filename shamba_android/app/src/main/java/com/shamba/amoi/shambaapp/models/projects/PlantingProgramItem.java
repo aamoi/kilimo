@@ -4,11 +4,20 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
+import com.shamba.amoi.shambaapp.db.projects.Task;
+import com.shamba.amoi.shambaapp.db.projects.TaskDao;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -302,13 +311,13 @@ public class PlantingProgramItem {
 }
 
 /**
- * This class locally fetches all planting programs stored in the database.
+ * Locally gets all tasks from the SQLite db.
  */
 class GetPlantingPrograms extends AsyncTask<Void, Void, List<PlantingProgramItem>> {
+
     PlantingProgramDao plantingProgramDao;
-    PlantingProgram plantingProgram;
+    List<PlantingProgramItem> plantingProgramItems;
     Activity activity;
-    ArrayList<PlantingProgramItem> plantingProgramItems;
 
     public GetPlantingPrograms(Activity activity) {
         this.activity = activity;
@@ -318,52 +327,172 @@ class GetPlantingPrograms extends AsyncTask<Void, Void, List<PlantingProgramItem
     protected void onPreExecute() {
         ShambaAppDB db = new DBAdaptor(activity).getDB();
         plantingProgramDao = db.plantingProgramDao();
-        plantingProgram = new PlantingProgram();
-        plantingProgramItems = new ArrayList<>();
+        plantingProgramItems = new ArrayList();
     }
 
     @Override
     protected List<PlantingProgramItem> doInBackground(Void... voids) {
-        List<PlantingProgram> dbList = new ArrayList<>();
 
-        dbList = plantingProgramDao.getAllPlantingPrograms();
-        for (int i = 0; i < dbList.size(); ++i) {
-            PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
-            plantingProgramItem.setPlanned_harvest_date(dbList.get(i).getPlanned_harvest_date());
-            plantingProgramItem.setId(dbList.get(i).getId());
-            plantingProgramItem.setEstimated_cost(dbList.get(i).getEstimated_cost());
-            plantingProgramItem.setLocation_block_id(dbList.get(i).getLocation_block_id());
-            plantingProgramItem.setPlanting_name(dbList.get(i).getPlanting_name());
-            plantingProgramItem.setProduct_id(dbList.get(i).getProduct_id());
-            plantingProgramItem.setEstimated_revenue(dbList.get(i).getEstimated_revenue());
-            plantingProgramItem.setPlanned_preparation_date(dbList.get(i).getPlanned_preparation_date());
-            plantingProgramItem.setPlanned_sales_date(dbList.get(i).getPlanned_sales_date());
-            plantingProgramItem.setSeed_quantity(dbList.get(i).getSeed_quantity());
-            plantingProgramItem.setPlanned_seedbed_date(dbList.get(i).getPlanned_seedbed_date());
-            plantingProgramItem.setPlanned_transplant_date(dbList.get(i).getPlanned_transplant_date());
+        plantingProgramItems=getAllPlantingsFromServer();
 
-            plantingProgramItems.add(plantingProgramItem);
+        List<PlantingProgram> db_tasks = plantingProgramDao.getAllPlantingPrograms();
+
+        if ((db_tasks.size() > 0)&&(plantingProgramItems.size()==0)) {
+
+            for (int count = 0; count < db_tasks.size(); ++count) {
+                PlantingProgramItem plantingProgramItem = new PlantingProgramItem();
+
+                plantingProgramItem.setProduct_id(db_tasks.get(count).getProduct_id());
+                plantingProgramItem.setLocation_block_id(db_tasks.get(count).getLocation_block_id());
+                plantingProgramItem.setId(db_tasks.get(count).getId());
+                plantingProgramItem.setActual_revenue(db_tasks.get(count).getActual_revenue());
+                plantingProgramItem.setActual_sales_quantity(db_tasks.get(count).
+                        getActual_sales_quantity());
+                plantingProgramItem.setActual_cost(db_tasks.get(count).getActual_cost());
+                plantingProgramItem.setActual_sales_date(db_tasks.get(count).
+                        getActual_sales_date());
+                plantingProgramItem.setActual_harvest_date(db_tasks.get(count).
+                        getActual_harvest_date());
+                plantingProgramItem.setActual_transplant_date(db_tasks.get(count).
+                        getActual_transplant_date());
+                plantingProgramItem.setActual_seedbed_date(db_tasks.get(count).
+                        getActual_seedbed_date());
+                plantingProgramItem.setActual_preparation_date(db_tasks.get(count).
+                        getActual_preparation_date());
+                plantingProgramItem.setPlanting_details(db_tasks.get(count).
+                        getPlanting_details());
+                plantingProgramItem.setSeed_quantity(db_tasks.get(count).
+                        getSeed_quantity());
+                plantingProgramItem.setEstimated_revenue(db_tasks.get(count).
+                        getEstimated_revenue());
+                plantingProgramItem.setEstimated_cost(db_tasks.get(count).
+                        getEstimated_cost());
+                plantingProgramItem.setPlanting_name(db_tasks.get(count).
+                        getPlanting_name());
+                plantingProgramItem.setPlanned_sales_date(db_tasks.get(count).
+                        getPlanned_sales_date());
+                plantingProgramItem.setPlanned_harvest_date(db_tasks.get(count).
+                        getPlanned_harvest_date());
+                plantingProgramItem.setPlanned_transplant_date(db_tasks.get(count).
+                        getPlanned_transplant_date());
+                plantingProgramItem.setPlanned_seedbed_date(db_tasks.get(count).
+                        getPlanned_seedbed_date());
+                plantingProgramItem.setPlanned_preparation_date(db_tasks.get(count).
+                        getPlanned_preparation_date());
+                plantingProgramItem.setEstimated_sales_quantity(db_tasks.get(count).
+                        getEstimated_sales_quantity());
+
+
+                plantingProgramItems.add(plantingProgramItem);
+            }
+
+            PlantingProgramItem.staticPlantingPrograms = plantingProgramItems;
         }
-        Log.d("Planting|", "Number of planting programs in the db is :" +
-                String.valueOf(plantingProgramItems.size()));
+        return plantingProgramItems;
+    }
+
+    protected List<PlantingProgramItem> getAllPlantingsFromServer() {
+
+        List<PlantingProgramItem> plantingProgramItems=new ArrayList<>();
+
+
+        try {
+            List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL,"planting/","");
+
+            Log.d("plantings",response.get(0).getString("planting_name"));
+
+            JSONArray jArray = new JSONArray(response);
+
+            for(int i=0;i<jArray.length();++i){
+
+                PlantingProgramItem planting=new PlantingProgramItem();
+
+                JSONObject jsonObject = jArray.getJSONObject(i);
+
+                int id=jsonObject.getInt("id");
+                planting.setId(id);
+
+                int product_id=jsonObject.getInt("product_id");
+                planting.setProduct_id(product_id);
+
+                String planned_preparation_date=jsonObject.getString("planned_preparation_date").substring(0,10);
+                planting.setPlanned_preparation_date(planned_preparation_date);
+
+                String planned_seedbed_date=jsonObject.getString("planned_seedbed_date");
+                planting.setPlanned_seedbed_date(planned_seedbed_date);
+
+                String planned_transplant_date=jsonObject.getString("planned_transplant_date");
+                planting.setPlanned_transplant_date(planned_transplant_date);
+
+                String planned_harvest_date=jsonObject.getString("planned_harvest_date");
+                planting.setPlanned_harvest_date(planned_harvest_date);
+
+                String planned_sales_date=jsonObject.getString("planned_sales_date");
+                planting.setPlanned_sales_date(planned_sales_date);
+
+                double estimated_cost=jsonObject.getDouble("estimated_cost");
+                planting.setEstimated_cost(estimated_cost);
+
+                double estimated_sales_quantity=jsonObject.getDouble("estimated_sales_quantity");
+                planting.setEstimated_sales_quantity(estimated_sales_quantity);
+
+                double estimated_revenue=jsonObject.getDouble("estimated_revenue");
+                planting.setEstimated_revenue(estimated_revenue);
+
+                double seed_quantity=jsonObject.getDouble("seed_quantity");
+                planting.setSeed_quantity(seed_quantity);
+
+                int location_block_id=jsonObject.getInt("location_block_id");
+                planting.setLocation_block_id(location_block_id);
+
+                String planting_name=jsonObject.getString("planting_name");
+                planting.setPlanting_name(planting_name);
+
+                Log.d("Planting name @ "+i, planting_name);
+
+                String planting_details=jsonObject.getString("planting_details");
+                planting.setPlanting_details(planting_details);
+
+                String actual_preparation_date=jsonObject.getString("actual_preparation_date");
+                planting.setActual_preparation_date(actual_preparation_date);
+
+                String actual_seedbed_date=jsonObject.getString("actual_seedbed_date");
+                planting.setActual_seedbed_date(actual_seedbed_date);
+
+                String actual_transplant_date=jsonObject.getString("actual_transplant_date");
+                planting.setActual_transplant_date(actual_transplant_date);
+
+                String actual_harvest_date=jsonObject.getString("actual_harvest_date");
+                planting.setActual_harvest_date(actual_harvest_date);
+
+                String actual_sales_date=jsonObject.getString("actual_sales_date");
+                planting.setActual_sales_date(actual_sales_date);
+
+                double actual_cost=jsonObject.getDouble("actual_cost");
+                planting.setActual_cost(actual_cost);
+
+                double actual_sales_quantity=jsonObject.getDouble("actual_sales_quantity");
+                planting.setActual_sales_quantity(actual_sales_quantity);
+
+                double actual_revenue=jsonObject.getDouble("actual_revenue");
+                planting.setActual_revenue(actual_revenue);
+
+                plantingProgramItems.add(planting);
+            }
+            PlantingProgramItem.staticPlantingPrograms=plantingProgramItems;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return plantingProgramItems;
     }
 
-    public HashMap<String, PlantingProgramItem> GetPlantingProgramsHashMap() {
-
-        HashMap<String, PlantingProgramItem> plantingProgramItemHashMap = new HashMap<>();
-
-        for (int i = 0; i < plantingProgramItems.size(); ++i) {
-            plantingProgramItemHashMap.put(plantingProgramItems.get(i).getPlanting_name(),
-                    plantingProgramItems.get(i));
-        }
-
-        return plantingProgramItemHashMap;
-
-    }
-
     @Override
-    protected void onPostExecute(List<PlantingProgramItem> result) {
+    protected void onPostExecute(List<PlantingProgramItem> taskItemList) {
+//            super.onPostExecute(masterPlantingPlanItems);
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.product.StockUtilization;
 import com.shamba.amoi.shambaapp.db.product.StockUtilizationDao;
+import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.StockUtilizationItem;
 import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
@@ -34,10 +36,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class InventoryUtilizationFragment extends BaseFragment {
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     String TAG = getClass().getSimpleName().toString() + "|";
-
     Spinner spn_project;
     Spinner spn_phase;
     Spinner spn_task;
@@ -45,26 +49,20 @@ public class InventoryUtilizationFragment extends BaseFragment {
     EditText edit_utilized_date;
     EditText edit_details;
     Button btn_submit_utilization;
-
     List<PlantingProgramItem> plantingProgramItems;
     List<PhaseItem> phaseItems;
     List<TaskItem> taskItems;
-
-
     String project_name;
     String phase_name;
     String task_name;
 
+    int stock_id;
     int project_id;
     int phase_id;
     int task_id;
     double utilized_quantity;
     String utilization_date;
     String details;
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -146,10 +144,27 @@ public class InventoryUtilizationFragment extends BaseFragment {
                     }
                 }
 
+                boolean server_status=false;
                 utilized_quantity = Double.parseDouble(edit_utilized_quantity.getText().toString());
                 utilization_date = edit_utilized_date.getText().toString();
                 details = edit_details.getText().toString();
+                stock_id= ProductStockItem.selectedProductStockItem.getId();
 
+                try {
+                    new SaveStockUtilization(stock_id,project_id,phase_id,task_id, utilized_quantity,
+                            utilization_date,details).execute().get();
+                    server_status=true;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                if(server_status){
+                    BaseFragment.changeFragment((AppCompatActivity) getActivity(),
+                                R.id.fragment_placeholder_home,
+                                new ProductStockFragment());
+                }
 
 //                Log.d(TAG, String.valueOf(InventoryUtilizationItem.getInventoryUtilizationItems(getActivity()).size()));
 
@@ -251,7 +266,7 @@ public class InventoryUtilizationFragment extends BaseFragment {
         JSONObject request_object = new JSONObject();
         JSONObject response_object = new JSONObject();
 
-        StockUtilizationItem stockUtilizationItem=new StockUtilizationItem();
+        StockUtilizationItem stockUtilizationItem = new StockUtilizationItem();
 
         StockUtilization stockUtilization;
         StockUtilizationDao stockUtilizationDao;

@@ -4,11 +4,18 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.projects.Task;
 import com.shamba.amoi.shambaapp.db.projects.TaskDao;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -284,9 +291,11 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
     @Override
     protected List<TaskItem> doInBackground(Void... voids) {
 
+        taskList=getAllTasksFromServer();
+
         List<Task> db_tasks = taskDao.getAllTasks();
 
-        if (db_tasks.size() > 0) {
+        if ((db_tasks.size() > 0)&&(taskList.size()==0)) {
 
             for (int count = 0; count < db_tasks.size(); ++count) {
                 TaskItem taskItem = new TaskItem();
@@ -314,6 +323,84 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
             TaskItem.staticTaskItems = taskList;
         }
         return taskList;
+    }
+
+    protected List<TaskItem> getAllTasksFromServer() {
+
+        List<TaskItem> taskItems=new ArrayList<>();
+
+
+        try {
+            List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL,"task/","");
+
+            JSONArray jArray = new JSONArray(response);
+
+            for(int i=0;i<jArray.length();++i){
+
+                TaskItem taskItem=new TaskItem();
+
+                JSONObject jsonObject = jArray.getJSONObject(i);
+
+                int id=jsonObject.getInt("id");
+                taskItem.setId(id);
+
+                int project_id=jsonObject.getInt("project_id");
+                taskItem.setProject_id(project_id);
+
+                String task_name=jsonObject.getString("task_name");
+                taskItem.setTask_name(task_name);
+
+                String planned_start_date=jsonObject.getString("planned_start_date");
+                taskItem.setActual_start_date(planned_start_date);
+
+                String planned_end_date=jsonObject.getString("planned_end_date");
+                taskItem.setPlanned_end_date(planned_end_date);
+
+                double planned_days=jsonObject.getDouble("planned_days");
+                taskItem.setPlanned_days(planned_days);
+
+                int phase_id=jsonObject.getInt("phase_id");
+                taskItem.setPhase_id(phase_id);
+
+                int planned_persons=jsonObject.getInt("planned_persons");
+                taskItem.setPlanned_persons(planned_persons);
+
+                double estimated_cost=jsonObject.getDouble("estimated_cost");
+                taskItem.setEstimated_cost(estimated_cost);
+
+                double estimated_revenue=jsonObject.getDouble("estimated_revenue");
+                taskItem.setEstimated_revenue(estimated_revenue);
+
+                String actual_start_date=jsonObject.getString("actual_start_date");
+                taskItem.setActual_start_date(actual_start_date);
+
+                String actual_end_date=jsonObject.getString("actual_end_date");
+                taskItem.setActual_end_date(actual_end_date);
+
+                double actual_days=jsonObject.getDouble("actual_days");
+                taskItem.setActual_days(actual_days);
+
+                double actual_persons=jsonObject.getDouble("actual_persons");
+                taskItem.setActual_persons(actual_persons);
+
+                double actual_cost=jsonObject.getDouble("actual_cost");
+                taskItem.setActual_persons(actual_cost);
+
+                double actual_revenue=jsonObject.getDouble("actual_revenue");
+                taskItem.setActual_revenue(actual_revenue);
+
+                taskItems.add(taskItem);
+            }
+            TaskItem.staticTaskItems=taskItems;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return taskItems;
     }
 
     @Override
