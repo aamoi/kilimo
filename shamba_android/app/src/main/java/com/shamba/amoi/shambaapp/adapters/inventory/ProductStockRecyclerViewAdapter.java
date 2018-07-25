@@ -13,8 +13,10 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
 import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment.OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.VendorItem;
+import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class ProductStockRecyclerViewAdapter extends
 
     private final List<ProductStockItem> product_stock_list;
     private final HomeActivity homeActivity;
+    private ProductItem productItem;
 
     public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
                                            HomeActivity homeActivity) {
@@ -37,6 +40,8 @@ public class ProductStockRecyclerViewAdapter extends
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        productItem=ProductItem.selectedProductItem;
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_productstock, parent, false);
         return new ViewHolder(view);
@@ -89,7 +94,7 @@ public class ProductStockRecyclerViewAdapter extends
                 @Override
                 public void onClick(View v) {
                     ProductStockItem.selectedProductStockItem=inv_stock_Item;
-                    String product_name=BaseFragment.productItem.getProduct_name();
+                    String product_name=productItem.getProduct_name();
 
                     try {
                         AlertDialog.Builder builder = new AlertDialog.Builder(homeActivity);

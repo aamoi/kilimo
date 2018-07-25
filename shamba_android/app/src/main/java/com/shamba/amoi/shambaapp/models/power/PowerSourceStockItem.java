@@ -9,8 +9,6 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStock;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStockDao;
-import com.shamba.amoi.shambaapp.models.inventory.InventoryUtilizationItem;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -125,7 +123,7 @@ public class PowerSourceStockItem {
  */
 class GetPowerSourceStocks extends AsyncTask<Void, Void, List<PowerSourceStockItem>> {
 
-    public String TAG=new InventoryUtilizationItem().TAG;
+//    public String TAG=new InventoryUtilizationItem().TAG;
 
 
     PowerSourceStockDao powerSourceStockDao;
@@ -164,7 +162,7 @@ class GetPowerSourceStocks extends AsyncTask<Void, Void, List<PowerSourceStockIt
 
             powerSourceStockItems.add(powerSourceStockItem);
         }
-        Log.d(TAG, "Power source stocks is :" + String.valueOf(powerSourceStockItems.size()));
+//        Log.d(TAG, "Power source stocks is :" + String.valueOf(powerSourceStockItems.size()));
 
         return powerSourceStockItems;
     }

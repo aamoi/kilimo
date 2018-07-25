@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import com.shamba.amoi.shambaapp.db.product.StockUtilization;
+
 import java.util.List;
 
 /**
@@ -14,17 +16,17 @@ import java.util.List;
 @Dao
 public interface InventoryUtilizationDao {
     @Insert
-    public void insertInventoryUtilization(InventoryUtilization inventoryUtilization);
+    public void insertStockUtilization(StockUtilization stockUtilization);
 
     @Update
-    public void updateInventoryUtilization(InventoryUtilization inventoryUtilization);
+    public void updateStockUtilization(StockUtilization stockUtilization);
 
     @Delete
-    public void deleteInventoryUtilization(InventoryUtilization inventoryUtilization);
+    public void deleteStockUtilization(StockUtilization stockUtilization);
 
-    @Query("select * from inventoryutilization")
-    public List<InventoryUtilization> getAllInventoryUtilization();
+    @Query("select * from stockutilization")
+    public List<StockUtilization> getAllStockUtilization();
 
-    @Query("select * from inventoryutilization where utilization_id in (:utilization_id)")
-    public List<InventoryUtilization> getAnInventoryUtilization(String utilization_id);
+    @Query("select * from StockUtilization where id in (:id)")
+    public List<StockUtilization> getStockUtilizationById(int id);
 }

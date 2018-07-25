@@ -21,6 +21,8 @@ import java.util.concurrent.ExecutionException;
 
 public class PlantingProgramItem {
     public static PlantingProgramItem selectedPlantingProgram;
+    public static List<PlantingProgramItem> staticPlantingPrograms;
+
 
     public int id;
     private double estimated_cost;

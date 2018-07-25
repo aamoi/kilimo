@@ -18,6 +18,7 @@
         <item>Maize</item>
     </string-array>
 
+    <!--Restocking spinners-->
     <string-array name="dummy_vendor">
         <item>Select vendor</item>
     </string-array>
@@ -33,6 +34,20 @@
     <string-array name="dummy_location">
         <item>Select location</item>
     </string-array>
+
+    <!--Stock utilization-->
+    <string-array name="dummy_project">
+        <item>Select project</item>
+    </string-array>
+
+    <string-array name="dummy_phase">
+        <item>Select phase</item>
+    </string-array>
+
+    <string-array name="dummy_task">
+        <item>Select task</item>
+    </string-array>
+
 
     <string name="location_prompt">Select location</string>
     <string-array name="location_array">

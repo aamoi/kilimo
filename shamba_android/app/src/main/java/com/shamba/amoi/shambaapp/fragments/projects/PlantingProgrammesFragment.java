@@ -231,6 +231,7 @@ public class PlantingProgrammesFragment extends BaseFragment {
 
                     plantingProgramItems.add(planting);
                 }
+                PlantingProgramItem.staticPlantingPrograms=plantingProgramItems;
 
             } catch (IOException e) {
                 e.printStackTrace();

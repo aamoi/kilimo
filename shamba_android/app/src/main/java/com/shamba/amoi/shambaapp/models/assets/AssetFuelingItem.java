@@ -8,7 +8,6 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.assets.AssetFueling;
 import com.shamba.amoi.shambaapp.db.assets.AssetFuelingDao;
-import com.shamba.amoi.shambaapp.models.inventory.InventoryUtilizationItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -94,7 +93,7 @@ public class AssetFuelingItem {
  */
 class GetAssetFuelings extends AsyncTask<Void, Void, List<AssetFuelingItem>> {
 
-    public String TAG=new InventoryUtilizationItem().TAG;
+//    public String TAG=new InventoryUtilizationItem().TAG;
     AssetFuelingDao assetFuelingDao;
     AssetFueling assetFueling;
     Activity activity;
@@ -127,7 +126,7 @@ class GetAssetFuelings extends AsyncTask<Void, Void, List<AssetFuelingItem>> {
 
             assetFuelingItems.add(assetFuelingItem);
         }
-        Log.d(TAG, "Asset fueling is :" + String.valueOf(assetFuelingItems.size()));
+//        Log.d(TAG, "Asset fueling is :" + String.valueOf(assetFuelingItems.size()));
         return assetFuelingItems;
     }
 
