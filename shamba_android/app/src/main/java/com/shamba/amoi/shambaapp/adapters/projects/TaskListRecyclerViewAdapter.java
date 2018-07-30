@@ -1,5 +1,6 @@
 package com.shamba.amoi.shambaapp.adapters.projects;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,14 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = tasks.get(position);
+
+        String complete_status= holder.mItem.getComplete_status();
+
+        if(!(complete_status.equalsIgnoreCase("Complete"))){
+            holder.mIdView.setBackgroundColor(Color.RED);
+            holder.mContentView.setBackgroundColor(Color.RED);
+        }
+
         holder.mIdView.setText(tasks.get(position).getTask_name());
 
         holder.mContentView.setText(tasks.get(position).getPlanned_start_date());
@@ -84,8 +93,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
                 @Override
                 public void onSelectNegativeDialogueOption(){
                     TaskItem.selectedTaskItem=mItem;
-//                    BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
-//                            new TaskSchedulingActuals());
+
                     BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
                             TaskSchedulingFragment.newInstance("view",""));
                 }

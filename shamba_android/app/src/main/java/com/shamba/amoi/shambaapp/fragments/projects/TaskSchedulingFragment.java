@@ -250,7 +250,7 @@ public class TaskSchedulingFragment extends BaseFragment {
         required_products = edit_required_products.getText().toString();
         details = edit_details.getText().toString();
         spn_task_complete_status.setEnabled(true);
-        task_complete_status=spn_task_complete_status.getSelectedItem().toString();
+        task_complete_status = spn_task_complete_status.getSelectedItem().toString();
     }
 
     private void addActualDetails() {
@@ -344,12 +344,6 @@ public class TaskSchedulingFragment extends BaseFragment {
     }
 
     class SaveScheduleTask extends AsyncTask<Void, Void, Integer> {
-        JSONObject request_object = new JSONObject();
-        JSONObject response_object = new JSONObject();
-
-        Task task;
-        TaskDao taskDao;
-
         public int task_id;
         public int project_id;
         public int phase_id;
@@ -370,16 +364,11 @@ public class TaskSchedulingFragment extends BaseFragment {
         public String required_products;
         public String details;
         public String status;
-
+        JSONObject request_object = new JSONObject();
+        JSONObject response_object = new JSONObject();
+        Task task;
+        TaskDao taskDao;
         int success = 0;
-
-        public int getPhase_id() {
-            return phase_id;
-        }
-
-        public void setPhase_id(int phase_id) {
-            this.phase_id = phase_id;
-        }
 
         public SaveScheduleTask(int project_id, int phase_id, String task_name, String planned_startDate,
                                 String actual_startDate, String planned_endDate, String actual_endDate,
@@ -408,6 +397,14 @@ public class TaskSchedulingFragment extends BaseFragment {
             this.status = status;
         }
 
+        public int getPhase_id() {
+            return phase_id;
+        }
+
+        public void setPhase_id(int phase_id) {
+            this.phase_id = phase_id;
+        }
+
         @Override
         public void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
@@ -427,12 +424,18 @@ public class TaskSchedulingFragment extends BaseFragment {
                 request_object.put("required_assets", required_assets);
                 request_object.put("required_products", required_products);
                 request_object.put("details", details);
-//                request_object.put("actual_start_date", actual_startDate);
-//                request_object.put("actual_end_date", actual_endDate);
-//                request_object.put("actual_days", actual_days);
-//                request_object.put("actual_persons", actual_people);
-//                request_object.put("actual_cost", actual_cost);
-//                request_object.put("actual_revenue", actual_revenue);
+
+                if (view_type.contains("edit")) {
+                    Log.d("++++++","++++++");
+                    request_object.put("actual_start_date", actual_startDate);
+                    request_object.put("actual_end_date", actual_endDate);
+                    request_object.put("actual_days", actual_days);
+                    request_object.put("actual_persons", actual_people);
+                    request_object.put("actual_cost", actual_cost);
+                    request_object.put("actual_revenue", actual_revenue);
+                    request_object.put("completion_status", status);
+
+                }
 
                 Log.d("Task request...", request_object.toString());
 
@@ -455,8 +458,8 @@ public class TaskSchedulingFragment extends BaseFragment {
              */
             try {
                 if (view_type.contains("edit")) {
-                    response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
-                            "updateTask/", request_object.toString());
+                    response_object = CommonHelper.sendPutRequestWithJsonResponse(BuildConfig.SERVER_URL,
+                            "updateTask/"+String.valueOf(taskItem.getId()), request_object.toString());
                 } else if (view_type.contains("new")) {
                     response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
                             "createTask/", request_object.toString());
@@ -479,7 +482,7 @@ public class TaskSchedulingFragment extends BaseFragment {
             /**
              * Saving planting record to local db only if the record is send to the server!
              */
-            if (task_id > 0) {
+            if ((task_id > 0)&&view_type.contains("new")) {
                 try {
                     task.setId(task_id);
                     task.setProject_id(project_id);

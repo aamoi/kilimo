@@ -54,6 +54,21 @@ public class CommonHelper {
         return  jsonObject;
     }
 
+    public static JSONObject sendPutRequestWithJsonResponse(String requestUrl, String path, String params)
+            throws IOException {
+
+        String response=sendRequest(requestUrl + path,params,"PUT","");
+
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return  jsonObject;
+    }
+
 //    public static String sendPostRequest(String requestUrl, String path, String params,
 //                                         String authToken) throws IOException {
 //        return sendRequest(requestUrl + path, params, "POST", authToken);

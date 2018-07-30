@@ -50,6 +50,16 @@ public class TaskItem {
     private String required_products;
     private String details;
 
+    private String complete_status;
+
+    public String getComplete_status() {
+        return complete_status;
+    }
+
+    public void setComplete_status(String complete_status) {
+        this.complete_status = complete_status;
+    }
+
     public String getRequired_assets() {
         return required_assets;
     }
@@ -426,6 +436,9 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
 
                 String details=jsonObject.getString("details");
                 taskItem.setDetails(details);
+
+                String completion_status=jsonObject.getString("completion_status");
+                taskItem.setComplete_status(completion_status);
 
                 taskItems.add(taskItem);
             }
