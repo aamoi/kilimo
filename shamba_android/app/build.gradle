@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 
+
 android {
     compileSdkVersion 23
     defaultConfig {
@@ -23,7 +24,7 @@ android {
 
         local {
             dimension = "environmentType"
-            buildConfigField "String", "SERVER_URL", '\"http://10.157.199.125:8080/\"'
+            buildConfigField "String", "SERVER_URL", '\"http://10.157.199.161:8080/\"'
         }
     }
 

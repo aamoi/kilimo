@@ -62,10 +62,11 @@ public class ProductStockController {
         double location_balance = location_balance_str==null?0:Double.parseDouble(location_balance_str);
         String mpesa_txn_number = body.get("mpesa_txn_number");
         String receipt_upload = body.get("receipt_upload");
+        String stock_order_status=body.get("stock_order_status");
 
         return productStockRepository.save(new ProductStock(product_id,vendor_id,distributor_id,manufacturer_id,
                 purchase_quantity,purchase_price ,purchase_details,purchase_date ,location_id,location_balance,
-                mpesa_txn_number,receipt_upload));
+                mpesa_txn_number,receipt_upload,stock_order_status));
     }
 
     @PutMapping("/updateProductStock/{id}")

@@ -29,6 +29,15 @@ public class ProductStock {
     private double location_balance;
     private String mpesa_txn_number;
     private String receipt_upload;
+    private String stock_order_status;
+
+    public String getStock_order_status() {
+        return stock_order_status;
+    }
+
+    public void setStock_order_status(String stock_order_status) {
+        this.stock_order_status = stock_order_status;
+    }
 
     public int getDistributor_id() {
         return distributor_id;
@@ -142,7 +151,7 @@ public class ProductStock {
 
     public ProductStock(int product_id,int vendor_id,int manufacturer_id,int distributor_id,double purchase_quantity,
                         double purchase_price,String purchase_details,Date purchase_date ,int location_id,
-                        double location_balance,String mpesa_txn_number,String receipt_upload) {
+                        double location_balance,String mpesa_txn_number,String receipt_upload,String stock_order_status) {
         this.product_id = product_id;
         this.vendor_id = vendor_id;
         this.manufacturer_id = manufacturer_id;
@@ -155,6 +164,7 @@ public class ProductStock {
         this.location_balance = location_balance;
         this.mpesa_txn_number = mpesa_txn_number;
         this.receipt_upload = receipt_upload;
+        this.stock_order_status=stock_order_status;
     }
 
     @Override
@@ -174,6 +184,8 @@ public class ProductStock {
                 ", location_balance='" + location_balance + '\'' +
                 ", mpesa_txn_number='" + mpesa_txn_number + '\'' +
                 ", receipt_upload='" + receipt_upload + '\'' +
+                ", stock_order_status='" + stock_order_status + '\'' +
+
                 + '}';
     }
 }

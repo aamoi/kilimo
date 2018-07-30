@@ -72,6 +72,13 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+    <string-array name="stock_delivery_status" />
+    <string-array name="stock_delivery_status_value">
+        <item>Stock order status?</item>
+        <item>Delivered</item>
+        <item>Pre-order</item>
+    </string-array>
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

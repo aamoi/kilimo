@@ -81,15 +81,6 @@ public class TaskSchedulingActuals extends BaseFragment {
     public TaskSchedulingActuals() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskSchedulingActuals.
-     */
     // TODO: Rename and change types and number of parameters
     public static TaskSchedulingActuals newInstance(String param1, String param2) {
         TaskSchedulingActuals fragment = new TaskSchedulingActuals();
@@ -112,19 +103,16 @@ public class TaskSchedulingActuals extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the submit_form_details for this fragment
         View view= inflater.inflate(R.layout.fragment_task_scheduling_actuals,
                 container, false);
-//
-//        plantingProgramItem= BaseFragment.plantingProgramItem;
-//        plantingPhaseItem= BaseFragment.plantingPhaseItem;
-        taskItem=BaseFragment.taskItem;
+        taskItem=TaskItem.selectedTaskItem;
 
         product_name=(TextView) view.findViewById(R.id.product_name);
         planting_name=(TextView) view.findViewById(R.id.planting_name);
         planting_phase=(TextView) view.findViewById(R.id.planting_phase);
 
 //        product_name.setText(plantingProgramItem.getPlanting_produce());
+
         planting_name.setText(plantingProgramItem.getPlanting_name());
         planting_phase.setText(plantingPhaseItem.getPhase_name());
 
@@ -195,12 +183,6 @@ public class TaskSchedulingActuals extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -209,16 +191,6 @@ public class TaskSchedulingActuals extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

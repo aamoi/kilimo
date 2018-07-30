@@ -1,9 +1,12 @@
 package com.shamba.amoi.shambaapp.adapters.inventory;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +63,17 @@ public class ProductStockRecyclerViewAdapter extends
         holder.stock_date.setText(purchase_date);
         holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).getPurchase_quantity()));
 
+        String order_status = product_stock_list.get(position).getStock_order_status();
+
+        if(!(order_status==null)) {
+            Log.d("Stock list item status",order_status);
+            if(!order_status.equalsIgnoreCase("Delivered"))
+               holder.stock_view.setBackgroundColor(Color.MAGENTA);
+        }
+       else{
+            Log.d("Stock list item null",order_status);
+        }
+
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +97,7 @@ public class ProductStockRecyclerViewAdapter extends
         public final TextView stock_quantity;
         public ProductStockItem inv_stock_Item;
 
+        @SuppressLint("ResourceAsColor")
         public ViewHolder(View view) {
             super(view);
             stock_view = view;
@@ -132,7 +147,6 @@ public class ProductStockRecyclerViewAdapter extends
                     }
                 }
             };
-
             stock_view.setOnClickListener(listener);
             supplier_name.setOnClickListener(listener);
             stock_date.setOnClickListener(listener);

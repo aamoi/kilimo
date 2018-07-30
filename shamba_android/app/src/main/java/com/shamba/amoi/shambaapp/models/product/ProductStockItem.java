@@ -37,6 +37,15 @@ public class ProductStockItem {
     private double location_balance;
     private String mpesa_txn_number;
     private String receipt_upload;
+    private String stock_order_status;
+
+    public String getStock_order_status() {
+        return stock_order_status;
+    }
+
+    public void setStock_order_status(String stock_order_status) {
+        this.stock_order_status = stock_order_status;
+    }
 
     public int getDistributor_id() {
         return distributor_id;
@@ -158,5 +167,23 @@ public class ProductStockItem {
             }
         }
         return productStockItem;
+    }
+
+    /**
+     * get product stock items by product id.
+     * @param productStockItems
+     * @param product_id
+     * @return
+     */
+    public static List<ProductStockItem> getProductStockItemByProductId(List<ProductStockItem> productStockItems,
+                                                           int product_id) {
+        List<ProductStockItem> productStockItemList = new ArrayList<>();
+
+        for (int i = 0; i < productStockItems.size(); ++i) {
+            if (productStockItems.get(i).getProduct_id() == product_id) {
+                productStockItemList.add(productStockItems.get(i));
+            }
+        }
+        return productStockItemList;
     }
 }

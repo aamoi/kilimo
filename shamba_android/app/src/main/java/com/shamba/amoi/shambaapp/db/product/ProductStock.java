@@ -30,6 +30,7 @@ public class ProductStock {
     private double location_balance;
     private String mpesa_txn_number;
     private String receipt_upload;
+    private String stock_order_status;
 
     public int getDistributor_id() {
         return distributor_id;
@@ -135,5 +136,12 @@ public class ProductStock {
         this.receipt_upload = receipt_upload;
     }
 
+    public String getStock_order_status() {
+        return stock_order_status;
+    }
+
+    public void setStock_order_status(String stock_order_status) {
+        this.stock_order_status = stock_order_status;
+    }
 }
 

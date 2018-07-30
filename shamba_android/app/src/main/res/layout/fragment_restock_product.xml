@@ -85,6 +85,12 @@
             android:layout_marginTop="10dp"
             android:hint="Upload receipt here"
             android:inputType="text" />
+
+        <Spinner
+            android:id="@+id/spn_delivery_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/stock_delivery_status_value"  />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

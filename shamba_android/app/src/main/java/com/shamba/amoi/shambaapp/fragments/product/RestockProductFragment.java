@@ -47,6 +47,8 @@ public class RestockProductFragment extends BaseFragment {
     EditText edit_purchase_details;
     EditText edit_mpesa_txn_number;
     EditText edit_receipt_upload;
+    Spinner spn_delivery_status;
+
 
     Button submit;
 
@@ -60,6 +62,7 @@ public class RestockProductFragment extends BaseFragment {
     int location_id;
     String mpesa_txn_number;
     String receipt_upload;
+    String delivery_status;
 
     ProductItem productItem;
     private OnFragmentInteractionListener mListener;
@@ -112,10 +115,12 @@ public class RestockProductFragment extends BaseFragment {
                 purchase_date = edit_purchase_date.getText().toString();
                 mpesa_txn_number = edit_mpesa_txn_number.getText().toString();
                 receipt_upload = edit_receipt_upload.getText().toString();
+                delivery_status = spn_delivery_status.getSelectedItem().toString();
+
 
                 SaveStockToDB save_stock = new SaveStockToDB(product_id, vendor_id, distributor_id,
                         manufacturer_id, purchase_quantity, purchase_price, purchase_details,
-                        purchase_date, location_id, mpesa_txn_number, receipt_upload);
+                        purchase_date, location_id, mpesa_txn_number, receipt_upload,delivery_status);
                 try {
                     save_stock.execute().get();
                 } catch (Exception e) {
@@ -132,6 +137,7 @@ public class RestockProductFragment extends BaseFragment {
 
         spn_location = (Spinner) view.findViewById(R.id.spn_location);
         List<String> locations = new ArrayList<>();
+        locations.add("Select location...");
         List<LocationItem> locationItems = LocationItem.staticLocationItemList;
         for (int i = 0; i < locationItems.size(); ++i) {
             locations.add(locationItems.get(i).getLocation_name());
@@ -141,6 +147,8 @@ public class RestockProductFragment extends BaseFragment {
 
         spn_vendor = (Spinner) view.findViewById(R.id.spn_vendor);
         List<String> vendors = new ArrayList<>();
+        vendors.add("Select vendor...");
+
         List<VendorItem> vendorItems = VendorItem.staticVendorItemList;
         for (int i = 0; i < vendorItems.size(); ++i) {
             vendors.add(vendorItems.get(i).getVendor_name());
@@ -150,6 +158,8 @@ public class RestockProductFragment extends BaseFragment {
 
         spn_distributor = (Spinner) view.findViewById(R.id.spn_distributor);
         List<String> distributors = new ArrayList<>();
+        distributors.add("Select distributor...");
+
         List<DistributorItem> distributorItems = DistributorItem.staticDistributorItems;
         for (int i = 0; i < distributorItems.size(); ++i) {
             distributors.add(distributorItems.get(i).getDistributor_name());
@@ -159,6 +169,8 @@ public class RestockProductFragment extends BaseFragment {
 
         spn_manufacturer = (Spinner) view.findViewById(R.id.spn_manufacturer);
         List<String> manufacturers = new ArrayList<>();
+        manufacturers.add("Select manufacturer...");
+
         List<ManufacturerItem> manufacturerItems = ManufacturerItem.staticManufacturerItemList;
         for (int i = 0; i < (manufacturerItems != null ? manufacturerItems.size() : 0); ++i) {
             manufacturers.add(manufacturerItems.get(i).getManufacturer_name());
@@ -171,7 +183,7 @@ public class RestockProductFragment extends BaseFragment {
         edit_purchase_details = (EditText) view.findViewById(R.id.edit_purchase_details);
         edit_mpesa_txn_number = (EditText) view.findViewById(R.id.edit_mpesa_txn_number);
         edit_receipt_upload = (EditText) view.findViewById(R.id.edit_receipt_upload);
-
+        spn_delivery_status = (Spinner) view.findViewById(R.id.spn_delivery_status);
         edit_purchase_date = (EditText) view.findViewById(R.id.edit_purchase_date);
         new DatePickerUtility(edit_purchase_date);
 
@@ -208,6 +220,7 @@ public class RestockProductFragment extends BaseFragment {
         public int location_id;
         public String mpesa_txn_number;
         public String receipt_upload;
+        public String delivery_status;
 
         int success = 0;
         int stock_id;
@@ -222,7 +235,7 @@ public class RestockProductFragment extends BaseFragment {
         public SaveStockToDB(int product_id, int vendor_id, int distributor_id,
                              int manufacturer_id, double purchase_quantity, double purchase_price,
                              String purchase_details, String purchase_date, int location_id,
-                             String mpesa_txn_number, String receipt_upload) {
+                             String mpesa_txn_number, String receipt_upload,String delivery_status) {
 
             this.product_id = product_id;
             this.vendor_id = vendor_id;
@@ -235,6 +248,7 @@ public class RestockProductFragment extends BaseFragment {
             this.location_id = location_id;
             this.mpesa_txn_number = mpesa_txn_number;
             this.receipt_upload = receipt_upload;
+            this.delivery_status=delivery_status;
         }
 
         @Override
@@ -255,6 +269,8 @@ public class RestockProductFragment extends BaseFragment {
                 request_object.put("location_id", location_id);
                 request_object.put("mpesa_txn_number", mpesa_txn_number);
                 request_object.put("receipt_upload", receipt_upload);
+                request_object.put("stock_order_status", delivery_status);
+
 
                 Log.d("Stock request...", request_object.toString());
 
@@ -276,6 +292,8 @@ public class RestockProductFragment extends BaseFragment {
                 productStock.setPurchase_quantity(purchase_quantity);
                 productStock.setReceipt_upload(receipt_upload);
                 productStock.setVendor_id(vendor_id);
+                productStock.setStock_order_status(delivery_status);
+
 
                 Log.d("Stock db request...", productStock.toString());
             } catch (Exception e) {

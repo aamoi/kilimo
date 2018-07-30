@@ -352,7 +352,7 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
                 taskItem.setTask_name(task_name);
 
                 String planned_start_date=jsonObject.getString("planned_start_date");
-                taskItem.setActual_start_date(planned_start_date);
+                taskItem.setPlanned_start_date(planned_start_date);
 
                 String planned_end_date=jsonObject.getString("planned_end_date");
                 taskItem.setPlanned_end_date(planned_end_date);

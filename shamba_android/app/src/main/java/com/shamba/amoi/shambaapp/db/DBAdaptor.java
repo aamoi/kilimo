@@ -20,6 +20,8 @@ public class DBAdaptor {
 
     public ShambaAppDB getDB() {
 
+//        ShambaAppDB db = Room.databaseBuilder(context_activity.getApplicationContext(),
+//                ShambaAppDB.class, "shamba_app_db").fallbackToDestructiveMigration().build();
         ShambaAppDB db = Room.databaseBuilder(context_activity.getApplicationContext(),
                 ShambaAppDB.class, "shamba_app_db").build();
         return db;

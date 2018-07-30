@@ -18,6 +18,7 @@ import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.adapters.inventory.ProductStockRecyclerViewAdapter;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.db.product.ProductStock;
 import com.shamba.amoi.shambaapp.db.product.ProductStockDao;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
@@ -67,15 +68,21 @@ public class ProductStockFragment extends BaseFragment {
 
         List<ProductStockItem> product_stock_list = new ArrayList<>();
 
+
+        List<ProductStockItem> all_stocks = new ArrayList<>();
+
 //        product_stock_list = ProductStockItem.staticProductStockItemList;
 
         try {
-            product_stock_list = new GetProductStocks().execute().get();
+            all_stocks = new GetProductStocks().execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        product_stock_list=ProductStockItem.getProductStockItemByProductId(all_stocks,ProductItem.
+                selectedProductItem.getId());
 
         double total_quantity = 0.0;
 
@@ -213,6 +220,9 @@ public class ProductStockFragment extends BaseFragment {
 
                     String receipt_upload=jsonObject.getString("receipt_upload");
                     productStockItem.setReceipt_upload(receipt_upload);
+
+                    String stock_order_status=jsonObject.getString("stock_order_status");
+                    productStockItem.setStock_order_status(stock_order_status);
 
                     productStockItems.add(productStockItem);
                 }

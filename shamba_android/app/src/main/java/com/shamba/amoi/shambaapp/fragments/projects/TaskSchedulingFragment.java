@@ -122,11 +122,15 @@ public class TaskSchedulingFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         getActivity().setTitle(R.string.title_fragment_add_task);
         // Inflate the submit_form_details for this fragment
-        View view = inflater.inflate(R.layout.fragment_task_scheduling, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_scheduling, container,
+                false);
+
+        boolean isNew=view_type.equalsIgnoreCase("edit");
 
         plantingProgramItem = PlantingProgramItem.selectedPlantingProgram;
         phaseItem = PhaseItem.selectedPhaseItem;
 //        taskItem=BaseFragment.taskItem;
+        taskItem=isNew?(new TaskItem()):TaskItem.selectedTaskItem;
 
         product_id = plantingProgramItem.getProduct_id();
         produce_name = ProductItem.getProductItemByID(ProductItem.staticProductItemList, product_id).
@@ -142,10 +146,12 @@ public class TaskSchedulingFragment extends BaseFragment {
 
         findViewByIds(view);
 
-        if (view_type.contains("view")) {
-            viewTaskDetails();
-        } else if (view_type.contains("new")) {
-            editPlanOnlyView();
+        if (view_type.contains("edit")) {
+            addActualDetails();
+
+            } else if (view_type.contains("new")) {
+            addPlannedDetails();
+
             btn_submit_task = (Button) view.findViewById(R.id.btn_submit_task);
             btn_submit_task.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,15 +182,6 @@ public class TaskSchedulingFragment extends BaseFragment {
 
                     BaseFragment.changeFragment((AppCompatActivity) getActivity(),
                             R.id.fragment_placeholder_home,new TaskListFragment());
-//
-//                    BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-//                            R.id.fragment_placeholder_home, new PlantingProgrammesFragment());
-//
-//                    TaskListFragment fragment = new Fragment();
-//                    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-//                    ft.replace(R.id.fragment_placeholder_home, fragment);
-//                    ft.addToBackStack(null);
-//                    ft.commit();
                 }
             });
 
@@ -212,23 +209,31 @@ public class TaskSchedulingFragment extends BaseFragment {
         edit_details = (EditText) view.findViewById(R.id.edit_details);
     }
 
-    private void viewTaskDetails() {
-        edit_task_name.setText(taskItem.getTask_name());
+    private void addActualDetails() {
+        taskItem=TaskItem.selectedTaskItem;
+        edit_task_name.setText(TaskItem.selectedTaskItem.getTask_name());
         edit_task_name.setEnabled(false);
 
         edit_planned_days.setText(String.valueOf(taskItem.getPlanned_days()));
         edit_planned_days.setEnabled(false);
 
-        edit_planned_startDate.setText(String.valueOf(taskItem.getActual_start_date()));
+        String start_date_planned=String.valueOf(taskItem.getPlanned_start_date());
+
+        edit_planned_startDate.setText(String.valueOf(taskItem.getPlanned_start_date()));
+
         edit_planned_startDate.setEnabled(false);
 
         edit_planned_endDate.setText(taskItem.getPlanned_end_date());
         edit_planned_endDate.setEnabled(false);
 
-        edit_planned_people.setText(taskItem.getPlanned_persons());
+        edit_planned_people.setText(String.valueOf(taskItem.getPlanned_persons()));
         edit_planned_people.setEnabled(false);
 
         edit_planned_cost.setText(String.valueOf(taskItem.getEstimated_cost()));
+        edit_planned_cost.setEnabled(false);
+
+
+        edit_planned_revenue.setText(String.valueOf(taskItem.getEstimated_revenue()));
         edit_planned_cost.setEnabled(false);
 
         edit_actual_days.setText(String.valueOf(taskItem.getActual_days()));
@@ -259,7 +264,7 @@ public class TaskSchedulingFragment extends BaseFragment {
 //        edit_details.setEnabled(false);
     }
 
-    private void editPlanOnlyView() {
+    private void addPlannedDetails() {
         new DatePickerUtility(edit_planned_startDate).setDateOnEditTextField();
         new DatePickerUtility(edit_planned_endDate).setDateOnEditTextField();
 
@@ -281,12 +286,7 @@ public class TaskSchedulingFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @Override
@@ -295,16 +295,6 @@ public class TaskSchedulingFragment extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

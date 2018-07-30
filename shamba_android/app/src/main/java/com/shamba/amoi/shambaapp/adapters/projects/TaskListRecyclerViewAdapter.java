@@ -21,7 +21,8 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRecyclerViewAdapter.ViewHolder> {
+public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRecyclerViewAdapter.
+        ViewHolder> {
 
     private final List<TaskItem> tasks;
     private final OnListFragmentInteractionListener mListener;
@@ -79,19 +80,21 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
 
             DialogUtility dialogUtility= new DialogUtility(homeActivity,
                     "Schedule Task Action?",
-                    "Actuals","Details"){
+                    "Details","Actuals",""){
                 @Override
                 public void onSelectNegativeDialogueOption(){
-                    BaseFragment.taskItem=mItem;
+                    TaskItem.selectedTaskItem=mItem;
+//                    BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
+//                            new TaskSchedulingActuals());
                     BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
-                            new TaskSchedulingActuals());
+                            TaskSchedulingFragment.newInstance("view",""));
                 }
 
                 @Override
                 public void onSelectPostiveDialogueOption(){
-                    BaseFragment.taskItem=mItem;
+                    TaskItem.selectedTaskItem=mItem;
                     BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
-                            TaskSchedulingFragment.newInstance("view",""));
+                            TaskSchedulingFragment.newInstance("edit",""));
                 }
             };
 

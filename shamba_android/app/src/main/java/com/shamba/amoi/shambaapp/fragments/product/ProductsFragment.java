@@ -59,7 +59,6 @@ public class ProductsFragment extends BaseFragment {
 //        productItems=getProductList();
         productItems= ProductItem.staticProductItemList;
 
-
         getActivity().setTitle(String.valueOf(productItems.size())+" "+
                 getString(R.string.title_fragment_product_list));
 
