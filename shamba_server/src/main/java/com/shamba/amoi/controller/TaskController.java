@@ -63,6 +63,12 @@ public class TaskController {
         double estimated_cost=Double.parseDouble(body.get("estimated_cost"));
         double estimated_revenue=Double.parseDouble(body.get("estimated_revenue"));
 
+        String required_assets=body.get("required_assets");
+        String required_products=body.get("required_products");
+        String details=body.get("details");
+
+        String completion_status=body.get("completion_status");
+
         @Nullable
         Date actual_start_date= DateUtil.nullableStringToDate(body.get("actual_start_date"));
         @Nullable
@@ -77,25 +83,41 @@ public class TaskController {
         double actual_revenue=nullableStringToDouble(body.get("actual_revenue"));
 
         return taskRepository.save(new Task(project_id,task_name,planned_start_date,planned_end_date,planned_days,
-                phase_id,planned_persons,estimated_cost,estimated_revenue,actual_start_date,actual_end_date,
-                actual_days,actual_persons,actual_cost,actual_revenue));
+                phase_id,planned_persons,estimated_cost,estimated_revenue,actual_start_date,actual_end_date,actual_days,
+                actual_persons,actual_cost,actual_revenue,required_assets,required_products,details, completion_status));
 
     }
 
-//    @PutMapping("/updatePlanting/{id}")
-//    public Planting update(@PathVariable String id, @RequestBody Map<String, String> body) {
-//
-//        int planting_id = Integer.parseInt(id);
-//        Planting planting=plantingRepository.getOne(planting_id);
-//
-//        String name = body.get("name");
-//        planting.setName(name);
-//
-//        double seed_quantity = Double.parseDouble(body.get("seed_quantity"));
-//        planting.setSeed_quantity(seed_quantity);
-//        return plantingRepository.save(planting);
-////        return null;
-//    }
+    @PutMapping("/updateTask/{id}")
+    public Task update(@PathVariable String id, @RequestBody Map<String, String> body) {
+
+        int task_id = Integer.parseInt(id);
+
+        Task task=taskRepository.getOne(task_id);
+
+        Date  actual_start_date =DateUtil.stringToDate(body.get("actual_start_date"));
+        task.setActual_start_date(actual_start_date);
+        Date  actual_end_date =DateUtil.stringToDate(body.get("actual_end_date"));
+        task.setActual_end_date(actual_end_date);
+
+        double  actual_days = Double.parseDouble(body.get("actual_days"));
+        task.setActual_days(actual_days);
+
+        double  actual_persons = Double.parseDouble(body.get("actual_persons"));
+        task.setActual_persons(actual_persons);
+
+        double  actual_cost = Double.parseDouble(body.get("actual_cost"));
+        task.setActual_cost(actual_cost);
+
+        double  actual_revenue = Double.parseDouble(body.get("actual_revenue"));
+        task.setActual_revenue(actual_revenue);
+
+        String  completion_status =body.get("completion_status");
+        task.setCompletion_status(completion_status);
+
+        return taskRepository.save(task);
+//        return null;
+    }
 
 //    @DeleteMapping("/deletePlanting/{id}")
 //    public void delete(@PathVariable String id) {

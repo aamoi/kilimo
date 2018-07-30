@@ -478,6 +478,14 @@
                         android:inputType="text" />
                 </LinearLayout>
 
+                <Spinner
+                    android:id="@+id/spn_task_complete_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/task_complete_status"
+                    android:layout_marginTop="10dp"/>
+
+
             </LinearLayout>
         </ScrollView>
 

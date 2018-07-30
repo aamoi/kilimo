@@ -1,7 +1,5 @@
 package com.shamba.amoi.shambaapp.fragments.projects;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
@@ -30,6 +30,7 @@ import com.shamba.amoi.shambaapp.shareResources.DatePickerUtility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class TaskSchedulingFragment extends BaseFragment {
@@ -70,6 +71,9 @@ public class TaskSchedulingFragment extends BaseFragment {
     EditText edit_required_products;
     EditText edit_details;
 
+    Spinner spn_task_complete_status;
+    String task_complete_status;
+
     String task_name;
     String planned_startDate;
     String actual_startDate;
@@ -77,8 +81,8 @@ public class TaskSchedulingFragment extends BaseFragment {
     String actual_endDate;
     double planned_days;
     double actual_days;
-    int planned_people;
-    int actual_people;
+    double planned_people;
+    double actual_people;
     double planned_cost;
     double actual_cost;
     double planned_revenue;
@@ -89,14 +93,12 @@ public class TaskSchedulingFragment extends BaseFragment {
 
     Button btn_submit_task;
 
-    // TODO: Rename and change types of parameters
     private String view_type;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
     public TaskSchedulingFragment() {
-        // Required empty public constructor
     }
 
     public static TaskSchedulingFragment newInstance(String view_type, String param2) {
@@ -121,16 +123,14 @@ public class TaskSchedulingFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle(R.string.title_fragment_add_task);
-        // Inflate the submit_form_details for this fragment
         View view = inflater.inflate(R.layout.fragment_task_scheduling, container,
                 false);
 
-        boolean isNew=view_type.equalsIgnoreCase("edit");
+        boolean isNew = view_type.equalsIgnoreCase("edit");
 
         plantingProgramItem = PlantingProgramItem.selectedPlantingProgram;
         phaseItem = PhaseItem.selectedPhaseItem;
-//        taskItem=BaseFragment.taskItem;
-        taskItem=isNew?(new TaskItem()):TaskItem.selectedTaskItem;
+        taskItem = isNew ? (new TaskItem()) : TaskItem.selectedTaskItem;
 
         product_id = plantingProgramItem.getProduct_id();
         produce_name = ProductItem.getProductItemByID(ProductItem.staticProductItemList, product_id).
@@ -148,44 +148,49 @@ public class TaskSchedulingFragment extends BaseFragment {
 
         if (view_type.contains("edit")) {
             addActualDetails();
-
-            } else if (view_type.contains("new")) {
+        } else if (view_type.contains("new")) {
             addPlannedDetails();
-
-            btn_submit_task = (Button) view.findViewById(R.id.btn_submit_task);
-            btn_submit_task.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    task_name = edit_task_name.getText().toString();
-                    planned_startDate = edit_planned_startDate.getText().toString();
-                    actual_startDate = edit_actual_startDate.getText().toString();
-                    planned_endDate = edit_planned_endDate.getText().toString();
-                    actual_endDate = edit_actual_endDate.getText().toString();
-                    planned_days = Double.parseDouble(edit_planned_days.getText().toString());
-//                    actual_days = Double.parseDouble(edit_actual_days.getText().toString());
-                    planned_people = Integer.parseInt(edit_planned_people.getText().toString());
-//                    actual_people = Double.parseDouble(edit_actual_people.getText().toString());
-                    planned_cost = Double.parseDouble(edit_planned_cost.getText().toString());
-//                    actual_cost = Double.parseDouble(edit_actual_cost.getText().toString());
-                    planned_revenue = Double.parseDouble(edit_planned_revenue.getText().toString());
-//                    actual_revenue = Double.parseDouble(edit_actual_revenue.getText().toString());
-
-                    required_assets = edit_required_assets.getText().toString();
-                    required_products = edit_required_products.getText().toString();
-                    details = edit_details.getText().toString();
-
-                    new SaveScheduleTask(plantingProgramItem.id,phaseItem.getId(),task_name,
-                            planned_startDate, actual_startDate, planned_endDate,
-                            actual_endDate, planned_days, actual_days, planned_people, actual_people,
-                            planned_cost, actual_cost, planned_revenue, actual_revenue, required_assets,
-                            required_products, details).execute();
-
-                    BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-                            R.id.fragment_placeholder_home,new TaskListFragment());
-                }
-            });
-
         }
+
+        btn_submit_task = (Button) view.findViewById(R.id.btn_submit_task);
+        btn_submit_task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (view_type.contains("edit")) {
+                    getUpdateTaskValues();
+                } else if (view_type.contains("new")) {
+                    getNewTaskValues();
+                }
+//                    task_name = edit_task_name.getText().toString();
+//                    planned_startDate = edit_planned_startDate.getText().toString();
+//                    actual_startDate = edit_actual_startDate.getText().toString();
+//                    planned_endDate = edit_planned_endDate.getText().toString();
+//                    actual_endDate = edit_actual_endDate.getText().toString();
+//                    planned_days = Double.parseDouble(edit_planned_days.getText().toString());
+////                    actual_days = Double.parseDouble(edit_actual_days.getText().toString());
+//                    planned_people = Integer.parseInt(edit_planned_people.getText().toString());
+////                    actual_people = Double.parseDouble(edit_actual_people.getText().toString());
+//                    planned_cost = Double.parseDouble(edit_planned_cost.getText().toString());
+////                    actual_cost = Double.parseDouble(edit_actual_cost.getText().toString());
+//                    planned_revenue = Double.parseDouble(edit_planned_revenue.getText().toString());
+////                    actual_revenue = Double.parseDouble(edit_actual_revenue.getText().toString());
+//                    required_assets = edit_required_assets.getText().toString();
+//                    required_products = edit_required_products.getText().toString();
+//                    details = edit_details.getText().toString();
+
+                new SaveScheduleTask(plantingProgramItem.id, phaseItem.getId(), task_name,
+                        planned_startDate, actual_startDate, planned_endDate,
+                        actual_endDate, planned_days, actual_days, planned_people, actual_people,
+                        planned_cost, actual_cost, planned_revenue, actual_revenue, required_assets,
+                        required_products, details, task_complete_status).execute();
+
+                BaseFragment.changeFragment((AppCompatActivity) getActivity(),
+                        R.id.fragment_placeholder_home, new TaskListFragment());
+            }
+        });
+
+//        }
 
         return view;
     }
@@ -207,20 +212,57 @@ public class TaskSchedulingFragment extends BaseFragment {
         edit_required_assets = (EditText) view.findViewById(R.id.edit_required_assets);
         edit_required_products = (EditText) view.findViewById(R.id.edit_required_products);
         edit_details = (EditText) view.findViewById(R.id.edit_details);
+
+        spn_task_complete_status = (Spinner) view.findViewById(R.id.spn_task_complete_status);
+    }
+
+    private void getNewTaskValues() {
+        task_name = edit_task_name.getText().toString();
+        planned_startDate = edit_planned_startDate.getText().toString();
+        actual_startDate = edit_actual_startDate.getText().toString();
+        planned_endDate = edit_planned_endDate.getText().toString();
+        actual_endDate = edit_actual_endDate.getText().toString();
+        planned_days = Double.parseDouble(edit_planned_days.getText().toString());
+        planned_people = Integer.parseInt(edit_planned_people.getText().toString());
+        planned_cost = Double.parseDouble(edit_planned_cost.getText().toString());
+        planned_revenue = Double.parseDouble(edit_planned_revenue.getText().toString());
+        required_assets = edit_required_assets.getText().toString();
+        required_products = edit_required_products.getText().toString();
+        details = edit_details.getText().toString();
+        spn_task_complete_status.setEnabled(false);
+    }
+
+    private void getUpdateTaskValues() {
+        task_name = edit_task_name.getText().toString();
+        planned_startDate = edit_planned_startDate.getText().toString();
+        actual_startDate = edit_actual_startDate.getText().toString();
+        planned_endDate = edit_planned_endDate.getText().toString();
+        actual_endDate = edit_actual_endDate.getText().toString();
+        planned_days = Double.parseDouble(edit_planned_days.getText().toString());
+        actual_days = Double.parseDouble(edit_actual_days.getText().toString());
+        planned_people = Double.parseDouble(edit_planned_people.getText().toString());
+        actual_people = Double.parseDouble(edit_actual_people.getText().toString());
+        planned_cost = Double.parseDouble(edit_planned_cost.getText().toString());
+        actual_cost = Double.parseDouble(edit_actual_cost.getText().toString());
+        planned_revenue = Double.parseDouble(edit_planned_revenue.getText().toString());
+        actual_revenue = Double.parseDouble(edit_actual_revenue.getText().toString());
+        required_assets = edit_required_assets.getText().toString();
+        required_products = edit_required_products.getText().toString();
+        details = edit_details.getText().toString();
+        spn_task_complete_status.setEnabled(true);
+        task_complete_status=spn_task_complete_status.getSelectedItem().toString();
     }
 
     private void addActualDetails() {
-        taskItem=TaskItem.selectedTaskItem;
+        taskItem = TaskItem.selectedTaskItem;
         edit_task_name.setText(TaskItem.selectedTaskItem.getTask_name());
         edit_task_name.setEnabled(false);
 
         edit_planned_days.setText(String.valueOf(taskItem.getPlanned_days()));
         edit_planned_days.setEnabled(false);
-
-        String start_date_planned=String.valueOf(taskItem.getPlanned_start_date());
+//        String start_date_planned = String.valueOf(taskItem.getPlanned_start_date());
 
         edit_planned_startDate.setText(String.valueOf(taskItem.getPlanned_start_date()));
-
         edit_planned_startDate.setEnabled(false);
 
         edit_planned_endDate.setText(taskItem.getPlanned_end_date());
@@ -232,36 +274,39 @@ public class TaskSchedulingFragment extends BaseFragment {
         edit_planned_cost.setText(String.valueOf(taskItem.getEstimated_cost()));
         edit_planned_cost.setEnabled(false);
 
-
         edit_planned_revenue.setText(String.valueOf(taskItem.getEstimated_revenue()));
-        edit_planned_cost.setEnabled(false);
+        edit_planned_revenue.setEnabled(false);
 
         edit_actual_days.setText(String.valueOf(taskItem.getActual_days()));
-        edit_actual_days.setEnabled(false);
+//        edit_actual_days.setEnabled(false);
 
         edit_actual_startDate.setText(String.valueOf(taskItem.getActual_start_date()));
-        edit_actual_startDate.setEnabled(false);
+//        edit_actual_startDate.setEnabled(false);
 
         edit_actual_endDate.setText(String.valueOf(taskItem.getActual_end_date()));
-        edit_actual_endDate.setEnabled(false);
+//        edit_actual_endDate.setEnabled(false);
+
+        new DatePickerUtility(edit_actual_startDate).setDateOnEditTextField();
+        new DatePickerUtility(edit_actual_endDate).setDateOnEditTextField();
 
         edit_actual_people.setText(String.valueOf(taskItem.getActual_persons()));
-        edit_actual_people.setEnabled(false);
+//        edit_actual_people.setEnabled(false);
 
         edit_actual_cost.setText(String.valueOf(taskItem.getActual_cost()));
-        edit_actual_cost.setEnabled(false);
+//        edit_actual_cost.setEnabled(false);
 
         edit_actual_revenue.setText(String.valueOf(taskItem.getActual_revenue()));
-        edit_actual_revenue.setEnabled(false);
+//        edit_actual_revenue.setEnabled(false);
 
-//        edit_required_products.setText(String.valueOf(taskItem.get()));
+        edit_required_products.setText(String.valueOf(taskItem.getRequired_products()));
 //        edit_required_products.setEnabled(false);
 
-//        edit_required_assets.setText(String.valueOf(taskItem.get()));
+        edit_required_assets.setText(String.valueOf(taskItem.getRequired_assets()));
 //        edit_required_assets.setEnabled(false);
 
-//        edit_details.setText(String.valueOf(taskItem.get()));
+        edit_details.setText(String.valueOf(taskItem.getDetails()));
 //        edit_details.setEnabled(false);
+
     }
 
     private void addPlannedDetails() {
@@ -276,7 +321,6 @@ public class TaskSchedulingFragment extends BaseFragment {
         edit_actual_revenue.setEnabled(false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -296,7 +340,6 @@ public class TaskSchedulingFragment extends BaseFragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -317,8 +360,8 @@ public class TaskSchedulingFragment extends BaseFragment {
         public String actual_endDate;
         public double planned_days;
         public double actual_days;
-        public int planned_people;
-        public int actual_people;
+        public double planned_people;
+        public double actual_people;
         public double planned_cost;
         public double actual_cost;
         public double planned_revenue;
@@ -326,8 +369,9 @@ public class TaskSchedulingFragment extends BaseFragment {
         public String required_assets;
         public String required_products;
         public String details;
+        public String status;
 
-        int success=0;
+        int success = 0;
 
         public int getPhase_id() {
             return phase_id;
@@ -339,10 +383,10 @@ public class TaskSchedulingFragment extends BaseFragment {
 
         public SaveScheduleTask(int project_id, int phase_id, String task_name, String planned_startDate,
                                 String actual_startDate, String planned_endDate, String actual_endDate,
-                                double planned_days, double actual_days, int planned_people,
-                                int actual_people, double planned_cost, double actual_cost,
+                                double planned_days, double actual_days, double planned_people,
+                                double actual_people, double planned_cost, double actual_cost,
                                 double planned_revenue, double actual_revenue, String required_assets,
-                                String required_products, String details) {
+                                String required_products, String details, String status) {
             this.project_id = project_id;
             this.phase_id = phase_id;
             this.task_name = task_name;
@@ -361,13 +405,14 @@ public class TaskSchedulingFragment extends BaseFragment {
             this.required_assets = required_assets;
             this.required_products = required_products;
             this.details = details;
+            this.status = status;
         }
 
         @Override
         public void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-            taskDao=db.taskDao();
-            task=new Task();
+            taskDao = db.taskDao();
+            task = new Task();
 
             try {
                 request_object.put("project_id", project_id);
@@ -379,6 +424,9 @@ public class TaskSchedulingFragment extends BaseFragment {
                 request_object.put("planned_persons", planned_people);
                 request_object.put("estimated_cost", planned_cost);
                 request_object.put("estimated_revenue", planned_revenue);
+                request_object.put("required_assets", required_assets);
+                request_object.put("required_products", required_products);
+                request_object.put("details", details);
 //                request_object.put("actual_start_date", actual_startDate);
 //                request_object.put("actual_end_date", actual_endDate);
 //                request_object.put("actual_days", actual_days);
@@ -386,47 +434,53 @@ public class TaskSchedulingFragment extends BaseFragment {
 //                request_object.put("actual_cost", actual_cost);
 //                request_object.put("actual_revenue", actual_revenue);
 
-                Log.d("Task request...",request_object.toString());
+                Log.d("Task request...", request_object.toString());
 
             } catch (JSONException e) {
-                Log.d("Error preparing request",e.getMessage());
+                Log.d("Error preparing request", e.getMessage());
                 e.printStackTrace();
             }
-            try{
+            try {
                 task.setPlanned_days(planned_days);
-                Log.d("Task db request...",task.toString());
-            }
-            catch(Exception e){
-                Log.d("Error creating request",e.getMessage());
+                Log.d("Task db request...", task.toString());
+            } catch (Exception e) {
+                Log.d("Error creating request", e.getMessage());
             }
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
             /**
-             * Saving planting record to the server!
+             * Saving task record to the server!
              */
             try {
-                response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
-                        "createTask/",request_object.toString());
+                if (view_type.contains("edit")) {
+                    response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
+                            "updateTask/", request_object.toString());
+                } else if (view_type.contains("new")) {
+                    response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
+                            "createTask/", request_object.toString());
+                }
+//                response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
+//                        "createTask/", request_object.toString());
 
                 Log.d("Task response...", response_object.toString());
 
-                task_id=response_object.getInt("id");
+                task_id = response_object.getInt("id");
 
             } catch (IOException e) {
-                Log.d("Error posting request",e.getMessage());
+                Log.d("Error posting request", e.getMessage());
                 e.printStackTrace();
-            }catch(JSONException jsonException){
-                Log.d("Error getting response",jsonException.getMessage());
+            } catch (JSONException jsonException) {
+                Log.d("Error getting response", jsonException.getMessage());
                 jsonException.printStackTrace();
             }
 
             /**
              * Saving planting record to local db only if the record is send to the server!
              */
-            if(task_id>0){
-                try{
+            if (task_id > 0) {
+                try {
                     task.setId(task_id);
                     task.setProject_id(project_id);
                     task.setPhase_id(phase_id);
@@ -441,11 +495,11 @@ public class TaskSchedulingFragment extends BaseFragment {
                     request_object.put("estimated_revenue", planned_revenue);
 
                     taskDao.insertTask(task);
-                    Log.d("Record saved", "planting name: "+planting_name);
-                    success=1;
-                } catch(Exception e){
-                    success=0;
-                    Log.d("Error saving record",e.getMessage());
+                    Log.d("Record saved", "planting name: " + planting_name);
+                    success = 1;
+                } catch (Exception e) {
+                    success = 0;
+                    Log.d("Error saving record", e.getMessage());
                     e.printStackTrace();
                 }
             }

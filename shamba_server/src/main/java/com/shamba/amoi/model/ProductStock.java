@@ -185,7 +185,6 @@ public class ProductStock {
                 ", mpesa_txn_number='" + mpesa_txn_number + '\'' +
                 ", receipt_upload='" + receipt_upload + '\'' +
                 ", stock_order_status='" + stock_order_status + '\'' +
-
                 + '}';
     }
 }

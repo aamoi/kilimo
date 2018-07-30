@@ -78,6 +78,11 @@
         <item>Delivered</item>
         <item>Pre-order</item>
     </string-array>
+    <string-array name="task_complete_status">
+        <item>Task completion status</item>
+        <item>Complete</item>
+        <item>Incomplete</item>
+    </string-array>
 
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -99,8 +104,6 @@
 
     <string name="title_fragment_Products">Products</string>
     <string name="message_processing_products">Fetching products ...</string>
-
-
 
 
     <string name="title_fragment_reports">Reports</string>

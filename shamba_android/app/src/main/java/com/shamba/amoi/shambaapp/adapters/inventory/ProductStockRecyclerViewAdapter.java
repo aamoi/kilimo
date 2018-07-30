@@ -61,25 +61,22 @@ public class ProductStockRecyclerViewAdapter extends
 
         String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
         holder.stock_date.setText(purchase_date);
-        holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).getPurchase_quantity()));
+        holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).
+                getPurchase_quantity()));
 
         String order_status = product_stock_list.get(position).getStock_order_status();
 
-        if(!(order_status==null)) {
-            Log.d("Stock list item status",order_status);
-            if(!order_status.equalsIgnoreCase("Delivered"))
-               holder.stock_view.setBackgroundColor(Color.MAGENTA);
-        }
-       else{
-            Log.d("Stock list item null",order_status);
+        if (!(order_status == null)) {
+            Log.d("Stock list item status", order_status);
+            if (!order_status.equalsIgnoreCase("Delivered"))
+                holder.stock_view.setBackgroundColor(Color.RED);
+        } else {
+            Log.d("Stock list item null", order_status);
         }
 
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (null != mListener) {
-//                    mListener.onListFragmentInteraction(holder.inv_stock_Item);
-//                }
             }
         });
     }
@@ -116,10 +113,12 @@ public class ProductStockRecyclerViewAdapter extends
                         AlertDialog.Builder builder = new AlertDialog.Builder(homeActivity);
 
                         builder.setTitle(Html.fromHtml(
-                                "<font color='#FF7000'>Action on " + product_name + " stock dated  " +
+                                "<font color='#FF7000'>Action on " + product_name +
+                                        " stock dated  " +
                                         stock_date.getText().toString() + "? </font>"));
 
-                        builder.setNegativeButton(Html.fromHtml("<font color='#FF7000'>Utilize stock</font>"),
+                        builder.setNegativeButton(Html.fromHtml(
+                                "<font color='#FF7000'>Utilize stock</font>"),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         BaseFragment.changeFragment(homeActivity,
@@ -128,12 +127,14 @@ public class ProductStockRecyclerViewAdapter extends
                                     }
                                 });
 
-                        builder.setPositiveButton(Html.fromHtml("<font color='#FF7000'>Details</font>")
+                        builder.setPositiveButton(Html.fromHtml(
+                                "<font color='#FF7000'>Details</font>")
                                 , new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
 
                                         BaseFragment.changeFragment(homeActivity,
-                                                R.id.fragment_placeholder_home, RestockProductFragment.newInstance());
+                                                R.id.fragment_placeholder_home,
+                                                RestockProductFragment.newInstance());
                                     }
                                 });
 

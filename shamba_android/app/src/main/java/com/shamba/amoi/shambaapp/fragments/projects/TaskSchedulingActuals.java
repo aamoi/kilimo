@@ -144,7 +144,7 @@ public class TaskSchedulingActuals extends BaseFragment {
         planned_endDate.setEnabled(false);
 
         planned_People=(EditText) view.findViewById(R.id.edit_planned_people);
-        planned_People.setText(taskItem.getPlanned_persons());
+        planned_People.setText((int) taskItem.getPlanned_persons());
         planned_People.setEnabled(false);
 
         planned_cost=(EditText) view.findViewById(R.id.edit_planned_cost);

@@ -21,7 +21,7 @@ public class Task {
     private String planned_end_date;
     private double planned_days;
     private int phase_id;
-    private int planned_persons;
+    private double planned_persons;
     private double estimated_cost;
     private double estimated_revenue;
     private String actual_start_date;
@@ -30,6 +30,34 @@ public class Task {
     private double actual_persons;
     private double actual_cost;
     private double actual_revenue;
+
+    private String required_assets;
+    private String required_products;
+    private String details;
+
+    public String getRequired_assets() {
+        return required_assets;
+    }
+
+    public void setRequired_assets(String required_assets) {
+        this.required_assets = required_assets;
+    }
+
+    public String getRequired_products() {
+        return required_products;
+    }
+
+    public void setRequired_products(String required_products) {
+        this.required_products = required_products;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
     public int getId() {
         return id;
@@ -87,11 +115,11 @@ public class Task {
         this.phase_id = phase_id;
     }
 
-    public int getPlanned_persons() {
+    public double getPlanned_persons() {
         return planned_persons;
     }
 
-    public void setPlanned_persons(int planned_persons) {
+    public void setPlanned_persons(double planned_persons) {
         this.planned_persons = planned_persons;
     }
 

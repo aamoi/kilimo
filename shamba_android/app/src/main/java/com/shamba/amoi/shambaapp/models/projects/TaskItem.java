@@ -36,7 +36,7 @@ public class TaskItem {
     private String planned_end_date;
     private double planned_days;
     private int phase_id;
-    private int planned_persons;
+    private double planned_persons;
     private double estimated_cost;
     private double estimated_revenue;
     private String actual_start_date;
@@ -45,6 +45,34 @@ public class TaskItem {
     private double actual_persons;
     private double actual_cost;
     private double actual_revenue;
+
+    private String required_assets;
+    private String required_products;
+    private String details;
+
+    public String getRequired_assets() {
+        return required_assets;
+    }
+
+    public void setRequired_assets(String required_assets) {
+        this.required_assets = required_assets;
+    }
+
+    public String getRequired_products() {
+        return required_products;
+    }
+
+    public void setRequired_products(String required_products) {
+        this.required_products = required_products;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
     public int getId() {
         return id;
@@ -102,11 +130,11 @@ public class TaskItem {
         this.phase_id = phase_id;
     }
 
-    public int getPlanned_persons() {
+    public double getPlanned_persons() {
         return planned_persons;
     }
 
-    public void setPlanned_persons(int planned_persons) {
+    public void setPlanned_persons(double planned_persons) {
         this.planned_persons = planned_persons;
     }
 
@@ -389,6 +417,15 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
 
                 double actual_revenue=jsonObject.getDouble("actual_revenue");
                 taskItem.setActual_revenue(actual_revenue);
+
+                String required_assets=jsonObject.getString("required_assets");
+                taskItem.setRequired_assets(required_assets);
+
+                String required_products=jsonObject.getString("required_products");
+                taskItem.setRequired_products(required_products);
+
+                String details=jsonObject.getString("details");
+                taskItem.setDetails(details);
 
                 taskItems.add(taskItem);
             }
