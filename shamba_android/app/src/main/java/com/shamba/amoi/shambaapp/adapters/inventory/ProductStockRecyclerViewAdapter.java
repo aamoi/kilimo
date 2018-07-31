@@ -68,10 +68,17 @@ public class ProductStockRecyclerViewAdapter extends
 
         if (!(order_status == null)) {
             Log.d("Stock list item status", order_status);
-            if (!order_status.equalsIgnoreCase("Delivered"))
-                holder.stock_view.setBackgroundColor(Color.RED);
+            if (!order_status.equalsIgnoreCase("Delivered")) {
+                holder.stock_date.setBackgroundColor(Color.RED);
+                holder.stock_quantity.setBackgroundColor(Color.RED);
+                holder.supplier_name.setBackgroundColor(Color.RED);
+            }
+
         } else {
             Log.d("Stock list item null", order_status);
+            holder.stock_date.setBackgroundColor(Color.TRANSPARENT);
+            holder.stock_quantity.setBackgroundColor(Color.TRANSPARENT);
+            holder.supplier_name.setBackgroundColor(Color.TRANSPARENT);
         }
 
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
