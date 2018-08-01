@@ -15,20 +15,14 @@ import android.widget.TextView;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
-import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment.OnListFragmentInteractionListener;
 import com.shamba.amoi.shambaapp.fragments.product.RestockProductFragment;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.VendorItem;
-import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.List;
 
-/**
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ProductStockRecyclerViewAdapter extends
         RecyclerView.Adapter<ProductStockRecyclerViewAdapter.ViewHolder> {
 
@@ -73,7 +67,6 @@ public class ProductStockRecyclerViewAdapter extends
                 holder.stock_quantity.setBackgroundColor(Color.RED);
                 holder.supplier_name.setBackgroundColor(Color.RED);
             }
-
         } else {
             Log.d("Stock list item null", order_status);
             holder.stock_date.setBackgroundColor(Color.TRANSPARENT);
@@ -149,7 +142,6 @@ public class ProductStockRecyclerViewAdapter extends
                         dialog.show();
 
                     } catch (Exception ex)
-
                     {
                         ex.printStackTrace();
                     }

@@ -225,27 +225,6 @@ public class TaskItem {
         }
         return taskItem1;
     }
-
-    /**
-     * Provide public access to all db tasks packaged in hashmap
-     *
-     * @param activity
-     * @return
-     */
-    public static HashMap<String, TaskItem> getAllTaskHashMap(Activity activity) {
-        HashMap<String, TaskItem> taskItemHashMap = new HashMap<>();
-
-        List<TaskItem> taskItemList = getAllTask(activity);
-        for (int i = 0; i < taskItemList.size(); ++i) {
-            taskItemHashMap.put(taskItemList.get(i).getTask_name(),
-                    taskItemList.get(i));
-        }
-
-        Log.d("number of tasks", String.valueOf(taskItemHashMap.size()));
-        return taskItemHashMap;
-
-    }
-
     /**
      * Pools all project phase task from local SQL db!
      *
@@ -258,12 +237,12 @@ public class TaskItem {
         Log.d("Projects|", "phase id- " + String.valueOf(phase_id));
 
 
-
         List<TaskItem> allTaskItems = new ArrayList<>();
 
         try {
             allTaskItems = new GetTaskList(activity).execute().get();
-            Log.d("Projects|", "number of all task: " + String.valueOf(allTaskItems.size()));
+            Log.d("Task items|", "number of all project phase task: " +
+                    String.valueOf(allTaskItems.size()));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -278,7 +257,7 @@ public class TaskItem {
             }
         }
 
-        Log.d("Projects|", "number of project phase task: " +
+        Log.d("Task items|", "number of project phase task: " +
                 String.valueOf(project_phase_taskItems.size()));
 
         return project_phase_taskItems;
@@ -296,13 +275,112 @@ public class TaskItem {
 
         try {
             allTaskItems = new GetTaskList(activity).execute().get();
-            Log.d("Projects|", "number of all tasks: " + String.valueOf(allTaskItems.size()));
+            Log.d("Task items|", "number of all tasks: " + String.valueOf(allTaskItems.size()));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         return allTaskItems;
+    }
+
+    /**
+     * Get all tasks for a project.
+     * @param activity
+     * @return
+     */
+    public static List<TaskItem> getProjectTask(Activity activity, int project_id) {
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
+        List<TaskItem> phaseTasks = new ArrayList<>();
+
+        allTaskItems = getAllTask(activity);
+        for (int i = 0; i < allTaskItems.size(); ++i) {
+            if (allTaskItems.get(i).getProject_id() == project_id) {
+                phaseTasks.add(allTaskItems.get(i));
+            }
+        }
+        Log.d("Task items|", "number of all project tasks: " +
+                String.valueOf(phaseTasks.size()));
+
+        return phaseTasks;
+    }
+
+    /**
+     * Get all tasks for a phase.
+     * @param activity
+     * @return
+     */
+    public static List<TaskItem> getPhaseTask(Activity activity, int phase_id) {
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
+        List<TaskItem> phaseTasks = new ArrayList<>();
+
+        allTaskItems = getAllTask(activity);
+
+        Log.d("Task items|", "all  tasks #: " +
+                String.valueOf(allTaskItems.size()));
+
+
+        for (int i = 0; i < allTaskItems.size(); ++i) {
+            if (allTaskItems.get(i).getPhase_id() == phase_id) {
+                phaseTasks.add(allTaskItems.get(i));
+            }
+        }
+        Log.d("Task items|", "number of all phase tasks: " + String.valueOf(phaseTasks.size()));
+
+        return phaseTasks;
+    }
+
+    /**
+     * Get all project tasks for a phase.
+     * @param taskItems
+     * @return
+     */
+    public static List<TaskItem> getPhaseTask(List<TaskItem> taskItems, int phase_id) {
+
+        Log.d("Task items|", "phase id " + String.valueOf(phase_id));
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
+        List<TaskItem> phaseTasks = new ArrayList<>();
+
+        allTaskItems = taskItems;
+
+        Log.d("Task items|", "all  tasks #: " +
+                String.valueOf(allTaskItems.size()));
+
+        for (int i = 0; i < allTaskItems.size(); ++i) {
+            if (allTaskItems.get(i).getPhase_id() == phase_id) {
+                phaseTasks.add(allTaskItems.get(i));
+            }
+        }
+        Log.d("Task items|", "number of all phase tasks: " + String.valueOf(phaseTasks.size()));
+
+        return phaseTasks;
+    }
+
+    /**
+     * Get all tasks for a phase.
+     *
+     * @return
+     */
+    public static List<TaskItem> getPlantingPhaseTask(Activity activity, int project_id, int phase_id) {
+
+        List<TaskItem> allTaskItems = new ArrayList<>();
+        List<TaskItem> plantingPhaseTasks = new ArrayList<>();
+
+        allTaskItems = getAllTask(activity);
+
+        for (int i = 0; i < allTaskItems.size(); ++i) {
+            if ((allTaskItems.get(i).getProject_id() == project_id) &&
+                    (allTaskItems.get(i).getPhase_id() == phase_id)) {
+                plantingPhaseTasks.add(allTaskItems.get(i));
+            }
+        }
+        Log.d("Task items|", "number of all planting phase tasks: " +
+                String.valueOf(plantingPhaseTasks.size()));
+
+        return plantingPhaseTasks;
     }
 }
 
@@ -329,11 +407,11 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
     @Override
     protected List<TaskItem> doInBackground(Void... voids) {
 
-        taskList=getAllTasksFromServer();
+        taskList = getAllTasksFromServer();
 
         List<Task> db_tasks = taskDao.getAllTasks();
 
-        if ((db_tasks.size() > 0)&&(taskList.size()==0)) {
+        if ((db_tasks.size() > 0) && (taskList.size() == 0)) {
 
             for (int count = 0; count < db_tasks.size(); ++count) {
                 TaskItem taskItem = new TaskItem();
@@ -365,84 +443,84 @@ class GetTaskList extends AsyncTask<Void, Void, List<TaskItem>> {
 
     protected List<TaskItem> getAllTasksFromServer() {
 
-        List<TaskItem> taskItems=new ArrayList<>();
+        List<TaskItem> taskItems = new ArrayList<>();
 
 
         try {
-            List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
-                    BuildConfig.SERVER_URL,"task/","");
+            List<JSONObject> response = CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL, "task/", "");
 
             JSONArray jArray = new JSONArray(response);
 
-            for(int i=0;i<jArray.length();++i){
+            for (int i = 0; i < jArray.length(); ++i) {
 
-                TaskItem taskItem=new TaskItem();
+                TaskItem taskItem = new TaskItem();
 
                 JSONObject jsonObject = jArray.getJSONObject(i);
 
-                int id=jsonObject.getInt("id");
+                int id = jsonObject.getInt("id");
                 taskItem.setId(id);
 
-                int project_id=jsonObject.getInt("project_id");
+                int project_id = jsonObject.getInt("project_id");
                 taskItem.setProject_id(project_id);
 
-                String task_name=jsonObject.getString("task_name");
+                String task_name = jsonObject.getString("task_name");
                 taskItem.setTask_name(task_name);
 
-                String planned_start_date=jsonObject.getString("planned_start_date");
+                String planned_start_date = jsonObject.getString("planned_start_date");
                 taskItem.setPlanned_start_date(planned_start_date);
 
-                String planned_end_date=jsonObject.getString("planned_end_date");
+                String planned_end_date = jsonObject.getString("planned_end_date");
                 taskItem.setPlanned_end_date(planned_end_date);
 
-                double planned_days=jsonObject.getDouble("planned_days");
+                double planned_days = jsonObject.getDouble("planned_days");
                 taskItem.setPlanned_days(planned_days);
 
-                int phase_id=jsonObject.getInt("phase_id");
+                int phase_id = jsonObject.getInt("phase_id");
                 taskItem.setPhase_id(phase_id);
 
-                int planned_persons=jsonObject.getInt("planned_persons");
+                int planned_persons = jsonObject.getInt("planned_persons");
                 taskItem.setPlanned_persons(planned_persons);
 
-                double estimated_cost=jsonObject.getDouble("estimated_cost");
+                double estimated_cost = jsonObject.getDouble("estimated_cost");
                 taskItem.setEstimated_cost(estimated_cost);
 
-                double estimated_revenue=jsonObject.getDouble("estimated_revenue");
+                double estimated_revenue = jsonObject.getDouble("estimated_revenue");
                 taskItem.setEstimated_revenue(estimated_revenue);
 
-                String actual_start_date=jsonObject.getString("actual_start_date");
+                String actual_start_date = jsonObject.getString("actual_start_date");
                 taskItem.setActual_start_date(actual_start_date);
 
-                String actual_end_date=jsonObject.getString("actual_end_date");
+                String actual_end_date = jsonObject.getString("actual_end_date");
                 taskItem.setActual_end_date(actual_end_date);
 
-                double actual_days=jsonObject.getDouble("actual_days");
+                double actual_days = jsonObject.getDouble("actual_days");
                 taskItem.setActual_days(actual_days);
 
-                double actual_persons=jsonObject.getDouble("actual_persons");
+                double actual_persons = jsonObject.getDouble("actual_persons");
                 taskItem.setActual_persons(actual_persons);
 
-                double actual_cost=jsonObject.getDouble("actual_cost");
+                double actual_cost = jsonObject.getDouble("actual_cost");
                 taskItem.setActual_persons(actual_cost);
 
-                double actual_revenue=jsonObject.getDouble("actual_revenue");
+                double actual_revenue = jsonObject.getDouble("actual_revenue");
                 taskItem.setActual_revenue(actual_revenue);
 
-                String required_assets=jsonObject.getString("required_assets");
+                String required_assets = jsonObject.getString("required_assets");
                 taskItem.setRequired_assets(required_assets);
 
-                String required_products=jsonObject.getString("required_products");
+                String required_products = jsonObject.getString("required_products");
                 taskItem.setRequired_products(required_products);
 
-                String details=jsonObject.getString("details");
+                String details = jsonObject.getString("details");
                 taskItem.setDetails(details);
 
-                String completion_status=jsonObject.getString("completion_status");
+                String completion_status = jsonObject.getString("completion_status");
                 taskItem.setComplete_status(completion_status);
 
                 taskItems.add(taskItem);
             }
-            TaskItem.staticTaskItems=taskItems;
+            TaskItem.staticTaskItems = taskItems;
 
         } catch (IOException e) {
             e.printStackTrace();

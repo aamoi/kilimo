@@ -58,4 +58,30 @@ public class SpinnerUtility  implements AdapterView.OnItemSelectedListener {
         return spinner;
 
     }
+
+    /**
+     * @param spinner
+     */
+    public void onSpinnersItemSelected(Spinner spinner) {
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+                onSpinnerItemSelected();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                onSpinnerNothingSelected();
+            }
+        });
+
+    }
+
+    public void onSpinnerItemSelected() {
+    }
+
+    public void onSpinnerNothingSelected() {
+    }
 }

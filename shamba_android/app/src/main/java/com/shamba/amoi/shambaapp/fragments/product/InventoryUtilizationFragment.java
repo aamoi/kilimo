@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -63,7 +64,6 @@ public class InventoryUtilizationFragment extends BaseFragment {
     double utilized_quantity;
     String utilization_date;
     String details;
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -94,7 +94,6 @@ public class InventoryUtilizationFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         String stock_item = null;
 
 //        String stock_item="Utilize "+BaseFragment.productItem.getProduct_name()+"("+
@@ -144,26 +143,26 @@ public class InventoryUtilizationFragment extends BaseFragment {
                     }
                 }
 
-                boolean server_status=false;
+                boolean server_status = false;
                 utilized_quantity = Double.parseDouble(edit_utilized_quantity.getText().toString());
                 utilization_date = edit_utilized_date.getText().toString();
                 details = edit_details.getText().toString();
-                stock_id= ProductStockItem.selectedProductStockItem.getId();
+                stock_id = ProductStockItem.selectedProductStockItem.getId();
 
                 try {
-                    new SaveStockUtilization(stock_id,project_id,phase_id,task_id, utilized_quantity,
-                            utilization_date,details).execute().get();
-                    server_status=true;
+                    new SaveStockUtilization(stock_id, project_id, phase_id, task_id, utilized_quantity,
+                            utilization_date, details).execute().get();
+                    server_status = true;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
 
-                if(server_status){
+                if (server_status) {
                     BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-                                R.id.fragment_placeholder_home,
-                                new ProductStockFragment());
+                            R.id.fragment_placeholder_home,
+                            new ProductStockFragment());
                 }
 
 //                Log.d(TAG, String.valueOf(InventoryUtilizationItem.getInventoryUtilizationItems(getActivity()).size()));
@@ -190,10 +189,16 @@ public class InventoryUtilizationFragment extends BaseFragment {
         return view;
     }
 
-    private void getViews(View view) {
+    private void getViews(final View view) {
+
+        taskItems = new ArrayList<>();
+
+
+                spn_project = (Spinner) view.findViewById(R.id.spn_project);
+        spn_phase = (Spinner) view.findViewById(R.id.spn_phase);
+        spn_task = (Spinner) view.findViewById(R.id.spn_task);
 
         plantingProgramItems = PlantingProgramItem.getAllPlantingPrograms(getActivity());
-        spn_project = (Spinner) view.findViewById(R.id.spn_project);
         List<String> projects = new ArrayList<>();
         for (int i = 0; i < plantingProgramItems.size(); ++i) {
             projects.add(plantingProgramItems.get(i).getPlanting_name());
@@ -201,8 +206,34 @@ public class InventoryUtilizationFragment extends BaseFragment {
         spn_project = SpinnerUtility.setDynamicSpinner(view.getContext(),
                 spn_project, projects);
 
+        spn_project.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+
+                int project_id = PlantingProgramItem.getPlantingProgramByName(getActivity(),
+                        spn_project.getSelectedItem().toString()).getId();
+                taskItems = TaskItem.getProjectTask(getActivity(), project_id);
+
+                Log.d("Invent. utilization|", "project tasks #"+
+                        String.valueOf(taskItems.size()));
+
+//                taskItems = TaskItem.getProjectTask(getActivity(), project_id);
+                List<String> tasks = new ArrayList<>();
+                for (int i = 0; i < taskItems.size(); ++i) {
+                    tasks.add(taskItems.get(i).getTask_name());
+                }
+                spn_task = SpinnerUtility.setDynamicSpinner(view.getContext(),
+                        spn_task, tasks);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
         phaseItems = PhaseItem.staticPhaseItems;
-        spn_phase = (Spinner) view.findViewById(R.id.spn_phase);
         List<String> phases = new ArrayList<>();
         for (int i = 0; i < phaseItems.size(); ++i) {
             phases.add(phaseItems.get(i).getPhase_name());
@@ -210,14 +241,35 @@ public class InventoryUtilizationFragment extends BaseFragment {
         spn_phase = SpinnerUtility.setDynamicSpinner(view.getContext(),
                 spn_phase, phases);
 
-        taskItems = TaskItem.getAllTask(getActivity());
-        spn_task = (Spinner) view.findViewById(R.id.spn_task);
-        List<String> tasks = new ArrayList<>();
-        for (int i = 0; i < taskItems.size(); ++i) {
-            tasks.add(taskItems.get(i).getTask_name());
-        }
-        spn_task = SpinnerUtility.setDynamicSpinner(view.getContext(),
-                spn_task, tasks);
+        spn_phase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+                                       int position, long id) {
+
+                int project_id = PlantingProgramItem.getPlantingProgramByName(getActivity(),
+                        spn_project.getSelectedItem().toString()).getId();
+
+                int phase_id = PhaseItem.getPhaseByName(spn_phase.getSelectedItem().toString()).
+                        getId();
+
+                spn_task = (Spinner) view.findViewById(R.id.spn_task);
+
+                taskItems = TaskItem.getPlantingPhaseTask(getActivity(), project_id,phase_id);
+                List<String> tasks = new ArrayList<>();
+                for (int i = 0; i < taskItems.size(); ++i) {
+                    tasks.add(taskItems.get(i).getTask_name());
+
+                }
+                spn_task = SpinnerUtility.setDynamicSpinner(view.getContext(),
+                        spn_task, tasks);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+
+        });
+
 
         edit_utilized_quantity = SharedUtilities.getEditTextById(view, R.id.edit_utilized_quantity);
 
@@ -267,12 +319,10 @@ public class InventoryUtilizationFragment extends BaseFragment {
         JSONObject response_object = new JSONObject();
 
         StockUtilizationItem stockUtilizationItem = new StockUtilizationItem();
-
         StockUtilization stockUtilization;
         StockUtilizationDao stockUtilizationDao;
 
         int id;
-
         int success = 0;
 
         public SaveStockUtilization(int stock_id, int project_id, int phase_id, int task_id,

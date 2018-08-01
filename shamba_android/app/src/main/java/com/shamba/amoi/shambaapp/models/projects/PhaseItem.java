@@ -12,6 +12,24 @@ public class PhaseItem {
     private boolean is_poultry_phase;
     private boolean is_fishing_phase;
     private boolean is_dairy_phase;
+    /**
+     * Get phase item by name.
+     * @return
+     */
+    public static PhaseItem getPhaseByName(String phase_name) {
+
+        List<PhaseItem> allPhases = PhaseItem.staticPhaseItems;
+
+        PhaseItem phaseItem = new PhaseItem();
+
+        for (int i = 0; i < allPhases.size(); ++i) {
+            if (allPhases.get(i).getPhase_name().equalsIgnoreCase(phase_name)) {
+                phaseItem = allPhases.get(i);
+                break;
+            }
+        }
+        return phaseItem;
+    }
 
     public int getId() {
         return id;
@@ -69,3 +87,4 @@ public class PhaseItem {
         this.is_dairy_phase = is_dairy_phase;
     }
 }
+

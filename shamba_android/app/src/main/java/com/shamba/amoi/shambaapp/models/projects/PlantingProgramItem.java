@@ -233,22 +233,45 @@ public class PlantingProgramItem {
     }
 
     /**
-     * Returns planting program based on program id supplied.
+     * Returns planting item based on id supplied.
      * @param activity
-     * @param key_plan_id
+     * @param project_id
      * @return
      */
+    public static PlantingProgramItem getPlantingProgramById(Activity activity, int project_id) {
 
-//    public static PlantingProgramItem getPlantingProgramById(Activity activity, String key_plan_id) {
-//
-//        List<PlantingProgramItem> plantingProgramItemList=getAllPlantingPrograms(activity);
-//        for (PlantingProgramItem plantingProgramItem:plantingProgramItemList) {
-//            if(plantingProgramItem.id.equalsIgnoreCase(key_plan_id))
-//                return plantingProgramItem;
-//        }
-//        return null;
-//    }
+        PlantingProgramItem plantingProgram=new PlantingProgramItem();
+        List<PlantingProgramItem> plantingProgramItems=new ArrayList<>();
+        plantingProgramItems=getAllPlantingPrograms(activity);
 
+
+
+        for (PlantingProgramItem plantingProgramItem:plantingProgramItems) {
+            if(plantingProgramItem.getId()==project_id){
+                plantingProgram=plantingProgramItem;
+            }
+        }
+        return plantingProgram;
+    }
+    /**
+     * Returns planting item based on name supplied.
+     * @param activity
+     * @param project_name
+     * @return
+     */
+    public static PlantingProgramItem getPlantingProgramByName(Activity activity,String  project_name) {
+
+        PlantingProgramItem plantingProgram=new PlantingProgramItem();
+        List<PlantingProgramItem> plantingProgramItems=new ArrayList<>();
+        plantingProgramItems=getAllPlantingPrograms(activity);
+
+        for (PlantingProgramItem plantingProgramItem:plantingProgramItems) {
+            if(plantingProgramItem.getPlanting_name().equalsIgnoreCase(project_name)){
+                plantingProgram=plantingProgramItem;
+            }
+        }
+        return plantingProgram;
+    }
     /**
      * Returns PlantingProgramItem identified by the name
      * @param activity
