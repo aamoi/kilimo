@@ -5,7 +5,6 @@ package com.shamba.amoi.model;
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.internal.Nullable;
 
 import javax.persistence.*;
 
