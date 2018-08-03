@@ -58,8 +58,7 @@ public class StockUtilizationController {
         Date utilized_date = DateUtil.stringToDate(body.get("utilized_date"));
         String details = body.get("details");
 
-        StockUtilization stockUtilization = stockUtilizationRepository.save(new StockUtilization(stock_id, project_id,
-                phase_id, task_id, utilized_quantity, utilized_date, details));
+        StockUtilization stockUtilization =null;
 
         int product_id = 0;
         int location_id = 0;
@@ -71,9 +70,9 @@ public class StockUtilizationController {
             product_id = productStock.getProduct_id();
             location_id = productStock.getLocation_id();
 
-            stock_bal=productStock.getPurchase_quantity();
-            productStock.setPurchase_quantity((stock_bal-utilized_quantity));
-            productStockRepository.save(productStock);
+            stock_bal=productStock.getStock_balance();
+            productStock.setStock_balance((stock_bal-utilized_quantity));
+//            productStockRepository.save(productStock);
 
             ProductStock last_location_stock_item = new ProductStock();
             double last_location_bal = 0;
@@ -85,7 +84,7 @@ public class StockUtilizationController {
                 current_location_bal = last_location_bal - utilized_quantity;
                 last_location_stock_item.setLocation_balance(current_location_bal);
             }
-            productStockRepository.save(last_location_stock_item);
+//            productStockRepository.save(last_location_stock_item);
 
             ProductStock last_product_stock = new ProductStock();
             double last_product_bal = 0;
@@ -97,11 +96,18 @@ public class StockUtilizationController {
                 current_product_bal = last_product_bal - utilized_quantity;
                 last_product_stock.setOverall_stock_balance(current_product_bal);
             }
-            productStockRepository.save(last_product_stock);
+//            productStockRepository.save(last_product_stock);
 
-            stockTransactionRepository.save(new StockTransaction(stock_id, stockUtilization.getId(), "outbound",
-                    utilized_quantity, current_product_bal, current_location_bal));
+            if((current_location_bal>=0)&&(stock_bal>=0)){
+                productStockRepository.save(productStock);
+                productStockRepository.save(last_location_stock_item);
+                productStockRepository.save(last_product_stock);
+                stockUtilization = stockUtilizationRepository.save(new StockUtilization(stock_id, project_id,
+                        phase_id, task_id, utilized_quantity, utilized_date, details));
+
+            }
         }
+
 
         return stockUtilization;
     }

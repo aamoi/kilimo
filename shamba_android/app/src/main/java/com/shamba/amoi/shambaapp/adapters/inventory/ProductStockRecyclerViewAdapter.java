@@ -56,7 +56,7 @@ public class ProductStockRecyclerViewAdapter extends
         String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
         holder.stock_date.setText(purchase_date);
         holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).
-                getPurchase_quantity()));
+                getStock_balance()));
 
         String order_status = product_stock_list.get(position).getStock_order_status();
 

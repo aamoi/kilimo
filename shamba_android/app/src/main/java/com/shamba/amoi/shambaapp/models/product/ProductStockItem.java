@@ -1,20 +1,5 @@
 package com.shamba.amoi.shambaapp.models.product;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.shamba.amoi.shambaapp.BuildConfig;
-import com.shamba.amoi.shambaapp.db.DBAdaptor;
-import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
-import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
-import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +15,7 @@ public class ProductStockItem {
     private int distributor_id;
     private int manufacturer_id;
     private double purchase_quantity;
+    private double stock_balance;
     private double purchase_price;
     private String purchase_details;
     private String purchase_date;
@@ -38,6 +24,14 @@ public class ProductStockItem {
     private String mpesa_txn_number;
     private String receipt_upload;
     private String stock_order_status;
+
+    public double getStock_balance() {
+        return stock_balance;
+    }
+
+    public void setStock_balance(double stock_balance) {
+        this.stock_balance = stock_balance;
+    }
 
     public String getStock_order_status() {
         return stock_order_status;
@@ -175,8 +169,8 @@ public class ProductStockItem {
      * @param product_id
      * @return
      */
-    public static List<ProductStockItem> getProductStockItemByProductId(List<ProductStockItem> productStockItems,
-                                                           int product_id) {
+    public static List<ProductStockItem> getProductStockItemByProductId(
+            List<ProductStockItem> productStockItems, int product_id) {
         List<ProductStockItem> productStockItemList = new ArrayList<>();
 
         for (int i = 0; i < productStockItems.size(); ++i) {

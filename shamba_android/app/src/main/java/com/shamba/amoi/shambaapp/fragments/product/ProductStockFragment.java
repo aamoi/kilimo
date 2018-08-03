@@ -90,7 +90,9 @@ public class ProductStockFragment extends BaseFragment {
 
         if(product_stock_list!=null){
             for (int i = 0; i < product_stock_list.size(); ++i) {
-                total_quantity = total_quantity + product_stock_list.get(i).getPurchase_quantity();
+                if(product_stock_list.get(i).getStock_order_status().
+                        equalsIgnoreCase("Delivered"))
+                total_quantity = total_quantity + product_stock_list.get(i).getStock_balance();
             }
             stock_size = String.valueOf(product_stock_list.size());
         }
@@ -199,6 +201,9 @@ public class ProductStockFragment extends BaseFragment {
 
                     double purchase_quantity=jsonObject.getDouble("purchase_quantity");
                     productStockItem.setPurchase_quantity(purchase_quantity);
+
+                    double stock_balance=jsonObject.getDouble("stock_balance");
+                    productStockItem.setStock_balance(stock_balance);
 
                     double purchase_price=jsonObject.getDouble("purchase_price");
                     productStockItem.setPurchase_price(purchase_price);

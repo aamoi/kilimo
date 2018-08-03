@@ -28,9 +28,18 @@ public class ProductStock {
     private int location_id;
     private double location_balance;
     private double overall_stock_balance;
+    private double stock_balance;
     private String mpesa_txn_number;
     private String receipt_upload;
     private String stock_order_status;
+
+    public double getStock_balance() {
+        return stock_balance;
+    }
+
+    public void setStock_balance(double stock_balance) {
+        this.stock_balance = stock_balance;
+    }
 
     public double getOverall_stock_balance() {
         return overall_stock_balance;
@@ -160,8 +169,8 @@ public class ProductStock {
 
     public ProductStock(int product_id,int vendor_id,int manufacturer_id,int distributor_id,double purchase_quantity,
                         double purchase_price,String purchase_details,Date purchase_date ,int location_id,
-                        double location_balance,double overall_stock_balance,String mpesa_txn_number,
-                        String receipt_upload,String stock_order_status) {
+                        double location_balance,double stock_balance,double overall_stock_balance,
+                        String mpesa_txn_number,String receipt_upload,String stock_order_status) {
         this.product_id = product_id;
         this.vendor_id = vendor_id;
         this.manufacturer_id = manufacturer_id;
@@ -172,6 +181,7 @@ public class ProductStock {
         this.purchase_date = purchase_date;
         this.location_id=location_id;
         this.location_balance = location_balance;
+        this.stock_balance=stock_balance;
         this.overall_stock_balance=overall_stock_balance;
         this.mpesa_txn_number = mpesa_txn_number;
         this.receipt_upload = receipt_upload;
@@ -192,6 +202,7 @@ public class ProductStock {
                 ", purchase_date='" + purchase_date + '\'' +
                 ", location_id='" + location_id + '\'' +
                 ", location_balance='" + location_balance + '\'' +
+                ", stock_balance='" + stock_balance + '\'' +
                 ", overall_stock_balance='" + overall_stock_balance + '\'' +
                 ", mpesa_txn_number='" + mpesa_txn_number + '\'' +
                 ", receipt_upload='" + receipt_upload + '\'' +

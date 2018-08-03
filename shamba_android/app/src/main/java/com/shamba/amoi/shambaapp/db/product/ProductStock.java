@@ -23,6 +23,7 @@ public class ProductStock {
     private int distributor_id;
     private int manufacturer_id;
     private double purchase_quantity;
+    private double stock_balance;
     private double purchase_price;
     private String purchase_details;
     private String purchase_date;
@@ -31,6 +32,14 @@ public class ProductStock {
     private String mpesa_txn_number;
     private String receipt_upload;
     private String stock_order_status;
+
+    public double getStock_balance() {
+        return stock_balance;
+    }
+
+    public void setStock_balance(double stock_balance) {
+        this.stock_balance = stock_balance;
+    }
 
     public int getDistributor_id() {
         return distributor_id;
