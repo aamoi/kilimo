@@ -106,7 +106,6 @@ public class StockUtilization {
         this.utilized_date = utilized_date;
         this.details = details;
     }
-
     @Override
     public String toString() {
         return "Productstock{" +

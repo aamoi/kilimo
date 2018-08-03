@@ -4,13 +4,17 @@ package com.shamba.amoi.controller;
  * Created by amoi on 09/07/2018.
  */
 
+import com.shamba.amoi.Repository.ProductStockRepository;
+import com.shamba.amoi.Repository.StockTransactionRepository;
 import com.shamba.amoi.Repository.StockUtilizationRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.ProductStock;
+import com.shamba.amoi.model.StockTransaction;
 import com.shamba.amoi.model.StockUtilization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,25 +23,22 @@ import java.util.Map;
 public class StockUtilizationController {
 
     @Autowired
-    StockUtilizationRepository stockUtilization;
-
-//    @RequestMapping("/")
-//    public String index() {
-//        return "Hit planting controller";
-//    }
-
-//    PlantingMockedData blogMockedData = PlantingMockedData.getInstance();
+    StockUtilizationRepository stockUtilizationRepository;
+    @Autowired
+    StockTransactionRepository stockTransactionRepository;
+    @Autowired
+    ProductStockRepository productStockRepository;
 
     @GetMapping("/stockUtilization")
     public List<StockUtilization> index() {
-        return stockUtilization.
+        return stockUtilizationRepository.
                 findAll(new Sort(Sort.Order.asc("id")));
     }
 
     @GetMapping("/stockUtilization/{id}")
     public StockUtilization show(@PathVariable String id) {
         int Id = Integer.parseInt(id);
-        return stockUtilization.getOne(Id);
+        return stockUtilizationRepository.getOne(Id);
     }
 
     @PostMapping("/stockUtilization/search")
@@ -54,20 +55,65 @@ public class StockUtilizationController {
         int phase_id = Integer.parseInt(body.get("phase_id"));
         int task_id = Integer.parseInt(body.get("task_id"));
         double utilized_quantity = Double.parseDouble(body.get("utilized_quantity"));
-        Date utilized_date =DateUtil.stringToDate(body.get("utilized_date"));
+        Date utilized_date = DateUtil.stringToDate(body.get("utilized_date"));
         String details = body.get("details");
 
-        return stockUtilization.save(new StockUtilization(stock_id,project_id,phase_id,task_id,utilized_quantity,utilized_date,details));
+        StockUtilization stockUtilization = stockUtilizationRepository.save(new StockUtilization(stock_id, project_id,
+                phase_id, task_id, utilized_quantity, utilized_date, details));
+
+        int product_id = 0;
+        int location_id = 0;
+        double stock_bal=0;
+
+        ProductStock productStock = new ProductStock();
+        if (stock_id > 0) {
+            productStock = productStockRepository.getOne(stock_id);
+            product_id = productStock.getProduct_id();
+            location_id = productStock.getLocation_id();
+
+            stock_bal=productStock.getPurchase_quantity();
+            productStock.setPurchase_quantity((stock_bal-utilized_quantity));
+            productStockRepository.save(productStock);
+
+            ProductStock last_location_stock_item = new ProductStock();
+            double last_location_bal = 0;
+            double current_location_bal = 0;
+
+            if (!productStockRepository.findLastLocationStock(product_id, location_id).isEmpty()) {
+                last_location_stock_item = productStockRepository.findLastLocationStock(product_id, location_id).get(0);
+                last_location_bal = last_location_stock_item.getLocation_balance();
+                current_location_bal = last_location_bal - utilized_quantity;
+                last_location_stock_item.setLocation_balance(current_location_bal);
+            }
+            productStockRepository.save(last_location_stock_item);
+
+            ProductStock last_product_stock = new ProductStock();
+            double last_product_bal = 0;
+            double current_product_bal = 0;
+
+            if (!productStockRepository.findLastStock(product_id).isEmpty()) {
+                last_product_stock = productStockRepository.findLastStock(product_id).get(0);
+                last_product_bal = last_product_stock.getOverall_stock_balance();
+                current_product_bal = last_product_bal - utilized_quantity;
+                last_product_stock.setOverall_stock_balance(current_product_bal);
+            }
+            productStockRepository.save(last_product_stock);
+
+            stockTransactionRepository.save(new StockTransaction(stock_id, stockUtilization.getId(), "outbound",
+                    utilized_quantity, current_product_bal, current_location_bal));
+        }
+
+        return stockUtilization;
     }
 
     @PutMapping("/updateStockUtilizationk/{id}")
     public ProductStock update(@PathVariable String id, @RequestBody Map<String, String> body) {
 
         int Id = Integer.parseInt(id);
-        StockUtilization stockUtil = stockUtilization.getOne(Id);
+        StockUtilization stockUtil = stockUtilizationRepository.getOne(Id);
 
         String details = body.get("details");
-        stockUtilization.getOne(Id);
+        stockUtilizationRepository.getOne(Id);
 //
 //        double seed_quantity = Double.parseDouble(body.get("seed_quantity"));
 //        planting.setSeed_quantity(seed_quantity);

@@ -1,7 +1,6 @@
 package com.shamba.amoi.Repository;
 
 import com.shamba.amoi.model.Phase;
-import com.shamba.amoi.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
