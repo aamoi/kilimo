@@ -17,43 +17,72 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class TaskAssignmentItem {
-    String assignment_id;
-    String resource_id;
-    String plan_id;
-    String phase_id;
-    String task_id;
-    String pay_rate_id;
+
+    public static List<TaskAssignmentItem> staticTaskAssignmentItem;
+    public static TaskAssignmentItem selectedTaskAssignmentItem;
+    int id;
+    int resource_id;
+    int task_id;
+    int pay_rate_id;
     String assignment_start_date;
     String assignment_end_date;
     double quantity_worked;
     double amount_due;
-    boolean complete_status;
+    String complete_status;
     String comments;
-    public void setResource_id(String resource_id) {
+    String payment_status;
+    double amount_paid;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComplete_status() {
+        return complete_status;
+    }
+
+    public String isComplete_status() {
+        return complete_status;
+    }
+
+    public String getPayment_status() {
+        return payment_status;
+    }
+
+    public void setPayment_status(String payment_status) {
+        this.payment_status = payment_status;
+    }
+
+    public double getAmount_paid() {
+        return amount_paid;
+    }
+
+    public void setAmount_paid(double amount_paid) {
+        this.amount_paid = amount_paid;
+    }
+
+    public void setResource_id(int resource_id) {
         this.resource_id = resource_id;
     }
 
-    public String getResource_id() {
+    public int getResource_id() {
         return resource_id;
     }
 
-    public void setPay_rate_id(String pay_rate_id) {
+    public void setPay_rate_id(int pay_rate_id) {
         this.pay_rate_id = pay_rate_id;
-    }
-
-    public void setPlan_id(String plan_id) {
-        this.plan_id = plan_id;
     }
 
     public void setComments(String comments) {
         this.comments = comments;
     }
 
-    public void setPhase_id(String phase_id) {
-        this.phase_id = phase_id;
-    }
 
-    public void setTask_id(String task_id) {
+    public void setTask_id(int task_id) {
         this.task_id = task_id;
     }
 
@@ -65,15 +94,11 @@ public class TaskAssignmentItem {
         this.assignment_end_date = assignment_end_date;
     }
 
-    public void setAssignment_id(String assignment_id) {
-        this.assignment_id = assignment_id;
-    }
-
     public void setAssignment_start_date(String assignment_start_date) {
         this.assignment_start_date = assignment_start_date;
     }
 
-    public void setComplete_status(boolean complete_status) {
+    public void setComplete_status(String complete_status) {
         this.complete_status = complete_status;
     }
 
@@ -93,31 +118,20 @@ public class TaskAssignmentItem {
         return quantity_worked;
     }
 
-    public String getPlan_id() {
-        return plan_id;
-    }
-
     public String getAssignment_end_date() {
         return assignment_end_date;
     }
 
-    public String getAssignment_id() {
-        return assignment_id;
-    }
 
     public String getAssignment_start_date() {
         return assignment_start_date;
     }
 
-    public String getPay_rate_id() {
+    public int getPay_rate_id() {
         return pay_rate_id;
     }
 
-    public String getPhase_id() {
-        return phase_id;
-    }
-
-    public String getTask_id() {
+    public int getTask_id() {
         return task_id;
     }
 
@@ -171,14 +185,11 @@ class GetTaskAssignmentList extends AsyncTask<Void, Void, List<TaskAssignmentIte
 
                 taskItem.setAmount_due(db_tasks.get(count).getAmount_due());
                 taskItem.setAssignment_end_date(db_tasks.get(count).getAssignment_end_date());
-                taskItem.setAssignment_id(db_tasks.get(count).getAssignment_id());
+                taskItem.setId(db_tasks.get(count).getId());
                 taskItem.setAssignment_start_date(db_tasks.get(count).getAssignment_start_date());
                 taskItem.setComments(db_tasks.get(count).getComments());
                 taskItem.setComplete_status(db_tasks.get(count).getComplete_status());
                 taskItem.setPay_rate_id(db_tasks.get(count).getPay_rate_id());
-                taskItem.setPhase_id(db_tasks.get(count).getPhase_id());
-                taskItem.setPhase_id(db_tasks.get(count).getPhase_id());
-                taskItem.setPlan_id(db_tasks.get(count).getPlan_id());
                 taskItem.setQuantity_worked(db_tasks.get(count).getQuantity_worked());
                 taskItem.setResource_id(db_tasks.get(count).getResource_id());
                 taskItem.setTask_id(db_tasks.get(count).getTask_id());

@@ -11,13 +11,10 @@ import android.widget.Button;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.adapters.labor.SalaryPaymentsRecyclerViewAdapter;
-import com.shamba.amoi.shambaapp.db.labor.TaskPayment;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
-import com.shamba.amoi.shambaapp.models.labor.SalaryPaymentItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.labor.TaskPaymentItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,7 +65,7 @@ public class SalaryPaymentsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String title= HumanResourceItem.current_hr_resource.getResource_name()+" "+
+        String title= ResourceItem.selectedResourceItem.getResource_name()+" "+
                 getString(R.string.title_fragment_salary_payment_list);
 
         getActivity().setTitle(title);
@@ -78,7 +75,7 @@ public class SalaryPaymentsFragment extends BaseFragment {
         add_payment=(Button) view.findViewById(R.id.btn_add_payment);
 
         salaryPaymentItems= TaskPaymentItem.getAllResourceTaskPayments(getActivity(),
-                HumanResourceItem.current_hr_resource.getResource_id());
+                String.valueOf(ResourceItem.selectedResourceItem.getId()));
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_salary_payments);
         recyclerView.setAdapter(new SalaryPaymentsRecyclerViewAdapter((HomeActivity)getActivity(),

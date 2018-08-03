@@ -9,8 +9,10 @@ import com.shamba.amoi.shambaapp.db.assets.AssetFueling;
 import com.shamba.amoi.shambaapp.db.assets.AssetFuelingDao;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilization;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilizationDao;
-import com.shamba.amoi.shambaapp.db.labor.HumanResource;
-import com.shamba.amoi.shambaapp.db.labor.HumanResourceDao;
+import com.shamba.amoi.shambaapp.db.labor.PayRate;
+import com.shamba.amoi.shambaapp.db.labor.PayRateDao;
+import com.shamba.amoi.shambaapp.db.labor.Resource;
+import com.shamba.amoi.shambaapp.db.labor.ResourceDao;
 import com.shamba.amoi.shambaapp.db.labor.TaskAssignment;
 import com.shamba.amoi.shambaapp.db.labor.TaskAssignmentDao;
 import com.shamba.amoi.shambaapp.db.labor.TaskPayment;
@@ -35,23 +37,21 @@ import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
 import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
 import com.shamba.amoi.shambaapp.db.projects.Task;
 import com.shamba.amoi.shambaapp.db.projects.TaskDao;
-
 /**
  * Created by amoi on 24/12/2017.
  */
-
 @Database(entities ={Product.class,MasterPlantingPlan.class,
-        Asset.class,PlantingProgram.class, HumanResource.class,
+        Asset.class,PlantingProgram.class, Resource.class,
         PowerSource.class, Task.class,PlantingPhase.class, ProductStock.class, StockUtilization.class,
         TaskAssignment.class, InventoryUtilization.class, TaskPayment.class, PowerSourceStock.class,
-        AssetFueling.class, Phase.class},
+        AssetFueling.class, Phase.class, PayRate.class},
         version = 4)
 public abstract class ShambaAppDB extends RoomDatabase {
     public abstract ProductDao productDao();
     public abstract MasterPlantingPlanDao masterPlantPlanDao();
     public abstract PlantingProgramDao plantingProgramDao();
     public abstract AssetDao assetDao();
-    public abstract HumanResourceDao humanResourceDao();
+    public abstract ResourceDao resourceDao();
     public abstract PowerSourceDao powerSourceDao();
     public abstract TaskDao taskDao();
     public abstract PlantingPhaseDao plantingPhaseDao();
@@ -63,6 +63,7 @@ public abstract class ShambaAppDB extends RoomDatabase {
     public abstract PhaseDao phaseDao();
     public abstract ProductStockDao productStockDao();
     public abstract StockUtilizationDao stockUtilizationDao();
+    public abstract PayRateDao payRateDao();
 
 }
 

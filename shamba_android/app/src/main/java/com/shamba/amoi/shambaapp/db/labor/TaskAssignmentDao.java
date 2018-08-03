@@ -25,6 +25,6 @@ public interface TaskAssignmentDao {
     @Query("select * from taskassignment")
     public List<TaskAssignment> getAllTaskAssignment();
 
-    @Query("select * from taskassignment where assignment_id in (:assignment_id)")
-    public List<TaskAssignment> getTaskAssignment(String assignment_id);
+    @Query("select * from taskassignment where id in (:id)")
+    public List<TaskAssignment> getTaskAssignment(int id);
 }

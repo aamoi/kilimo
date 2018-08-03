@@ -8,12 +8,9 @@ import android.widget.TextView;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.fragments.labor.SalaryPaymentsFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.TaskAssignmentListFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourceStockListFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment.OnListFragmentInteractionListener;
-import com.shamba.amoi.shambaapp.fragments.power.RestockPowerSource;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
 import com.shamba.amoi.shambaapp.models.power.PowerSourceItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;

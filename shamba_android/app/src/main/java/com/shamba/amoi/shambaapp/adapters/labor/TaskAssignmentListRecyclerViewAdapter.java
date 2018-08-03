@@ -43,7 +43,10 @@ public class TaskAssignmentListRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.task_identity.setText(mValues.get(position).getTask_id());
+
+        String task_name=TaskItem.getTaskItemById(TaskItem.staticTaskItems,mValues.get(position).
+                getTask_id()).getTask_name();
+        holder.task_identity.setText(task_name);
         holder.task_date.setText(mValues.get(position).getAssignment_start_date());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

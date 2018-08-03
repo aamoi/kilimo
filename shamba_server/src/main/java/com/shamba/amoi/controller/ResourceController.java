@@ -44,17 +44,18 @@ public class ResourceController {
 
     @PostMapping("/createResource")
     public Resource create(@RequestBody Map<String, String> body) {
+        int id= Integer.parseInt(body.get("id"));
         String resource_name=body.get("resource_name");
+        int default_pay_rate_id= Integer.parseInt(body.get("default_pay_rate_id"));
+        int location_id= Integer.parseInt(body.get("location_id"));
         String  phone=body.get("phone");
-        int resource_type_id= Integer.parseInt(body.get("resource_type_id"));
-        int contract_type_id= Integer.parseInt(body.get("contract_type_id"));
-        int pay_rate_id= Integer.parseInt(body.get("pay_rate_id"));
-        String comments= body.get("comments");
         String skillset= body.get("skillset");
-        Date joining_date= DateUtil.stringToDate(body.get("joining_date"));
+        String resource_type= body.get("resource_type");
+        String details= body.get("details");
 
-        return resourceRepository.save(new Resource(resource_name,phone,resource_type_id,contract_type_id,pay_rate_id,
-                comments,skillset,joining_date));
+
+        return resourceRepository.save(new Resource(resource_name,default_pay_rate_id,location_id,
+                phone,skillset,resource_type,details));
     }
 
 //    @PutMapping("/updatePlanting/{id}")

@@ -2,45 +2,31 @@ package com.shamba.amoi.shambaapp.shareResources;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.shamba.amoi.shambaapp.R;
-import com.shamba.amoi.shambaapp.db.DBAdaptor;
-import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.labor.TaskAssignment;
-import com.shamba.amoi.shambaapp.db.labor.TaskAssignmentDao;
-import com.shamba.amoi.shambaapp.db.projects.PlantingProgram;
-import com.shamba.amoi.shambaapp.db.projects.PlantingProgramDao;
 import com.shamba.amoi.shambaapp.models.inventory.ProductItem;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
-import com.shamba.amoi.shambaapp.models.labor.TaskAssignmentItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.projects.CropItem;
-import com.shamba.amoi.shambaapp.models.projects.LocationItem;
-import com.shamba.amoi.shambaapp.models.projects.PlantingPhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 /**
  * Created by amoi on 08/02/2018.
  */
 public abstract class BaseFragment extends Fragment {
     public static List<CropItem> cropItems;
-    public static List<HumanResourceItem> humanResourceItemList;
-    public static HumanResourceItem humanResourceItem;
+    public static List<ResourceItem> resourceItemList;
+    public static ResourceItem resourceItem;
 
     public static HashMap<String, ProductItem> productItemHashMap;
     public static ProductItem productItem;

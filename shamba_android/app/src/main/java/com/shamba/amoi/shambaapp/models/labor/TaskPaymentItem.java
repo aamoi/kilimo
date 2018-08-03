@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class TaskPaymentItem {
     int task_payment_id;
     String task_assignment_id;
-    String resource_id;
+    int resource_id;
     String task_id;
     String program_id;
     double total_amount;
@@ -72,11 +72,11 @@ public class TaskPaymentItem {
         this.task_assignment_id = task_assignment_id;
     }
 
-    public String getResource_id() {
+    public int getResource_id() {
         return resource_id;
     }
 
-    public void setResource_id(String resource_id) {
+    public void setResource_id(int resource_id) {
         this.resource_id = resource_id;
     }
 

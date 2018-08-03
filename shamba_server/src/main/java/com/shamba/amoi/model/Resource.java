@@ -16,15 +16,22 @@ public class Resource {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-    private String resource_name;
-    private String phone;
-    private int resource_type_id;
-    private int contract_type_id;
-    private int pay_rate_id;
-    private String comments;
-    private String skillset;
-    private Date joining_date;
+    int id;
+    String resource_name;
+    int default_pay_rate_id;
+    int location_id;
+    String phone;
+    String skillset;
+    String resource_type;
+    String details;
+
+    public int getDefault_pay_rate_id() {
+        return default_pay_rate_id;
+    }
+
+    public void setDefault_pay_rate_id(int default_pay_rate_id) {
+        this.default_pay_rate_id = default_pay_rate_id;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -38,12 +45,20 @@ public class Resource {
         this.id = id;
     }
 
-    public String getName() {
+    public String getResource_name() {
         return resource_name;
     }
 
-    public void setName(String name) {
-        this.resource_name = name;
+    public void setResource_name(String resource_name) {
+        this.resource_name = resource_name;
+    }
+
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
     }
 
     public String getPhone() {
@@ -54,36 +69,6 @@ public class Resource {
         this.phone = phone;
     }
 
-    public int getResource_type() {
-        return resource_type_id;
-    }
-
-    public void setResource_type(int resource_type) {
-        this.resource_type_id = resource_type;
-    }
-
-    public int getContract_type() {
-        return contract_type_id;
-    }
-
-    public void setContract_type(int contract_type_id) {this.contract_type_id = contract_type_id;}
-
-    public int getPay_rate() {
-        return pay_rate_id;
-    }
-
-    public void setPay_rate(int pay_rate_id) {
-        this.pay_rate_id = pay_rate_id;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public String getSkillset() {
         return skillset;
     }
@@ -92,40 +77,48 @@ public class Resource {
         this.skillset = skillset;
     }
 
-    public Date getJoining_date() {
-        return joining_date;
+    public String getResource_type() {
+        return resource_type;
     }
 
-    public void setJoining_date(Date joining_date) {
-        this.joining_date = joining_date;
+    public void setResource_type(String resource_type) {
+        this.resource_type = resource_type;
     }
 
-    public Resource() {  }
+    public String getDetails() {
+        return details;
+    }
 
-    public Resource( String resource_name,String phone,int resource_type_id,int contract_type_id,int pay_rate_id,
-                     String comments,String skillset,Date joining_date) {
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public Resource() {
+    }
+
+    public Resource(String resource_name,int default_pay_rate_id, int location_id, String phone, String skillset,
+                    String resource_type, String details) {
+
         this.resource_name = resource_name;
+        this.default_pay_rate_id=default_pay_rate_id;
+        this.location_id = location_id;
         this.phone = phone;
-        this.resource_type_id = resource_type_id;
-        this.contract_type_id = contract_type_id;
-        this.pay_rate_id = pay_rate_id;
-        this.comments = comments;
         this.skillset = skillset;
-        this.joining_date = joining_date;
+        this.resource_type = resource_type;
+        this.details = details;
     }
 
     @Override
     public String toString() {
         return "Resource{" +
                 "id=" + id +
+                ", default_pay_rate_id='" + default_pay_rate_id + '\'' +
                 ", resource_name='" + resource_name + '\'' +
+                ", location_id='" + location_id + '\'' +
                 ", phone='" + phone + '\'' +
-                ", resource_type_id='" + resource_type_id + '\'' +
-                ", contract_type_id='" + contract_type_id  + '\'' +
-                ", pay_rate_id='" + pay_rate_id  + '\'' +
-                ", skill_set='" + skillset  + '\'' +
-                ", joining_date='" + joining_date  + '\'' +
-                ", comments='" + comments  +
+                ", skillset='" + skillset + '\'' +
+                ", resource_type='" + resource_type + '\'' +
+                ", details='" + details + '\'' +
                 '}';
     }
 }

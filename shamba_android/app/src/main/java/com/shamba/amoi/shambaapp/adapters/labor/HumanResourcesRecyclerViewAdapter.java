@@ -11,24 +11,19 @@ import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment.OnListFragmentInteractionListener;
 import com.shamba.amoi.shambaapp.fragments.labor.SalaryPaymentsFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.TaskAssignmentListFragment;
-import com.shamba.amoi.shambaapp.fragments.projects.TaskSchedulingFragment;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 
 import java.util.List;
 
-/**
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class HumanResourcesRecyclerViewAdapter
         extends RecyclerView.Adapter<HumanResourcesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<HumanResourceItem> hr_list;
+    private final List<ResourceItem> hr_list;
     private final HomeActivity homeActivity;
 
-    public HumanResourcesRecyclerViewAdapter(List<HumanResourceItem> items,
+    public HumanResourcesRecyclerViewAdapter(List<ResourceItem> items,
                                              HomeActivity homeActivity) {
         hr_list = items;
         this.homeActivity=homeActivity;
@@ -45,7 +40,7 @@ public class HumanResourcesRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.hr_item = hr_list.get(position);
         holder.hr_name.setText(hr_list.get(position).getResource_name());
-        holder.hr_skills.setText(hr_list.get(position).getResource_joining_date());
+        holder.hr_skills.setText(hr_list.get(position).getPhone());
 
 //        holder.hr_View.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -96,7 +91,7 @@ public class HumanResourcesRecyclerViewAdapter
         public final View hr_View;
         public final TextView hr_name;
         public final TextView hr_skills;
-        public HumanResourceItem hr_item;
+        public ResourceItem hr_item;
 
         public ViewHolder(View view) {
             super(view);
@@ -110,14 +105,14 @@ public class HumanResourcesRecyclerViewAdapter
 
                 @Override
                 public void onSelectNegativeDialogueOption(){
-                    HumanResourceItem.current_hr_resource=hr_item;
+                    ResourceItem.selectedResourceItem=hr_item;
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             new TaskAssignmentListFragment());
                 }
 
                 @Override
                 public void onSelectPostiveDialogueOption(){
-                    HumanResourceItem.current_hr_resource=hr_item;
+                    ResourceItem.selectedResourceItem=hr_item;
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             new SalaryPaymentsFragment());
                 }

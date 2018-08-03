@@ -212,6 +212,12 @@ public class TaskItem {
         this.actual_revenue = actual_revenue;
     }
 
+    /**
+     * Get task item by id.
+     * @param activity
+     * @param task_id
+     * @return
+     */
     public static TaskItem getTaskItemById(Activity activity, int task_id) {
 
         List<TaskItem> taskItemList = getAllTask(activity);
@@ -220,6 +226,46 @@ public class TaskItem {
 
         for (TaskItem taskItem : taskItemList) {
             if (taskItem.getId() == task_id)
+                taskItem1 = taskItem;
+            break;
+        }
+        return taskItem1;
+    }
+
+    /**
+     * Get task item by id.
+     * @param taskItems
+     * @param task_id
+     * @return
+     */
+    public static TaskItem getTaskItemById(List<TaskItem> taskItems, int task_id) {
+
+        List<TaskItem> taskItemList = taskItems;
+
+        TaskItem taskItem1 = new TaskItem();
+
+        for (TaskItem taskItem : taskItemList) {
+            if (taskItem.getId() == task_id)
+                taskItem1 = taskItem;
+            break;
+        }
+        return taskItem1;
+    }
+
+    /**
+     * Get task item by name.
+     * @param activity
+     * @param name
+     * @return
+     */
+    public static TaskItem getTaskItemByName(Activity activity, String  name) {
+
+        List<TaskItem> taskItemList = getAllTask(activity);
+
+        TaskItem taskItem1 = new TaskItem();
+
+        for (TaskItem taskItem : taskItemList) {
+            if (taskItem.getTask_name().equalsIgnoreCase(name))
                 taskItem1 = taskItem;
             break;
         }

@@ -11,10 +11,7 @@ import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.SalaryPaymentsFragment;
-import com.shamba.amoi.shambaapp.fragments.labor.TaskAssignmentListFragment;
-import com.shamba.amoi.shambaapp.models.assets.AssetFuelingItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 

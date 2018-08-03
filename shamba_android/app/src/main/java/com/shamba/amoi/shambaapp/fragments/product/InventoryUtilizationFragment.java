@@ -193,8 +193,7 @@ public class InventoryUtilizationFragment extends BaseFragment {
 
         taskItems = new ArrayList<>();
 
-
-                spn_project = (Spinner) view.findViewById(R.id.spn_project);
+        spn_project = (Spinner) view.findViewById(R.id.spn_project);
         spn_phase = (Spinner) view.findViewById(R.id.spn_phase);
         spn_task = (Spinner) view.findViewById(R.id.spn_task);
 
@@ -263,13 +262,10 @@ public class InventoryUtilizationFragment extends BaseFragment {
                 spn_task = SpinnerUtility.setDynamicSpinner(view.getContext(),
                         spn_task, tasks);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
-
         });
-
 
         edit_utilized_quantity = SharedUtilities.getEditTextById(view, R.id.edit_utilized_quantity);
 

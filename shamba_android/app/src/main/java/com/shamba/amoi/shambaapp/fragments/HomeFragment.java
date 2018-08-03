@@ -20,6 +20,8 @@ import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
+import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.product.DistributorItem;
 import com.shamba.amoi.shambaapp.models.product.ManufacturerItem;
 import com.shamba.amoi.shambaapp.models.product.ProductCategoryItem;
@@ -39,16 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 public class HomeFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -79,19 +75,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the submit_form_details for this fragment
-
         getActivity().setTitle(R.string.title_fragment_home);
         View view =inflater.inflate(R.layout.fragment_home, container, false);
 
         return view;
 
     }
-
-    /**
-     * FragmHome
-     * @param view
-     */
 
     public void onClickProjects(View view){
      BaseFragment.changeFragment((AppCompatActivity) getActivity(),
@@ -124,11 +113,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
     }
 
 
@@ -141,7 +126,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
     }
 
     private void loadSetUpData(){
@@ -170,7 +154,8 @@ public class HomeFragment extends BaseFragment {
             getAllLocationFromServer();
             getAllManufacturerFromServer();
             getAllDistributorFromServer();
-
+            getAllResourceFromServer();
+            getAllPayRateFromServer();
             return 1;
         }
 
@@ -631,6 +616,113 @@ public class HomeFragment extends BaseFragment {
                 e.printStackTrace();
             }
             return manufacturerItems;
+        }
+
+        /**
+         * Pools all resources from server application!
+         * @return
+         */
+        private List<ResourceItem> getAllResourceFromServer(){
+
+            List<ResourceItem> resourceItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"resource/","");
+
+                Log.d("#resources pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    ResourceItem resourceItem=new ResourceItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    resourceItem.setId(id);
+
+                    int default_pay_rate_id=jsonObject.getInt("default_pay_rate_id");
+                    resourceItem.setDefault_pay_rate_id(default_pay_rate_id);
+
+                    int location_id=jsonObject.getInt("location_id");
+                    resourceItem.setLocation_id(location_id);
+
+                    String resource_name=jsonObject.getString("resource_name");
+                    resourceItem.setResource_name(resource_name);
+
+                    String phone=jsonObject.getString("phone");
+                    resourceItem.setPhone(phone);
+                    Log.d("Reosurce phone",phone);
+
+
+                    String skillset=jsonObject.getString("skillset");
+                    resourceItem.setSkillset(skillset);
+
+                    String resource_type=jsonObject.getString("resource_type");
+                    resourceItem.setResource_type(resource_type);
+
+                    String details=jsonObject.getString("details");
+                    resourceItem.setDetails(details);
+
+                    resourceItems.add(resourceItem);
+                }
+
+                ResourceItem.staticResourceItemList=resourceItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return resourceItems;
+        }
+
+        /**
+         * Pools all PayRate from server application!
+         * @return
+         */
+        private List<PayRateItem> getAllPayRateFromServer(){
+
+            List<PayRateItem> payRateItems=new ArrayList<>();
+
+            try {
+                List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                        BuildConfig.SERVER_URL,"payRate/","");
+
+                Log.d("#Pay rates pooled:- ", String.valueOf(response.size()));
+
+                JSONArray jArray = new JSONArray(response);
+
+                for(int i=0;i<jArray.length();++i){
+                    PayRateItem payRateItem=new PayRateItem();
+                    JSONObject jsonObject = jArray.getJSONObject(i);
+
+                    int id=jsonObject.getInt("id");
+                    payRateItem.setId(id);
+
+                    int uom_id=jsonObject.getInt("uom_id");
+                    payRateItem.setUnit_price(uom_id);
+
+                    String name=jsonObject.getString("name");
+                    payRateItem.setName(name);
+
+                    String details=jsonObject.getString("details");
+                    payRateItem.setDetails(details);
+
+                    double unit_price=jsonObject.getDouble("unit_price");
+                    payRateItem.setUnit_price(unit_price);
+
+                    payRateItems.add(payRateItem);
+                }
+
+                PayRateItem.staticPayRateItems=payRateItems;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return payRateItems;
         }
         @Override
         public void onPostExecute(Integer i) {

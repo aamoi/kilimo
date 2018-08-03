@@ -17,10 +17,10 @@ import android.widget.Spinner;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.labor.HumanResource;
-import com.shamba.amoi.shambaapp.db.labor.HumanResourceDao;
-import com.shamba.amoi.shambaapp.models.labor.HumanResourceItem;
-import com.shamba.amoi.shambaapp.models.labor.PaymentRateItem;
+import com.shamba.amoi.shambaapp.db.labor.Resource;
+import com.shamba.amoi.shambaapp.db.labor.ResourceDao;
+import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DatePickerUtility;
 import com.shamba.amoi.shambaapp.shareResources.SharedUtilities;
@@ -135,8 +135,8 @@ public class CreateHumanResourceFragment extends BaseFragment {
                 BaseFragment.getResourceContractTypes());
 
         spn_resource_pay_rate=(Spinner) view.findViewById(R.id.spn_resource_pay_rate);
-        SpinnerUtility.setDynamicSpinner(view.getContext(),spn_resource_pay_rate,
-                SharedUtilities.getHashMapStringKeySetList(PaymentRateItem.getPaymentRates().keySet()));
+//        SpinnerUtility.setDynamicSpinner(view.getContext(),spn_resource_pay_rate,
+//                SharedUtilities.getHashMapStringKeySetList(PayRateItem.selectedPayRateItem().keySet()));
 
         edit_comments_on_resource=(EditText)view.findViewById(R.id.edit_comments_on_resource);
         btn_add_hr=(Button)view.findViewById(R.id.btn_add_hr);
@@ -191,8 +191,8 @@ public class CreateHumanResourceFragment extends BaseFragment {
         public  String resource_pay_rate;
         public  String comments_on_resource;
         
-        HumanResource hr;
-        HumanResourceDao hr_dao;
+        Resource hr;
+        ResourceDao hr_dao;
 
         public SaveHumanResource(  String resource_id ,String resource_name, String resource_type ,
                                    String resource_joining_date , String resource_main_skillset ,
@@ -207,26 +207,26 @@ public class CreateHumanResourceFragment extends BaseFragment {
             this.resource_pay_rate = resource_pay_rate;
             this.comments_on_resource = comments_on_resource;
 
-            List<HumanResourceItem> hr_items;
+            List<ResourceItem> hr_items;
         }
         @Override
         public void onPreExecute(){
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-            hr_dao=db.humanResourceDao();
-            hr=new HumanResource();
-            hr.setComments_on_resource(comments_on_resource);
-            hr.setResource_contract(resource_contract);
-            hr.setResource_id(resource_id);
-            hr.setResource_joining_date(resource_joining_date);
-            hr.setResource_main_skillset(resource_main_skillset);
-            hr.setResource_name(resource_name);
-            hr.setResource_pay_rate(resource_pay_rate);
+//            hr_dao=db.humanResourceDao();
+//            hr=new Resource();
+//            hr.setComments_on_resource(comments_on_resource);
+//            hr.setResource_contract(resource_contract);
+//            hr.setResource_id(resource_id);
+//            hr.setResource_joining_date(resource_joining_date);
+//            hr.setResource_main_skillset(resource_main_skillset);
+//            hr.setResource_name(resource_name);
+//            hr.setResource_pay_rate(resource_pay_rate);
             hr.setResource_type(resource_type);
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            hr_dao.insertHumanResource(hr);
+            hr_dao.insertResource(hr);
             Log.d("Record saved", "resource name: "+resource_name);
             return null;
         }
