@@ -160,7 +160,6 @@ public class TaskAssignment {
                 ", comments='" + comments +
                 ", payment_status='" + payment_status + '\'' +
                 ", amount_paid='" + amount_paid + '\'' +
-
                 '}';
     }
 }

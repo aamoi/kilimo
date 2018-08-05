@@ -18,11 +18,11 @@ import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.labor.TaskAssignment;
-import com.shamba.amoi.shambaapp.db.labor.TaskAssignmentDao;
+import com.shamba.amoi.shambaapp.db.labor.Payment;
+import com.shamba.amoi.shambaapp.db.labor.PaymentDao;
 import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
+import com.shamba.amoi.shambaapp.models.labor.PaymentItem;
 import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
-import com.shamba.amoi.shambaapp.models.labor.TaskAssignmentItem;
 import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingPhaseItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceTaskAssignmentFragment extends BaseFragment {
+public class CreatePaymentFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Spinner spn_plan_name;
@@ -57,6 +57,8 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
     EditText edit_comments;
     EditText edit_amount_paid;
 
+    EditText edit_payment_date;
+
     Button btn_submit_task_assignment;
     String plan_name;
     String task_phase;
@@ -68,6 +70,7 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
     double total_payment;
     String complete_status;
     String comments;
+    String payment_date;
     List<TaskItem> taskItems;
     List<PhaseItem> phaseItems;
     List<PlantingProgramItem> plantingProgramItems;
@@ -77,11 +80,11 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ResourceTaskAssignmentFragment() {
+    public CreatePaymentFragment() {
     }
 
-    public static ResourceTaskAssignmentFragment newInstance(String param1, String param2) {
-        ResourceTaskAssignmentFragment fragment = new ResourceTaskAssignmentFragment();
+    public static CreatePaymentFragment newInstance(String param1, String param2) {
+        CreatePaymentFragment fragment = new CreatePaymentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -102,8 +105,8 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().setTitle(R.string.title_fragment_assign_resource_task);
-        View view = inflater.inflate(R.layout.fragment_resource_task_assignment, container,
+        getActivity().setTitle(R.string.title_fragment_payment);
+        View view = inflater.inflate(R.layout.fragment_create_payment, container,
                 false);
         getViewsByIds(view);
 
@@ -134,15 +137,17 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
                 complete_status = spn_complete_status.getSelectedItem().toString();
                 comments = edit_comments.getText().toString();
 
+                payment_date = edit_payment_date.getText().toString();
+
+
                 double amount_paid =0;
                 if(!edit_amount_paid.getText().toString().isEmpty())
                     amount_paid=Double.parseDouble(edit_amount_paid.getText().toString());
 
                 String payment_status = spn_payment_status.getSelectedItem().toString();
 
-                new SaveResourceAssignment(resource_id, task_id,pay_rate_id,start_date, end_date,
-                        total_work, total_payment,complete_status, comments,payment_status,
-                        amount_paid).execute();
+                new SavePayment(resource_id, task_id,pay_rate_id,total_work,start_date, end_date,
+                        total_payment,complete_status, comments,payment_status,payment_date,amount_paid).execute();
 
                 BaseFragment.changeFragment((AppCompatActivity) getActivity(),
                         R.id.fragment_placeholder_home, new TaskAssignmentListFragment());
@@ -255,8 +260,10 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
         spn_complete_status = SharedUtilities.getSpinnerById(view, R.id.spn_complete_status);
         edit_comments = SharedUtilities.getEditTextById(view, R.id.edit_comments);
 
-        edit_amount_paid = SharedUtilities.getEditTextById(view, R.id.edit_amount_paid);
+        edit_payment_date = SharedUtilities.getEditTextById(view, R.id.edit_payment_date);
+        new DatePickerUtility(edit_payment_date);
 
+        edit_amount_paid = SharedUtilities.getEditTextById(view, R.id.edit_amount_paid);
 
         btn_submit_task_assignment = SharedUtilities.getButtonById(view,
                 R.id.btn_submit_task_assignment);
@@ -286,10 +293,11 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
      * Saves resource assignment record into both server and local db
      * It only saves on local db after the record is saved to server!
      */
-    class SaveResourceAssignment extends AsyncTask<Void, Void, Integer> {
+    class SavePayment extends AsyncTask<Void, Void, Integer> {
         public int resource_id;
         public int task_id;
         public int pay_rate_id;
+        public double work_size;
         public String assignment_start_date;
         public String assignment_end_date;
         public double quantity_worked;
@@ -297,74 +305,77 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
         public String complete_status;
         public String comments;
         public String payment_status;
+        public String payment_date;
         public double amount_paid;
 
         JSONObject request_object = new JSONObject();
         JSONObject response_object = new JSONObject();
 
-        TaskAssignmentItem taskAssignmentItem = new TaskAssignmentItem();
-        TaskAssignment taskAssignment;
-        TaskAssignmentDao taskAssignmentDao;
+        PaymentItem paymentItem = new PaymentItem();
+        Payment payment;
+        PaymentDao paymentDao;
 
         int id;
         int success = 0;
 
-        public SaveResourceAssignment(int resource_id,int task_id,int pay_rate_id,
-                                      String assignment_start_date,String assignment_end_date,
-                                      double quantity_worked,double amount_due,String complete_status,
-                                      String comments,String payment_status,double amount_paid) {
+        public SavePayment(int resource_id, int task_id, int pay_rate_id, double work_size,
+                           String assignment_start_date,String assignment_end_date,double amount_due,
+                           String complete_status,String comments, String payment_status,
+                           String payment_date, double amount_paid) {
             this.resource_id = resource_id;
             this.task_id = task_id;
             this.pay_rate_id = pay_rate_id;
+            this.work_size=work_size;
             this.assignment_start_date = assignment_start_date;
             this.assignment_end_date = assignment_end_date;
-            this.quantity_worked = quantity_worked;
             this.amount_due = amount_due;
             this.complete_status = complete_status;
             this.comments = comments;
             this.payment_status = payment_status;
+            this.payment_date=payment_date;
             this.amount_paid = amount_paid;
         }
 
         @Override
         public void onPreExecute() {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-            taskAssignment = new TaskAssignment();
-            taskAssignmentDao = db.taskAssignmentDao();
+            payment = new Payment();
+            paymentDao = db.paymentDao();
 
             try {
                 request_object.put("resource_id", resource_id);
                 request_object.put("task_id", task_id);
                 request_object.put("pay_rate_id", pay_rate_id);
-                request_object.put("assignment_start_date", assignment_start_date);
-                request_object.put("assignment_end_date", assignment_end_date);
-                request_object.put("quantity_worked", quantity_worked);
+                request_object.put("work_size", work_size);
+                request_object.put("task_start_date", assignment_start_date);
+                request_object.put("due_date", assignment_end_date);
                 request_object.put("amount_due", amount_due);
                 request_object.put("complete_status", complete_status);
-                request_object.put("comments", comments);
+                request_object.put("details", comments);
                 request_object.put("payment_status", payment_status);
+                request_object.put("payment_date", payment_date);
                 request_object.put("amount_paid", amount_paid);
 
-                Log.d("Assignment request...", request_object.toString());
+                Log.d("Payment request...", request_object.toString());
 
             } catch (JSONException e) {
                 Log.d("Error preparing request", e.getMessage());
                 e.printStackTrace();
             }
             try {
-                taskAssignment.setResource_id(resource_id);
-                taskAssignment.setTask_id(task_id);
-                taskAssignment.setPay_rate_id(pay_rate_id);
-                taskAssignment.setAssignment_start_date(assignment_start_date);
-                taskAssignment.setAssignment_end_date(assignment_end_date);
-                taskAssignment.setQuantity_worked(quantity_worked);
-                taskAssignment.setAmount_due(amount_due);
-                taskAssignment.setComplete_status(complete_status);
-                taskAssignment.setComments(comments);
-                taskAssignment.setPayment_status(payment_status);
-                taskAssignment.setAmount_due(amount_paid);
+                payment.setResource_id(resource_id);
+                payment.setTask_id(task_id);
+                payment.setPay_rate_id(pay_rate_id);
+                payment.setWork_size(work_size);
+                payment.setTask_start_date(start_date);
+                payment.setDue_date(assignment_end_date);
+                payment.setAmount_due(amount_due);
+                payment.setTask_complete_status(complete_status);
+                payment.setDetails(comments);
+                payment.setPayment_status(payment_status);
+                payment.setAmount_paid(amount_paid);
 
-                Log.d("Assign. db request...", taskAssignment.toString());
+                Log.d("Payment. db request...", payment.toString());
             } catch (Exception e) {
                 Log.d("Error creating request", e.getMessage());
             }
@@ -377,9 +388,9 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
              */
             try {
                 response_object = CommonHelper.sendPostRequestWithJsonResponse(BuildConfig.SERVER_URL,
-                        "createTaskAssignment/", request_object.toString());
+                        "createPayment/", request_object.toString());
 
-                Log.d("Assignment response...", response_object.toString());
+                Log.d("Payment response...", response_object.toString());
 
                 id = response_object.getInt("id");
 
@@ -396,8 +407,8 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
              */
             if (id > 0) {
                 try {
-                    taskAssignment.setId(id);
-                    taskAssignmentDao.insertTaskAssignment(taskAssignment);
+                    payment.setId(id);
+                    paymentDao.insertPayment(payment);
                     Log.d("Record saved", "utilization id: " + id);
                     success = 1;
                 } catch (Exception e) {

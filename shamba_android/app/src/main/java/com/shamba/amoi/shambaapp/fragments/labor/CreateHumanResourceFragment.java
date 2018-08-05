@@ -19,7 +19,6 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.labor.Resource;
 import com.shamba.amoi.shambaapp.db.labor.ResourceDao;
-import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
 import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DatePickerUtility;
@@ -110,7 +109,7 @@ public class CreateHumanResourceFragment extends BaseFragment {
                              resource_pay_rate, comments_on_resource).execute();
 
                      BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-                             R.id.fragment_placeholder_home, new HumanResourcesFragment());
+                             R.id.fragment_placeholder_home, new ResourcesFragment());
                  }
             //}
         });

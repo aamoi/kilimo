@@ -10,7 +10,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
-import com.shamba.amoi.shambaapp.fragments.labor.SalaryPaymentsFragment;
+import com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
@@ -87,7 +87,7 @@ public class AssetRecyclerViewAdapter extends RecyclerView.Adapter<AssetRecycler
                 public void onSelectPostiveDialogueOption(){
                     AssetItem.currentAssetItem=assetItem;
                     BaseFragment.changeFragment(activity,R.id.fragment_placeholder_home,
-                            new SalaryPaymentsFragment());
+                            new PaymentsFragment());
                 }
 
                 @Override

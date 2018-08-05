@@ -13,8 +13,8 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     android:layout_height="match_parent"
     android:layout_below="@+id/main_layout"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.shamba.amoi.shambaapp.fragments.labor.SalaryPaymentsFragment"
-    tools:listitem="@layout/fragment_salarypayments"/>
+    tools:context="com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment"
+    tools:listitem="@layout/fragment_payments"/>
 
 <Button android:layout_width="fill_parent"
     android:layout_height="40dp"

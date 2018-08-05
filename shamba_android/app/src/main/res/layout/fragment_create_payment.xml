@@ -4,6 +4,12 @@
              android:layout_height="match_parent"
              tools:context="com.shamba.amoi.shambaapp.fragments.labor.ResourceTaskAssignmentFragment">
 
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_form">
+
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_marginTop="5dp"
@@ -100,24 +106,17 @@
                   android:layout_marginTop="5dp"
                   android:hint="Size of work e.g. man days(people * days)."
                   android:inputType="numberDecimal"/>
-        <EditText android:id="@+id/edit_total_payment"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="@dimen/text_marginLeft"
-                  android:layout_marginTop="5dp"
-                  android:hint="Payment due."
-                  android:inputType="numberDecimal"/>
 
         <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="10dp"
-                      android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView android:id="@+id/txtTaskCompletion"
-                      android:layout_width="130dp"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="@dimen/text_marginLeft"
-                      android:text="Task completed ?:"/>
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_marginLeft"
+                android:text="Task completed  ?:"/>
             <Spinner
                 android:id="@+id/spn_complete_status"
                 android:layout_width="fill_parent"
@@ -126,13 +125,13 @@
                 android:entries="@array/task_status_array"
                 android:layout_marginLeft="15dp"/>
         </LinearLayout>
-
-        <EditText android:id="@+id/edit_comments"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/text_marginLeft"
-            android:layout_marginTop="5dp"
-            android:hint="Comment here."/>
+        <EditText android:id="@+id/edit_total_payment"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/text_marginLeft"
+                  android:layout_marginTop="5dp"
+                  android:hint="Payment due."
+                  android:inputType="numberDecimal"/>
 
         <LinearLayout android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -148,9 +147,17 @@
                 android:id="@+id/spn_payment_status"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/payment_status_array"
+                android:entries="@array/paid_status_array"
                 android:layout_marginLeft="15dp"/>
         </LinearLayout>
+
+        <EditText android:id="@+id/edit_payment_date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_marginLeft"
+            android:layout_marginTop="5dp"
+            android:hint="Payment date."
+            android:inputType="date" />
 
         <EditText android:id="@+id/edit_amount_paid"
             android:layout_width="fill_parent"
@@ -158,8 +165,14 @@
             android:layout_marginLeft="@dimen/text_marginLeft"
             android:layout_marginTop="5dp"
             android:hint="Amount paid."
-            android:inputType="numberDecimal"
-            android:visibility="invisible"/>
+            android:inputType="numberDecimal" />
+
+        <EditText android:id="@+id/edit_comments"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/text_marginLeft"
+            android:layout_marginTop="5dp"
+            android:hint="Comment here."/>
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
@@ -189,5 +202,6 @@
         </LinearLayout>
 
     </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

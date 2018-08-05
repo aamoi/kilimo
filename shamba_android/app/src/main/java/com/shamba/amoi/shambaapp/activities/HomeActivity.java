@@ -21,7 +21,7 @@ import com.shamba.amoi.shambaapp.fragments.assets.AssetFragment;
 import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment;
 import com.shamba.amoi.shambaapp.fragments.product.ProductsFragment;
 import com.shamba.amoi.shambaapp.fragments.product.RestockProductFragment;
-import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment;
+import com.shamba.amoi.shambaapp.fragments.labor.ResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.CreatePlantingProgrammeFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingPhasesFragment;
@@ -257,7 +257,7 @@ public class HomeActivity extends BaseActivity  {
         fragmentMap.put(getString(R.string.title_fragment_home), new HomeFragment());
         fragmentMap.put(getString(R.string.title_fragment_Products), new ProductsFragment());
         fragmentMap.put(getString(R.string.title_fragment_projects), new PlantingProgrammesFragment());
-        fragmentMap.put(getString(R.string.title_fragment_labor), new HumanResourcesFragment());
+        fragmentMap.put(getString(R.string.title_fragment_labor), new ResourcesFragment());
         fragmentMap.put(getString(R.string.title_fragment_power), new PowerSourcesFragment());
         fragmentMap.put(getString(R.string.title_fragment_assets), new AssetFragment());
         fragmentMap.put(getString(R.string.title_fragment_reports),
@@ -318,7 +318,7 @@ public class HomeActivity extends BaseActivity  {
     public void onClickLabor(View view) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_placeholder_home,
-                new HumanResourcesFragment()).addToBackStack(null).commit();
+                new ResourcesFragment()).addToBackStack(null).commit();
     }
 
     public void onClickPowerButton(View view) {

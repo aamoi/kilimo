@@ -13,10 +13,9 @@ import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.product.Manufacturer;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFragment;
 import com.shamba.amoi.shambaapp.fragments.product.ProductsFragment;
-import com.shamba.amoi.shambaapp.fragments.labor.HumanResourcesFragment;
+import com.shamba.amoi.shambaapp.fragments.labor.ResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
@@ -94,7 +93,7 @@ public class HomeFragment extends BaseFragment {
 
     public void onClickLabor(View view) {
         BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-                R.id.fragment_placeholder_home,new HumanResourcesFragment());
+                R.id.fragment_placeholder_home,new ResourcesFragment());
     }
 
     public void onClickPowerButton(View view) {

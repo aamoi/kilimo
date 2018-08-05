@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.adapters.labor.HumanResourcesRecyclerViewAdapter;
+import com.shamba.amoi.shambaapp.adapters.labor.ResourcesRecyclerViewAdapter;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.labor.Resource;
@@ -23,7 +23,7 @@ import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-public class HumanResourcesFragment extends BaseFragment {
+public class ResourcesFragment extends BaseFragment {
 
     List<ResourceItem> resourceItemList;
     Button add_hr;
@@ -31,12 +31,12 @@ public class HumanResourcesFragment extends BaseFragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    public HumanResourcesFragment() {
+    public ResourcesFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static HumanResourcesFragment newInstance(int columnCount) {
-        HumanResourcesFragment fragment = new HumanResourcesFragment();
+    public static ResourcesFragment newInstance(int columnCount) {
+        ResourcesFragment fragment = new ResourcesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -56,14 +56,14 @@ public class HumanResourcesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("Resource List");
-        View view = inflater.inflate(R.layout.fragment_humanresources_list, container,
+        View view = inflater.inflate(R.layout.fragment_resources_list, container,
                 false);
 
         resourceItemList=ResourceItem.staticResourceItemList;
 
-        RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.recycler_list_human_resource);
+        RecyclerView recyclerView=(RecyclerView)view.findViewById(R.id.recycler_list_resource);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new HumanResourcesRecyclerViewAdapter(resourceItemList,
+        recyclerView.setAdapter(new ResourcesRecyclerViewAdapter(resourceItemList,
                 (HomeActivity)this.getActivity()));
         add_hr=(Button)view.findViewById(R.id.btn_add_hr);
 

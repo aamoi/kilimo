@@ -84,10 +84,17 @@
         <item>Incomplete</item>
     </string-array>
 
+    <!--For task assignment-->
     <string-array name="payment_status_array">
         <item>pending</item>
         <item>partially paid</item>
         <item>paid</item>
+    </string-array>
+
+    <!--For payment-->
+    <string-array name="paid_status_array">
+        <item>Partially paid</item>
+        <item>Fully paid</item>
     </string-array>
 
     <string name="title_activity_main2">Main2Activity</string>
@@ -131,6 +138,9 @@
     <string name="title_fragment_restock_power_source">Restock </string>
     <string name="title_fragment_power_source_stocks">stock list </string>
     <string name="title_activity_login">Sign in</string>
+
+    <string name="title_fragment_payment"> Payment</string>>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

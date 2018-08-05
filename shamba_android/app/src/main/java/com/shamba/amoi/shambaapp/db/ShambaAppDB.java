@@ -11,12 +11,12 @@ import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilization;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilizationDao;
 import com.shamba.amoi.shambaapp.db.labor.PayRate;
 import com.shamba.amoi.shambaapp.db.labor.PayRateDao;
+import com.shamba.amoi.shambaapp.db.labor.PaymentDao;
 import com.shamba.amoi.shambaapp.db.labor.Resource;
 import com.shamba.amoi.shambaapp.db.labor.ResourceDao;
 import com.shamba.amoi.shambaapp.db.labor.TaskAssignment;
 import com.shamba.amoi.shambaapp.db.labor.TaskAssignmentDao;
-import com.shamba.amoi.shambaapp.db.labor.TaskPayment;
-import com.shamba.amoi.shambaapp.db.labor.TaskPaymentDao;
+import com.shamba.amoi.shambaapp.db.labor.Payment;
 import com.shamba.amoi.shambaapp.db.power.PowerSource;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceDao;
 import com.shamba.amoi.shambaapp.db.power.PowerSourceStock;
@@ -43,7 +43,7 @@ import com.shamba.amoi.shambaapp.db.projects.TaskDao;
 @Database(entities ={Product.class,MasterPlantingPlan.class,
         Asset.class,PlantingProgram.class, Resource.class,
         PowerSource.class, Task.class,PlantingPhase.class, ProductStock.class, StockUtilization.class,
-        TaskAssignment.class, InventoryUtilization.class, TaskPayment.class, PowerSourceStock.class,
+        TaskAssignment.class, InventoryUtilization.class, Payment.class, PowerSourceStock.class,
         AssetFueling.class, Phase.class, PayRate.class},
         version = 4)
 public abstract class ShambaAppDB extends RoomDatabase {
@@ -57,7 +57,7 @@ public abstract class ShambaAppDB extends RoomDatabase {
     public abstract PlantingPhaseDao plantingPhaseDao();
     public abstract TaskAssignmentDao taskAssignmentDao();
     public abstract InventoryUtilizationDao inventoryUtilizationDao();
-    public abstract TaskPaymentDao taskPaymentDao();
+    public abstract PaymentDao paymentDao();
     public abstract PowerSourceStockDao powerSourceStockDao();
     public abstract AssetFuelingDao assetFuelingDao();
     public abstract PhaseDao phaseDao();
