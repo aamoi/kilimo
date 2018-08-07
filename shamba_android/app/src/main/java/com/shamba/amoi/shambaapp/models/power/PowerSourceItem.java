@@ -1,10 +1,8 @@
 package com.shamba.amoi.shambaapp.models.power;
 
-import com.shamba.amoi.shambaapp.models.inventory.ProductItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResourceTaskAssignmentFragment extends BaseFragment {
+public class CreateResourceAssignmentFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Spinner spn_plan_name;
@@ -77,11 +77,11 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ResourceTaskAssignmentFragment() {
+    public CreateResourceAssignmentFragment() {
     }
 
-    public static ResourceTaskAssignmentFragment newInstance(String param1, String param2) {
-        ResourceTaskAssignmentFragment fragment = new ResourceTaskAssignmentFragment();
+    public static CreateResourceAssignmentFragment newInstance(String param1, String param2) {
+        CreateResourceAssignmentFragment fragment = new CreateResourceAssignmentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -103,7 +103,7 @@ public class ResourceTaskAssignmentFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         getActivity().setTitle(R.string.title_fragment_assign_resource_task);
-        View view = inflater.inflate(R.layout.fragment_resource_task_assignment, container,
+        View view = inflater.inflate(R.layout.fragment_create_resource_assignment, container,
                 false);
         getViewsByIds(view);
 

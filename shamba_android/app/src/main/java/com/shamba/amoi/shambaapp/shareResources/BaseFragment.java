@@ -2,20 +2,15 @@ package com.shamba.amoi.shambaapp.shareResources;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.shamba.amoi.shambaapp.models.inventory.ProductItem;
 import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.projects.CropItem;
-import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,16 +22,10 @@ public abstract class BaseFragment extends Fragment {
     public static List<CropItem> cropItems;
     public static List<ResourceItem> resourceItemList;
     public static ResourceItem resourceItem;
-
-    public static HashMap<String, ProductItem> productItemHashMap;
-    public static ProductItem productItem;
-
     public static TaskItem taskItem;
-
     public static ProductStockItem productStockItem;
     /**
      * Switch/change from one fragment to another in an activity.
-     *
      * @param activity
      * @param activity_place_holder_id
      * @param fragment
@@ -65,10 +54,8 @@ public abstract class BaseFragment extends Fragment {
             }
         } );
     }
-
     /**
      * Validate that mandatory input text field is not empty.
-     *
      * @return
      */
     public boolean validateMandatoryEditTextFields(EditText ... editTexts) {
@@ -88,7 +75,6 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * Validate that mandatory input text field is not empty.
-     *
      * @return
      */
     public boolean validateMandatorySpinnerFields(Spinner... spinners) {
@@ -104,91 +90,11 @@ public abstract class BaseFragment extends Fragment {
             }
             catch(Exception e){
                 ((TextView)spinner.getSelectedView()).setError("Error message");
-
-//                TextView errorText = (TextView)spinner.getSelectedView();
-//                errorText.setError("");
-//                errorText.setTextColor(Color.RED);//just to highlight that this is an error
-//                errorText.setText("my actual error text");//changes the selected item text to
                 status= false;
 
             }
         }
         return status ;
-    }
-
-    public static HashMap<String, PlantingProgramItem> getAllPlantingPrograms(AppCompatActivity activity) {
-        List<PlantingProgramItem> plantingProgramItemList = PlantingProgramItem.getAllPlantingPrograms(activity);
-
-        HashMap<String, PlantingProgramItem> plantingProgramItemHashMap = new HashMap<>();
-
-//        for (int i = 0; i < plantingProgramItemList.size(); ++i) {
-//            plantingProgramItemHashMap.put(plantingProgramItemList.get(i).getPlan_id(),
-//                    plantingProgramItemList.get(i));
-//        }
-
-        return plantingProgramItemHashMap;
-    }
-
-    public static HashMap<Integer, TaskItem> getAllProjectsTasks(AppCompatActivity activity) {
-        List<TaskItem> taskItemList = TaskItem.getAllTask(activity);
-
-        Log.d("Projectsss|", "number of task: " + String.valueOf(taskItemList.size()));
-
-
-        HashMap<Integer, TaskItem> taskItemHashMap = new HashMap<>();
-
-        for (int i = 0; i < taskItemList.size(); ++i) {
-            taskItemHashMap.put(taskItemList.get(i).getId(), taskItemList.get(i));
-        }
-
-        return taskItemHashMap;
-    }
-
-
-    public static HashMap<String, ProductItem> getCrops() {
-
-        String product_type = getProductType().get("Crop");
-
-        String[] crops = {"Maize", "WaterMelon", "Beans", "Tomatoes", "Spinach", "Onions", "Beans",
-                "French Beans", "Peas", "Tomatoes", "Cabbage", "Sukuma", "Managu", "Kunde", "Terere"};
-
-        HashMap<String, ProductItem> cropItemHashMa = new HashMap<>();
-
-        for (int i = 0; i < crops.length; i++) {
-            ProductItem crop = new ProductItem();
-            crop.setProduct_id(String.valueOf(i));
-            crop.setProduct_name(crops[i]);
-            crop.setUnit_of_measure("gm");
-            crop.setProduct_type(product_type);
-            cropItemHashMa.put(crops[i], crop);
-        }
-
-        return cropItemHashMa;
-    }
-
-    public static List<CropItem> saveCrops() {
-
-        String[][] crops_str = {
-                {"1", "Maize", "For Milling Flour, Roasting and Boiling"},
-                {"2", "WaterMelon", "They are fruits"}, {"3", "Onions", ""},
-                {"4", "Beans", " "}, {"5", "French Beans", ""}, {"6", "Peas", ""},
-                {"7", "Tomatoes", " "}, {"8", "Cabbage", ""}, {"9", "Sukuma", ""},
-                {"10", "Spinach", " "}, {"11", "Managu", ""}, {"12", "Kunde", ""},
-                {"13", "Terere", ""},
-        };
-
-        ArrayList<CropItem> crops = new ArrayList();
-
-        for (int i = 0; i < crops_str.length; i++) {
-            CropItem crop = new CropItem();
-
-            crop.setCrop_id(Integer.parseInt(crops_str[i][0]));
-            crop.setCrop_name(crops_str[i][1]);
-            crop.setCrop_description(crops_str[i][2]);
-            crops.add(crop);
-        }
-        cropItems = crops;
-        return crops;
     }
 
     public static HashMap<String, String> getProductType() {

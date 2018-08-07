@@ -59,14 +59,16 @@ public class PaymentsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_payments_list, container,
                 false);
 
-        Log.d("Payment| resource id", String.valueOf( ResourceItem.selectedResourceItem.getId()));
+        Log.d("Payment| resource id", String.valueOf(
+                ResourceItem.selectedResourceItem.getId()));
 
         List<PaymentItem> resourcePayments=PaymentItem.getPaymentByResource(getActivity(),
                 ResourceItem.selectedResourceItem.getId());
 
         Log.d("Payment| # res. pays", String.valueOf(resourcePayments.size()));
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_salary_payments);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(
+                R.id.recycler_list_salary_payments);
         recyclerView.setAdapter(new PaymentsRecyclerViewAdapter((HomeActivity)getActivity(),
                 resourcePayments));
 

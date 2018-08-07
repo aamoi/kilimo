@@ -71,7 +71,7 @@ public class TaskAssignmentListFragment extends BaseFragment {
             public void onClick(View v) {
 
                 BaseFragment.changeFragment((AppCompatActivity) getActivity(), R.id.fragment_placeholder_home,
-                        new ResourceTaskAssignmentFragment());
+                        new CreateResourceAssignmentFragment());
             }
         });
 
