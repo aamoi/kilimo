@@ -1,10 +1,13 @@
 package com.shamba.amoi.shambaapp.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -46,9 +49,7 @@ public class HomeActivity extends BaseActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         loadHomeFragment();
-
         setupFragments();
         setupToolbar();
     }
@@ -148,8 +149,41 @@ public class HomeActivity extends BaseActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_home_drawer, menu);
+//        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+//        SearchManager searchManager = (SearchManager)
+//                getSystemService(Context.SEARCH_SERVICE);
+//       MenuItem searchMenuItem = menu.findItem(R.id.search);
+//        android.widget.SearchView searchView = (android.widget.SearchView)
+//                searchMenuItem.getActionView();
+////        searchMenuItem.setVisible(false);
+//
+//        searchView.setSearchableInfo(searchManager.
+//                getSearchableInfo(getComponentName()));
+//        searchView.setSubmitButtonEnabled(true);
+//
+//        searchView.setOnQueryTextListener((android.widget.SearchView.OnQueryTextListener) this);
+
         return true;
     }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.search_menu, menu);
+//
+//        SearchManager searchManager = (SearchManager)
+//                getSystemService(Context.SEARCH_SERVICE);
+//        searchMenuItem = menu.findItem(R.id.search);
+//        searchView = (SearchView) searchMe      nuItem.getActionView();
+//
+//        searchView.setSearchableInfo(searchManager.
+//                getSearchableInfo(getComponentName()));
+//        searchView.setSubmitButtonEnabled(true);
+//        searchView.setOnQueryTextListener(this);
+//
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,6 +196,10 @@ public class HomeActivity extends BaseActivity  {
         if (id == R.id.action_settings) {
             return true;
         }
+
+//        if (id == R.id.search) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -338,4 +376,14 @@ public class HomeActivity extends BaseActivity  {
         fragmentManager.beginTransaction().replace(R.id.fragment_placeholder_home,
                 new ReportsFragment()).addToBackStack(null).commit();
     }
+
+//    @Override
+//    public boolean onQueryTextSubmit(String s) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String s) {
+//        return false;
+//    }
 }

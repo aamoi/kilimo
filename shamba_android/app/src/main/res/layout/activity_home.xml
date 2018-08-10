@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/app_bar_home"/>
+        <include layout="@layout/app_bar_home" />
 
         <!-- main content view -->
         <FrameLayout
             android:id="@+id/fragment_placeholder_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"/>
+            android:layout_marginTop="?attr/actionBarSize" />
 
     </android.support.design.widget.CoordinatorLayout>
 

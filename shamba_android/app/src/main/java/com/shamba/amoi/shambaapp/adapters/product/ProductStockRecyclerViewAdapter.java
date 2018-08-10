@@ -1,4 +1,4 @@
-package com.shamba.amoi.shambaapp.adapters.inventory;
+package com.shamba.amoi.shambaapp.adapters.product;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;

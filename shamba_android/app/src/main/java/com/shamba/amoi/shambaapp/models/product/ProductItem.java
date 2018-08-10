@@ -1,5 +1,28 @@
 package com.shamba.amoi.shambaapp.models.product;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.shamba.amoi.shambaapp.BuildConfig;
+import com.shamba.amoi.shambaapp.db.DBAdaptor;
+import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
+import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
+import com.shamba.amoi.shambaapp.models.projects.LocationBlockItem;
+import com.shamba.amoi.shambaapp.models.projects.LocationItem;
+import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by amoi on 13/02/2018.
@@ -7,11 +30,11 @@ import java.util.List;
 public class ProductItem {
     public static List<ProductItem> staticProductItemList;
     public static ProductItem selectedProductItem;
-    private int id ;
+    private int id;
     private String product_name;
     private boolean is_asset;
-    private int category_id ;
-    private int uom_id ;
+    private int category_id;
+    private int uom_id;
     private boolean is_fuel;
 
     public int getId() {
@@ -68,51 +91,97 @@ public class ProductItem {
      * @param id
      * @return
      */
-    public static ProductItem getProductItemByID(List<ProductItem> productItems, int id){
-        ProductItem productItem=null;
+    public static ProductItem getProductItemByID(List<ProductItem> productItems, int id) {
+        ProductItem productItem = null;
 
-        for(int i=0;i<productItems.size();++i){
-            if(productItems.get(i).getId()==id){
-                productItem= productItems.get(i);
+        for (int i = 0; i < productItems.size(); ++i) {
+            if (productItems.get(i).getId() == id) {
+                productItem = productItems.get(i);
                 break;
             }
         }
-      return productItem;
+        return productItem;
     }
 
-//    /**
-//     * get all products from database
-//     */
-//    class GetProductsService extends AsyncTask<Void, Void, List<Product>> {
-//
-//        ProductDao product_dao;
-//        Product product;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            String message = getString(R.string.message_processing_products);
-//            Log.d("aaaa", "fetching products");
-//
-//            ((BaseActivity) getActivity()).createDialog(message, null);
-//
-//            ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
-//            product_dao = db.productDao();
-//            product = new Product();
-//        }
-//
-//        @Override
-//        protected List<Product> doInBackground(Void... voids) {
-//            saved_products = product_dao.getProducts();
-//
-//            return product_dao.getProducts();
-//        }
-//        @Override
-//        protected void onPostExecute(List<Product> result) {
-//            ((BaseActivity) getActivity()).clearDialog();
-//        }
-//
-//        public List<Product> getProducts() {
-//            return saved_products;
-//        }
-//    }
+    public static List<ProductItem> getAllProducts(Activity activity) {
+        List<ProductItem> all_products = new ArrayList<>();
+
+        try {
+            all_products = new GetProducts(activity).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return all_products;
+    }
+}
+
+/**
+ * Get products from android local db.
+ */
+class GetProducts extends AsyncTask<Void, Void, List<ProductItem>> {
+    public Activity activity;
+    Context context;
+
+    public GetProducts(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public void onPreExecute() {
+        ShambaAppDB db = new DBAdaptor(activity).getDB();
+    }
+
+    @Override
+    protected List<ProductItem> doInBackground(Void... voids) {
+        return getAllProductsFromServer();
+    }
+    /**
+     * Pools all products from server application!
+     * @return
+     */
+    private List<ProductItem> getAllProductsFromServer() {
+
+        List<ProductItem> productItemList = new ArrayList<>();
+
+        try {
+            List<JSONObject> response = CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL, "product/", "");
+
+            Log.d("# of products pooled:- ", String.valueOf(response.size()));
+
+            JSONArray jArray = new JSONArray(response);
+
+            for (int i = 0; i < jArray.length(); ++i) {
+                ProductItem productItem = new ProductItem();
+                JSONObject jsonObject = jArray.getJSONObject(i);
+                int id = jsonObject.getInt("id");
+                productItem.setId(id);
+                String product_name = jsonObject.getString("product_name");
+                productItem.setProduct_name(product_name);
+                int category_id = jsonObject.getInt("category_id");
+                productItem.setCategory_id(category_id);
+                int uom_id = jsonObject.getInt("uom_id");
+                productItem.setUom_id(uom_id);
+                boolean is_asset = jsonObject.getBoolean("_asset");
+                productItem.setIs_asset(is_asset);
+                boolean is_fuel = jsonObject.getBoolean("_fuel");
+                productItem.setIs_fuel(is_fuel);
+                productItemList.add(productItem);
+            }
+
+            ProductItem.staticProductItemList = productItemList;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return productItemList;
+    }
+
+    @Override
+    public void onPostExecute(List<ProductItem> productItems) {
+    }
 }
