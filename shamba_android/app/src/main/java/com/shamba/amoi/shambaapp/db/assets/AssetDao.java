@@ -25,6 +25,9 @@ public interface AssetDao {
     @Query("select * from asset")
     public List<Asset> getAllAssets(  );
 
-    @Query("select * from asset where asset_id IN (:asset_ids)")
-    public List<Asset> getAsset(int ...asset_ids);
+    @Query("select * from asset where id IN (:id)")
+    public List<Asset> getAssetById(int id);
+
+    @Query("select * from asset where name IN (:name)")
+    public List<Asset> getAssetByName(String  name);
 }

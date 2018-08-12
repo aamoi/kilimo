@@ -72,7 +72,7 @@ public class ResourcesFragment extends BaseFragment {
             public void onClick(View view) {
 
                 BaseFragment.changeFragment((AppCompatActivity) getActivity(),R.id.fragment_placeholder_home,
-                        new CreateHumanResourceFragment());
+                        new CreateResourceFragment());
             }
         });
 

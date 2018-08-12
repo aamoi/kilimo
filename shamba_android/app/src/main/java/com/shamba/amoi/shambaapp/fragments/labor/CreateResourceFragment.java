@@ -30,12 +30,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CreateHumanResourceFragment.OnFragmentInteractionListener} interface
+ * {@link CreateResourceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CreateHumanResourceFragment#newInstance} factory method to
+ * Use the {@link CreateResourceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateHumanResourceFragment extends BaseFragment {
+public class CreateResourceFragment extends BaseFragment {
     private EditText edit_resource_name;
     private Spinner  spn_resource_type;
     private EditText edit_resource_joining_date;
@@ -56,7 +56,7 @@ public class CreateHumanResourceFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public CreateHumanResourceFragment() {
+    public CreateResourceFragment() {
         // Required empty public constructor
     }
 
@@ -65,11 +65,11 @@ public class CreateHumanResourceFragment extends BaseFragment {
      * this fragment using the provided parameters.
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CreateHumanResourceFragment.
+     * @return A new instance of fragment CreateResourceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CreateHumanResourceFragment newInstance(String param1, String param2) {
-        CreateHumanResourceFragment fragment = new CreateHumanResourceFragment();
+    public static CreateResourceFragment newInstance(String param1, String param2) {
+        CreateResourceFragment fragment = new CreateResourceFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

@@ -120,7 +120,7 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
                 task_phase = spn_task_phase.getSelectedItem().toString();
                 String phase_id = PlantingPhaseItem.getPlantingPhase(task_phase).getPhase_id();
 
-                int task_id = TaskItem.getTaskItemByName(getActivity(),spn_plan_task.getSelectedItem().
+                int task_id = TaskItem.getTaskItemByName(getActivity(), spn_plan_task.getSelectedItem().
                         toString()).getId();
 //                 String task_id= TaskItem.getTaskItem(getActivity(),plan_task).getId();
                 pay_rate = spn_pay_rate.getSelectedItem().toString();
@@ -134,14 +134,14 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
                 complete_status = spn_complete_status.getSelectedItem().toString();
                 comments = edit_comments.getText().toString();
 
-                double amount_paid =0;
-                if(!edit_amount_paid.getText().toString().isEmpty())
-                    amount_paid=Double.parseDouble(edit_amount_paid.getText().toString());
+                double amount_paid = 0;
+                if (!edit_amount_paid.getText().toString().isEmpty())
+                    amount_paid = Double.parseDouble(edit_amount_paid.getText().toString());
 
                 String payment_status = spn_payment_status.getSelectedItem().toString();
 
-                new SaveResourceAssignment(resource_id, task_id,pay_rate_id,start_date, end_date,
-                        total_work, total_payment,complete_status, comments,payment_status,
+                new SaveResourceAssignment(resource_id, task_id, pay_rate_id, start_date, end_date,
+                        total_work, total_payment, complete_status, comments, payment_status,
                         amount_paid).execute();
 
                 BaseFragment.changeFragment((AppCompatActivity) getActivity(),
@@ -282,6 +282,7 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
     /**
      * Saves resource assignment record into both server and local db
      * It only saves on local db after the record is saved to server!
@@ -309,10 +310,10 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
         int id;
         int success = 0;
 
-        public SaveResourceAssignment(int resource_id,int task_id,int pay_rate_id,
-                                      String assignment_start_date,String assignment_end_date,
-                                      double quantity_worked,double amount_due,String complete_status,
-                                      String comments,String payment_status,double amount_paid) {
+        public SaveResourceAssignment(int resource_id, int task_id, int pay_rate_id,
+                                      String assignment_start_date, String assignment_end_date,
+                                      double quantity_worked, double amount_due, String complete_status,
+                                      String comments, String payment_status, double amount_paid) {
             this.resource_id = resource_id;
             this.task_id = task_id;
             this.pay_rate_id = pay_rate_id;
@@ -342,8 +343,8 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
                 request_object.put("amount_due", amount_due);
                 request_object.put("complete_status", complete_status);
                 request_object.put("comments", comments);
-                request_object.put("payment_status", payment_status);
-                request_object.put("amount_paid", amount_paid);
+//                request_object.put("payment_status", payment_status);
+//                request_object.put("amount_paid", amount_paid);
 
                 Log.d("Assignment request...", request_object.toString());
 
@@ -361,8 +362,8 @@ public class CreateResourceAssignmentFragment extends BaseFragment {
                 taskAssignment.setAmount_due(amount_due);
                 taskAssignment.setComplete_status(complete_status);
                 taskAssignment.setComments(comments);
-                taskAssignment.setPayment_status(payment_status);
-                taskAssignment.setAmount_due(amount_paid);
+//                taskAssignment.setPayment_status(payment_status);
+//                taskAssignment.setAmount_due(amount_paid);
 
                 Log.d("Assign. db request...", taskAssignment.toString());
             } catch (Exception e) {

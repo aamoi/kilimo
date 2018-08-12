@@ -62,7 +62,7 @@ public class AssetServicingListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String title= AssetItem.currentAssetItem.getAsset_name() +" "+
+        String title= AssetItem.currentAssetItem.getName() +" "+
                 getString(R.string.title_fragment_asset_servicngs);
         getActivity().setTitle(title);
 

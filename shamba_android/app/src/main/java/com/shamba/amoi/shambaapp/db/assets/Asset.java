@@ -11,84 +11,119 @@ import java.util.Date;
  */
 @Entity
 public class Asset {
-
     @PrimaryKey
     @NonNull
-    private String asset_id;
-    private String asset_name;
-    private String asset_type;
-    private String fuel_type;
-    private String manufacturer;
-    private String vendor;
-    private String unit_of_measure;
-    private String capacity;
-    private String purchase_date;
-    private double purchase_value;
-    private double current_value;
-    private String warrant_expiry_date;
+    int id;
+    String name;
+    int capacity_uom_id;
+    double capacity_quantity;
+    String is_serviceable;
+    String is_active;
+    String is_decommissioned;
+    int service_type_id;
+    int service_frequency_uom_id;
+    double service_frequency_quantity;
+    int fuel_product_id;
+    String purchase_date;
+    double purchase_price;
+    int vendor_id;
+    int distributor_id;
+    int manufacturer_id;
+    int mileage_uom_id;
+    double total_mileage_quantity;
+    String last_service_date;
+    double mileage_to_next_service;
+    String next_service_date;
+    String is_serviced_upto_date;
+    String asset_details;
 
-    public String getAsset_id() {
-        return asset_id;
+    @NonNull
+    public int getId() {
+        return id;
     }
 
-    public void setAsset_id(String asset_id) {
-        this.asset_id = asset_id;
+    public void setId(@NonNull int id) {
+        this.id = id;
     }
 
-    public String getAsset_name() {
-        return asset_name;
+    public String getName() {
+        return name;
     }
 
-    public void setAsset_name(String asset_name) {
-        this.asset_name = asset_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAsset_type() {
-        return asset_type;
+    public int getCapacity_uom_id() {
+        return capacity_uom_id;
     }
 
-    public void setAsset_type(String asset_type) {
-        this.asset_type = asset_type;
+    public void setCapacity_uom_id(int capacity_uom_id) {
+        this.capacity_uom_id = capacity_uom_id;
     }
 
-    public String getFuel_type() {
-        return fuel_type;
+    public double getCapacity_quantity() {
+        return capacity_quantity;
     }
 
-    public void setFuel_type(String fuel_type) {
-        this.fuel_type = fuel_type;
+    public void setCapacity_quantity(double capacity_quantity) {
+        this.capacity_quantity = capacity_quantity;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getIs_serviceable() {
+        return is_serviceable;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setIs_serviceable(String is_serviceable) {
+        this.is_serviceable = is_serviceable;
     }
 
-    public String getVendor() {
-        return vendor;
+    public String getIs_active() {
+        return is_active;
     }
 
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
+    public void setIs_active(String is_active) {
+        this.is_active = is_active;
     }
 
-    public String getUnit_of_measure() {
-        return unit_of_measure;
+    public String getIs_decommissioned() {
+        return is_decommissioned;
     }
 
-    public void setUnit_of_measure(String unit_of_measure) {
-        this.unit_of_measure = unit_of_measure;
+    public void setIs_decommissioned(String is_decommissioned) {
+        this.is_decommissioned = is_decommissioned;
     }
 
-    public String getCapacity() {
-        return capacity;
+    public int getService_type_id() {
+        return service_type_id;
     }
 
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
+    public void setService_type_id(int service_type_id) {
+        this.service_type_id = service_type_id;
+    }
+
+    public int getService_frequency_uom_id() {
+        return service_frequency_uom_id;
+    }
+
+    public void setService_frequency_uom_id(int service_frequency_uom_id) {
+        this.service_frequency_uom_id = service_frequency_uom_id;
+    }
+
+    public double getService_frequency_quantity() {
+        return service_frequency_quantity;
+    }
+
+    public void setService_frequency_quantity(double service_frequency_quantity) {
+        this.service_frequency_quantity = service_frequency_quantity;
+    }
+
+    public int getFuel_product_id() {
+        return fuel_product_id;
+    }
+
+    public void setFuel_product_id(int fuel_product_id) {
+        this.fuel_product_id = fuel_product_id;
     }
 
     public String getPurchase_date() {
@@ -99,27 +134,91 @@ public class Asset {
         this.purchase_date = purchase_date;
     }
 
-    public double getPurchase_value() {
-        return purchase_value;
+    public double getPurchase_price() {
+        return purchase_price;
     }
 
-    public void setPurchase_value(double purchase_value) {
-        this.purchase_value = purchase_value;
+    public void setPurchase_price(double purchase_price) {
+        this.purchase_price = purchase_price;
     }
 
-    public double getCurrent_value() {
-        return current_value;
+    public int getVendor_id() {
+        return vendor_id;
     }
 
-    public void setCurrent_value(double current_value) {
-        this.current_value = current_value;
+    public void setVendor_id(int vendor_id) {
+        this.vendor_id = vendor_id;
     }
 
-    public String getWarrant_expiry_date() {
-        return warrant_expiry_date;
+    public int getDistributor_id() {
+        return distributor_id;
     }
 
-    public void setWarrant_expiry_date(String warrant_expiry_date) {
-        this.warrant_expiry_date = warrant_expiry_date;
+    public void setDistributor_id(int distributor_id) {
+        this.distributor_id = distributor_id;
+    }
+
+    public int getManufacturer_id() {
+        return manufacturer_id;
+    }
+
+    public void setManufacturer_id(int manufacturer_id) {
+        this.manufacturer_id = manufacturer_id;
+    }
+
+    public int getMileage_uom_id() {
+        return mileage_uom_id;
+    }
+
+    public void setMileage_uom_id(int mileage_uom_id) {
+        this.mileage_uom_id = mileage_uom_id;
+    }
+
+    public double getTotal_mileage_quantity() {
+        return total_mileage_quantity;
+    }
+
+    public void setTotal_mileage_quantity(double total_mileage_quantity) {
+        this.total_mileage_quantity = total_mileage_quantity;
+    }
+
+    public String getLast_service_date() {
+        return last_service_date;
+    }
+
+    public void setLast_service_date(String last_service_date) {
+        this.last_service_date = last_service_date;
+    }
+
+    public double getMileage_to_next_service() {
+        return mileage_to_next_service;
+    }
+
+    public void setMileage_to_next_service(double mileage_to_next_service) {
+        this.mileage_to_next_service = mileage_to_next_service;
+    }
+
+    public String getNext_service_date() {
+        return next_service_date;
+    }
+
+    public void setNext_service_date(String next_service_date) {
+        this.next_service_date = next_service_date;
+    }
+
+    public String getIs_serviced_upto_date() {
+        return is_serviced_upto_date;
+    }
+
+    public void setIs_serviced_upto_date(String is_serviced_upto_date) {
+        this.is_serviced_upto_date = is_serviced_upto_date;
+    }
+
+    public String getAsset_details() {
+        return asset_details;
+    }
+
+    public void setAsset_details(String asset_details) {
+        this.asset_details = asset_details;
     }
 }

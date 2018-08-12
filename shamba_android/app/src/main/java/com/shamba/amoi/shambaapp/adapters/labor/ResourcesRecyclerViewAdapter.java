@@ -70,7 +70,7 @@ public class ResourcesRecyclerViewAdapter
 //                    });
 //                    builder.setPositiveButton("Details", new DialogInterface.OnClickListener() {
 //                        public void onClick(DialogInterface dialog, int id) {
-//                            BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,new CreateHumanResourceFragment());
+//                            BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,new CreateResourceFragment());
 //                        }
 //                    });
 //

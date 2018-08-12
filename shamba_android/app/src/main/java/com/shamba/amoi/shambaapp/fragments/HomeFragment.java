@@ -19,6 +19,7 @@ import com.shamba.amoi.shambaapp.fragments.labor.ResourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
 import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.product.DistributorItem;
@@ -57,7 +58,19 @@ public class HomeFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    /**
+     * Get all setup data from server
+     */
+    private void getAllSetUpData(){
+
         try {
+            AssetItem.getAllAssets(getActivity());
             new GetSetUpData().execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -65,15 +78,12 @@ public class HomeFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getAllSetUpData();
         getActivity().setTitle(R.string.title_fragment_home);
         View view =inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -111,11 +121,8 @@ public class HomeFragment extends BaseFragment {
                 R.id.fragment_placeholder_home,new ReportsFragment());
 
     }
-
     public void onButtonPressed(Uri uri) {
     }
-
-
 
     @Override
     public void onAttach(Context context) {

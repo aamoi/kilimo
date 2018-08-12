@@ -36,7 +36,7 @@ public class PaymentsRecyclerViewAdapter extends
         String task_name= TaskItem.getTaskItemById(TaskItem.staticTaskItems,
                 mValues.get(position).getTask_id()).getTask_name();
         holder.task_name.setText(task_name);
-        holder.due_date.setText(mValues.get(position).getDue_date());
+        holder.due_date.setText(mValues.get(position).getDue_date().substring(0,10));
         holder.amount_due.setText(String.valueOf(mValues.get(position).getAmount_due()));
     }
 

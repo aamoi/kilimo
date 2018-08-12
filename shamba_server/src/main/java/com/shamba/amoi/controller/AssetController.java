@@ -7,6 +7,7 @@ package com.shamba.amoi.controller;
 import com.shamba.amoi.Repository.AssetRepository;
 import com.shamba.amoi.Utils.DateUtil;
 import com.shamba.amoi.model.Asset;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,13 @@ public class AssetController {
 
     @GetMapping("/asset")
     public List<Asset> index() {
-        return assetRepository.findAll(new Sort(Sort.Order.asc("id")));
+
+        List<Asset> assets =assetRepository.findAll(new Sort(Sort.Order.asc("id")));
+
+        System.out.print("AssetController/asset hit. # of assets pooled from db:"+assets!=null?assets.size():0);
+
+
+        return assets;
     }
 
     @GetMapping("/asset/{id}")
@@ -49,26 +56,35 @@ public class AssetController {
 
     @PostMapping("/createAsset")
     public Asset create(@RequestBody Map<String, String> body) {
-        String name=body.get("name");
-        String vendor=body.get("vendor");
-        int uom_id = Integer.parseInt(body.get("uom_id"));
-        double capacity=Double.parseDouble(body.get("capacity"));
-        double purchase_price=Double.parseDouble(body.get("purchase_price"));
-        String asset_details=body.get("asset_details");
-        int service_frequency_in_month=Integer.parseInt(body.get("service_frequency_in_month"));
-        String service_description=body.get("service_description");
-        String fuel_type=body.get("fuel_type");
-        Date purchase_date= DateUtil.stringToDate(body.get("purchase_date"));
-        double total_hours_worked=Double.parseDouble(body.get("total_hours_worked"));
-        double hours_to_next_service=Double.parseDouble(body.get("hours_to_next_service"));
-        boolean is_serviceable=Boolean.parseBoolean(body.get("is_serviceable"));
-        boolean is_serviced_upto_date=Boolean.parseBoolean(body.get("is_serviced_upto_date"));
-        Date last_service_date= DateUtil.stringToDate(body.get("last_service_date"));
-        Date next_service_date=DateUtil.stringToDate(body.get("next_service_date"));
 
-        return assetRepository.save(new Asset(name,vendor, uom_id, capacity,purchase_price, asset_details,
-                service_frequency_in_month,service_description, fuel_type,purchase_date, total_hours_worked,
-                hours_to_next_service, is_serviceable, last_service_date,next_service_date,is_serviced_upto_date));
+        String name=body.get("name");
+        int capacity_uom_id = Integer.parseInt(body.get("capacity_uom_id"));
+        double capacity_quantity=Double.parseDouble(body.get("capacity_quantity"));
+        boolean is_serviceable=Boolean.parseBoolean(body.get("is_serviceable"));
+        boolean is_active=Boolean.parseBoolean(body.get("is_active"));
+        boolean is_decommissioned=Boolean.parseBoolean(body.get("is_decommissioned"));
+        int service_type_id = Integer.parseInt(body.get("service_type_id"));
+        int service_frequency_uom_id = Integer.parseInt(body.get("service_frequency_uom_id"));
+        double service_frequency_quantity = Double.parseDouble(body.get("service_frequency_quantity"));
+        int fuel_product_id = Integer.parseInt(body.get("fuel_product_id"));
+        Date purchase_date= DateUtil.stringToDate(body.get("purchase_date"));
+        double purchase_price=Double.parseDouble(body.get("purchase_price"));
+        int vendor_id = Integer.parseInt(body.get("vendor_id"));
+        int distributor_id = Integer.parseInt(body.get("distributor_id"));
+        int manufacturer_id = Integer.parseInt(body.get("manufacturer_id"));
+        int mileage_uom_id = Integer.parseInt(body.get("mileage_uom_id"));
+        double total_mileage_quantity=Double.parseDouble(body.get("total_mileage_quantity"));
+        Date last_service_date= DateUtil.stringToDate(body.get("last_service_date"));
+        double mileage_to_next_service=Double.parseDouble(body.get("mileage_to_next_service"));
+        Date next_service_date= DateUtil.stringToDate(body.get("next_service_date"));
+        boolean is_serviced_upto_date=Boolean.parseBoolean(body.get("is_serviced_upto_date"));
+        String asset_details=body.get("asset_details");
+
+        return assetRepository.save(new Asset(name, capacity_uom_id, capacity_quantity, is_serviceable, is_active,
+        is_decommissioned, service_type_id, service_frequency_uom_id, service_frequency_quantity,
+        fuel_product_id, purchase_date, purchase_price, vendor_id, distributor_id,
+        manufacturer_id, mileage_uom_id, total_mileage_quantity, last_service_date,
+        mileage_to_next_service, next_service_date, is_serviced_upto_date, asset_details));
 
     }
 

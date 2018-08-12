@@ -77,21 +77,9 @@ public class AssetFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.fragment_asset_list, container, false);
 
-
-        GetAssets assets=new GetAssets();
-        try {
-            asset_list=assets.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        asset_list.addAll(AssetItem.getAssets());
-
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_assets);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new AssetRecyclerViewAdapter((HomeActivity)getActivity(),asset_list));
+        recyclerView.setAdapter(new AssetRecyclerViewAdapter((HomeActivity)getActivity(),AssetItem.staticAssetItems));
 
         add_asset=(Button)view.findViewById(R.id.btn_add_asset);
         add_asset.setOnClickListener(new View.OnClickListener() {
@@ -138,42 +126,4 @@ public class AssetFragment extends BaseFragment {
         void onListFragmentInteraction(AssetItem uri);
     }
 
-    class GetAssets extends AsyncTask<Void, Void, List<AssetItem>> {
-
-        AssetDao assetDao;
-        List<AssetItem> assetItems;
-
-        @Override
-        protected void onPreExecute() {
-            ShambaAppDB db= new DBAdaptor(getActivity()).getDB();
-            assetDao=db.assetDao();
-            assetItems=new ArrayList();
-        }
-
-        @Override
-        protected List<AssetItem> doInBackground(Void... voids) {
-
-            List<Asset> db_assets = assetDao.getAllAssets();
-
-            if (db_assets.size() > 0){
-
-                for (int count = 0; count < db_assets.size(); ++count) {
-                    AssetItem assetItem = new AssetItem();
-                    assetItem.setAsset_name(db_assets.get(count).getAsset_name());
-                    assetItem.setManufacturer(db_assets.get(count).getManufacturer());
-                    assetItem.setCapacity(db_assets.get(count).getCapacity());
-                    assetItem.setUnit_of_measure(db_assets.get(count).getUnit_of_measure());
-
-                    assetItems.add(assetItem);
-                }
-            }
-
-            return assetItems;
-        }
-
-        @Override
-        protected void onPostExecute(List<AssetItem> assetItemListssetItems) {
-//            super.onPostExecute(masterPlantingPlanItems);
-        }
-    }
 }

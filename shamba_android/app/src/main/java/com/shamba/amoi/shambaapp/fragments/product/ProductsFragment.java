@@ -130,6 +130,9 @@ public class ProductsFragment extends BaseFragment {
             };
             searchView.setOnQueryTextListener(queryTextListener);
         }
+
+        productsRecyclerViewAdapter.setProductList(getContext(), productItems);
+
     }
 
     @Override

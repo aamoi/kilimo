@@ -11,13 +11,10 @@ import com.shamba.amoi.shambaapp.db.labor.TaskAssignmentDao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 /**
  * Created by amoi on 15/02/2018.
  */
-
 public class TaskAssignmentItem {
-
     public static List<TaskAssignmentItem> staticTaskAssignmentItem;
     public static TaskAssignmentItem selectedTaskAssignmentItem;
     int id;
@@ -30,8 +27,8 @@ public class TaskAssignmentItem {
     double amount_due;
     String complete_status;
     String comments;
-    String payment_status;
-    double amount_paid;
+//    String payment_status;
+//    double amount_paid;
 
     public int getId() {
         return id;
@@ -49,21 +46,21 @@ public class TaskAssignmentItem {
         return complete_status;
     }
 
-    public String getPayment_status() {
-        return payment_status;
-    }
+//    public String getPayment_status() {
+//        return payment_status;
+//    }
+//
+//    public void setPayment_status(String payment_status) {
+//        this.payment_status = payment_status;
+//    }
 
-    public void setPayment_status(String payment_status) {
-        this.payment_status = payment_status;
-    }
-
-    public double getAmount_paid() {
-        return amount_paid;
-    }
-
-    public void setAmount_paid(double amount_paid) {
-        this.amount_paid = amount_paid;
-    }
+//    public double getAmount_paid() {
+//        return amount_paid;
+//    }
+//
+//    public void setAmount_paid(double amount_paid) {
+//        this.amount_paid = amount_paid;
+//    }
 
     public void setResource_id(int resource_id) {
         this.resource_id = resource_id;
@@ -146,7 +143,8 @@ public class TaskAssignmentItem {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        Log.d("Projects|", "number of task assignments from db is: "+assignmentItemList.size());
+        Log.d("Projects|", "number of task assignments from db is: "+
+                assignmentItemList.size());
 
         return assignmentItemList;
     }

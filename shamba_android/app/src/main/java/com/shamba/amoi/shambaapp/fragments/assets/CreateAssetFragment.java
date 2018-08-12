@@ -175,10 +175,10 @@ public class CreateAssetFragment extends BaseFragment {
             ShambaAppDB db = new DBAdaptor(getActivity()).getDB();
             assetDao=db.assetDao();
             asset=new Asset();
-            asset.setManufacturer(manufacturer);
-            asset.setAsset_name(name);
-            asset.setUnit_of_measure(unit_of_measure);
-            asset.setCapacity(unit_size);
+//            asset.setManufacturer(manufacturer);
+//            asset.setAsset_name(name);
+//            asset.setUnit_of_measure(unit_of_measure);
+//            asset.setCapacity(unit_size);
         }
 
         @Override

@@ -52,37 +52,36 @@ public class TaskAssignmentListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TaskItem.staticTaskItems=TaskItem.getAllTask(getActivity());
+        TaskItem.staticTaskItems = TaskItem.getAllTask(getActivity());
 
-        String title= ResourceItem.selectedResourceItem.getResource_name()+" "+
+        String title = ResourceItem.selectedResourceItem.getResource_name() + " " +
                 getString(R.string.title_fragment_resource_assignment_list);
 
         getActivity().setTitle(title);
 
-        homeActivity=(HomeActivity) this.getActivity();
+        homeActivity = (HomeActivity) this.getActivity();
 
         View view = inflater.inflate(R.layout.fragment_taskassignmentlist_list, container,
                 false);
 
-        Button submit_task_assignment=(Button)view.findViewById(R.id.btn_add_task_assignment);
+        List<TaskAssignmentItem> taskAssignmentItemList = new ArrayList<>();
+        taskAssignmentItemList = TaskAssignmentItem.getAllTaskAssignments(this.getActivity());
+        TaskAssignmentItem.staticTaskAssignmentItem = taskAssignmentItemList;
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_task_assignment);
+
+        recyclerView.setAdapter(new TaskAssignmentListRecyclerViewAdapter((HomeActivity) homeActivity,
+                taskAssignmentItemList));
+
+        Button submit_task_assignment = (Button) view.findViewById(R.id.btn_add_task_assignment);
 
         submit_task_assignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                BaseFragment.changeFragment((AppCompatActivity) getActivity(), R.id.fragment_placeholder_home,
-                        new CreateResourceAssignmentFragment());
+                BaseFragment.changeFragment((AppCompatActivity) getActivity(),
+                        R.id.fragment_placeholder_home, new CreateResourceAssignmentFragment());
             }
         });
-
-        List<TaskAssignmentItem> taskAssignmentItemList=new ArrayList<>();
-        taskAssignmentItemList=TaskAssignmentItem.getAllTaskAssignments(this.getActivity());
-        TaskAssignmentItem.staticTaskAssignmentItem=taskAssignmentItemList;
-
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_task_assignment);
-
-            recyclerView.setAdapter(new TaskAssignmentListRecyclerViewAdapter((HomeActivity)homeActivity,
-                    taskAssignmentItemList   ));
         return view;
     }
 
@@ -97,6 +96,7 @@ public class TaskAssignmentListFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
     }
+
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(TaskAssignmentItem item);
     }
