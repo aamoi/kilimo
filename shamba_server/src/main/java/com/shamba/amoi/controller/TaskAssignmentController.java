@@ -17,16 +17,19 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @RestController
 public class TaskAssignmentController {
 
+    String class_name=getClass().getSimpleName();
+
     @Autowired
     TaskAssignmentRepository taskAssignmentRepository;
-
     @Autowired
     PaymentRepository paymentRepository;
 
@@ -54,7 +57,6 @@ public class TaskAssignmentController {
         String searchTerm = body.get("text");
 //        return plantingRepository.findByTitleContainingOrContentContaining(searchTerm, searchTerm);
         return null;
-
     }
 
     @PostMapping("/createTaskAssignment")
@@ -77,18 +79,14 @@ public class TaskAssignmentController {
         TaskAssignment taskAssignment = new TaskAssignment();
         Payment payment = new Payment();
 
-        try {
-
             taskAssignment = taskAssignmentRepository.save(new TaskAssignment(resource_id, task_id, pay_rate_id,
                     assignment_start_date, assignment_end_date, quantity_worked, amount_due, complete_status,
                     comments, payment_status, amount_paid));
+        System.out.println(class_name+"|createTaskAssignment(), taskAssignment:"+taskAssignment.toString());
 
-            payment = paymentRepository.save(new Payment(resource_id, task_id,assignment_start_date,assignment_end_date,
+        payment = paymentRepository.save(new Payment(resource_id, task_id,assignment_start_date,assignment_end_date,
                     pay_rate_id, quantity_worked, amount_due, null, payment_status, 0.0, amount_due, comments));
-
-        } catch (Exception e) {
-
-        }
+        System.out.println(class_name+"|createTaskAssignment(), payment:"+payment.toString());
 
         return taskAssignment;
     }

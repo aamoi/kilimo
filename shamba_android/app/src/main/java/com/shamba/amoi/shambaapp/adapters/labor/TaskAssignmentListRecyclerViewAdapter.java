@@ -44,18 +44,20 @@ public class TaskAssignmentListRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        String task_name=TaskItem.getTaskItemById(TaskItem.staticTaskItems,mValues.get(position).
-                getTask_id()).getTask_name();
+        TaskItem taskItem=TaskItem.getTaskItemById(TaskItem.staticTaskItems,mValues.get(position).
+                getTask_id());
+
+        String project_name=PlantingProgramItem.getPlantingProgramById(homeActivity,
+                taskItem.getProject_id()).getPlanting_name();
+        holder.project_identity.setText(project_name);
+
+        String task_name=taskItem.getTask_name();
         holder.task_identity.setText(task_name);
         holder.task_date.setText(mValues.get(position).getAssignment_start_date());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                }
             }
         });
     }
@@ -70,6 +72,7 @@ public class TaskAssignmentListRecyclerViewAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final TextView project_identity;
         public final TextView task_identity;
         public final TextView task_date;
         public TaskAssignmentItem mItem;
@@ -77,8 +80,9 @@ public class TaskAssignmentListRecyclerViewAdapter
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            task_identity = (TextView) view.findViewById(R.id.txt_first_column);
-            task_date = (TextView) view.findViewById(R.id.txt_second_column);
+            project_identity = (TextView) view.findViewById(R.id.txt_first_column);
+            task_identity = (TextView) view.findViewById(R.id.txt_second_column);
+            task_date = (TextView) view.findViewById(R.id.txt_third_column);
         }
 
         @Override

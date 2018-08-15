@@ -5,8 +5,8 @@
               android:orientation="horizontal">
 
     <include
-        android:id="@+id/two_columns_recycler_view"
-        layout="@layout/two_columns_recycler_view_form"
+        android:id="@+id/three_columns_recycler_view"
+        layout="@layout/three_columns_recycler_view_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

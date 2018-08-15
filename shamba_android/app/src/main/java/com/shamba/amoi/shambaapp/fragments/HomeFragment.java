@@ -20,6 +20,8 @@ import com.shamba.amoi.shambaapp.fragments.power.PowerSourcesFragment;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingProgrammesFragment;
 import com.shamba.amoi.shambaapp.fragments.reports.ReportsFragment;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
+import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
 import com.shamba.amoi.shambaapp.models.labor.PayRateItem;
 import com.shamba.amoi.shambaapp.models.labor.ResourceItem;
 import com.shamba.amoi.shambaapp.models.product.DistributorItem;
@@ -71,6 +73,10 @@ public class HomeFragment extends BaseFragment {
 
         try {
             AssetItem.getAllAssets(getActivity());
+            ServiceTypeItem.getAllServiceTypes(getActivity());
+            AssetServicingItem.getAllAssetServicings(getActivity());
+
+
             new GetSetUpData().execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();

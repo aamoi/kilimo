@@ -50,7 +50,7 @@ public class ProductStockRecyclerViewAdapter extends
         holder.inv_stock_Item = product_stock_list.get(position);
 
         String vendor = VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
-                product_stock_list.get(position).getVendor_id()).getVendor_name();
+                 product_stock_list.get(position).getVendor_id()).getVendor_name();
         holder.supplier_name.setText(vendor);
 
         String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
@@ -141,10 +141,7 @@ public class ProductStockRecyclerViewAdapter extends
                         AlertDialog dialog = builder.create();
                         dialog.show();
 
-                    } catch (Exception ex)
-                    {
-                        ex.printStackTrace();
-                    }
+                    } catch (Exception ex) { ex.printStackTrace(); }
                 }
             };
             stock_view.setOnClickListener(listener);

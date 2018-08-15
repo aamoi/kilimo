@@ -10,7 +10,7 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/txt_first_column"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="Column one"
             android:textStyle="bold"
@@ -18,7 +18,7 @@
             android:textAppearance="?attr/textAppearanceListItem"/>
         <TextView
             android:id="@+id/txt_second_column"
-            android:layout_width="100dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="Column two"
             android:textStyle="bold"

@@ -10,6 +10,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment.OnListFragmentInteractionListener;
 import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
+import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
 
 import java.util.List;
 
@@ -39,9 +40,13 @@ public class AssetServicingListRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.first_column.setText(mValues.get(position).getAssert_id());
-        holder.second_column.setText(mValues.get(position).getAssert_id());
-        holder.third_column.setText(mValues.get(position).getAssert_id());
+        holder.first_column.setText(mValues.get(position).getPlanned_service_start_date().
+                substring(0,10));
+        String service_type= ServiceTypeItem.getServiceTypeById(homeActivity,mValues.get(position).
+                getService_type_id()).getName();
+        holder.second_column.setText(String.valueOf(mValues.get(position).getService_cost()));
+        holder.third_column.setText(service_type);
+
     }
 
     @Override

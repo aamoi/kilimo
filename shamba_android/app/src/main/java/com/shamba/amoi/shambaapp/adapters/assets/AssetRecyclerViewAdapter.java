@@ -13,14 +13,12 @@ import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.product.UnitOfMeasureItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 
 import java.util.List;
 
-/**
- * TODO: Replace the implementation with code for your data type.
- */
 public class AssetRecyclerViewAdapter extends
         RecyclerView.Adapter<AssetRecyclerViewAdapter.ViewHolder> {
 
@@ -44,9 +42,13 @@ public class AssetRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.assetItem = asset_items.get(position);
         holder.name.setText(this.asset_items.get(position).getName());
-//        holder.capacity.setText(this.asset_items.get(position).getCapacity());
-        holder.capacity.setText(String.valueOf(this.asset_items.get(position).
-                getCapacity_quantity()));
+
+        String capacity = String.valueOf(this.asset_items.get(position).
+                getCapacity_quantity());
+        String capacity_uom = UnitOfMeasureItem.getUnitOfMeasureItemByID(UnitOfMeasureItem.
+                staticUnitOfMeasureItemList, this.asset_items.get(position).getCapacity_uom_id())
+                .getSymbol();
+        holder.capacity.setText(capacity + " " + capacity_uom);
 
         String active_status = this.asset_items.get(position).getIs_active().equalsIgnoreCase(
                 "TRUE") ? "Active " : "Inactive";
@@ -56,7 +58,7 @@ public class AssetRecyclerViewAdapter extends
     @Override
     public int getItemCount() {
 
-        int size =asset_items != null ? this.asset_items.size():0;
+        int size = asset_items != null ? this.asset_items.size() : 0;
         if (asset_items != null)
             Log.d("itemCount", String.valueOf(size));
         return size;
@@ -87,14 +89,12 @@ public class AssetRecyclerViewAdapter extends
                     BaseFragment.changeFragment(activity, R.id.fragment_placeholder_home,
                             new AssetServicingListFragment());
                 }
-
                 @Override
                 public void onSelectPostiveDialogueOption() {
                     AssetItem.currentAssetItem = assetItem;
                     BaseFragment.changeFragment(activity, R.id.fragment_placeholder_home,
                             new PaymentsFragment());
                 }
-
                 @Override
                 public void onSelectNeutralDialogueOption() {
                     AssetItem.currentAssetItem = assetItem;
@@ -103,12 +103,12 @@ public class AssetRecyclerViewAdapter extends
                 }
             };
 
-            dialogUtility.setSimpleDialogOnRecyclerListItem(mView,name,capacity, active_status);
+            dialogUtility.setSimpleDialogOnRecyclerListItem(mView, name, capacity,active_status);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + name.getText() +"'";
+            return super.toString() + " '" + name.getText() + "'";
         }
     }
 }

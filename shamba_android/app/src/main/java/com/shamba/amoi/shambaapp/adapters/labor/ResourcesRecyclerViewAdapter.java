@@ -117,14 +117,6 @@ public class ResourcesRecyclerViewAdapter
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             new PaymentsFragment());
                 }
-
-//                @Override
-//                public void onSelectNeutralDialogueOption(){
-//                    ResourceItem.selectedResourceItem=resource_item;
-//                    BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
-//                            new PaymentsFragment());
-//                }
-
             };
 
             dialogUtility.setSimpleDialogOnRecyclerListItem(resource_View, resource_name,hr_skills);

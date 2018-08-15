@@ -18,28 +18,15 @@ import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class AssetServicingListFragment extends BaseFragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public AssetServicingListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static AssetServicingListFragment newInstance(int columnCount) {
         AssetServicingListFragment fragment = new AssetServicingListFragment();
@@ -70,9 +57,11 @@ public class AssetServicingListFragment extends BaseFragment {
                 false);
 
         List<AssetServicingItem> assetServicingItems=new  ArrayList();
+        assetServicingItems=AssetServicingItem.getAllAssetServicings(getActivity());
 
         // Set the adapter
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_asset_servicings);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(
+                R.id.recycler_list_asset_servicings);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new AssetServicingListRecyclerViewAdapter(assetServicingItems,
                 (HomeActivity)getActivity()));
@@ -82,12 +71,6 @@ public class AssetServicingListFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -95,18 +78,6 @@ public class AssetServicingListFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+    public interface OnListFragmentInteractionListener {// TODO: Update argument type and name
     }
 }

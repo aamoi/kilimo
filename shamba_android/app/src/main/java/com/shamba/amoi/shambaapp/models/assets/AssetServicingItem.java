@@ -1,90 +1,302 @@
 package com.shamba.amoi.shambaapp.models.assets;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.shamba.amoi.shambaapp.BuildConfig;
+import com.shamba.amoi.shambaapp.db.DBAdaptor;
+import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by amoi on 15/04/2018.
  */
-
 public class AssetServicingItem {
-    public static  AssetServicingItem currentAssetServicingItem;
-    private String asset_servicing_id;
-    private String assert_id;
-    private String oil_stock_id;
-    private String previous_servicing_date;
-    private String next_servicing_date;
-    private String is_serviced;
-    private String servicing_date;
-    private String servicing_cost;
-    private String servicing_description;
+    public static  AssetServicingItem selectedAssetServicingItem;
+    public static List<AssetServicingItem> staticAssetServicingItems;
+    int id;
+    int asset_id;
+    int service_type_id;
+    int service_provider_id;
+    String planned_service_start_date;
+    String planned_service_end_date;
+    String actual_service_start_date;
+    String actual_service_end_date;
+    int pay_rate_id;
+    double work_size;
+    double service_cost;
+    String service_completed;
+    String details;
 
-    public String getAsset_servicing_id() {
-        return asset_servicing_id;
+    public String getPlanned_service_start_date() {
+        return planned_service_start_date;
     }
 
-    public void setAsset_servicing_id(String asset_servicing_id) {
-        this.asset_servicing_id = asset_servicing_id;
+    public void setPlanned_service_start_date(String planned_service_start_date) {
+        this.planned_service_start_date = planned_service_start_date;
     }
 
-    public String getAssert_id() {
-        return assert_id;
+    public String getPlanned_service_end_date() {
+        return planned_service_end_date;
     }
 
-    public void setAssert_id(String assert_id) {
-        this.assert_id = assert_id;
+    public void setPlanned_service_end_date(String planned_service_end_date) {
+        this.planned_service_end_date = planned_service_end_date;
     }
 
-    public String getOil_stock_id() {
-        return oil_stock_id;
+    public String getActual_service_start_date() {
+        return actual_service_start_date;
     }
 
-    public void setOil_stock_id(String oil_stock_id) {
-        this.oil_stock_id = oil_stock_id;
+    public void setActual_service_start_date(String actual_service_start_date) {
+        this.actual_service_start_date = actual_service_start_date;
     }
 
-    public String getPrevious_servicing_date() {
-        return previous_servicing_date;
+    public String getActual_service_end_date() {
+        return actual_service_end_date;
     }
 
-    public void setPrevious_servicing_date(String previous_servicing_date) {
-        this.previous_servicing_date = previous_servicing_date;
+    public void setActual_service_end_date(String actual_service_end_date) {
+        this.actual_service_end_date = actual_service_end_date;
     }
 
-    public String getNext_servicing_date() {
-        return next_servicing_date;
+    public int getId() {
+        return id;
     }
 
-    public void setNext_servicing_date(String next_servicing_date) {
-        this.next_servicing_date = next_servicing_date;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getIs_serviced() {
-        return is_serviced;
+    public int getAsset_id() {
+        return asset_id;
     }
 
-    public void setIs_serviced(String is_serviced) {
-        this.is_serviced = is_serviced;
+    public void setAsset_id(int asset_id) {
+        this.asset_id = asset_id;
     }
 
-    public String getServicing_date() {
-        return servicing_date;
+    public int getService_type_id() {
+        return service_type_id;
     }
 
-    public void setServicing_date(String servicing_date) {
-        this.servicing_date = servicing_date;
+    public void setService_type_id(int service_type_id) {
+        this.service_type_id = service_type_id;
     }
 
-    public String getServicing_cost() {
-        return servicing_cost;
+    public int getService_provider_id() {
+        return service_provider_id;
     }
 
-    public void setServicing_cost(String servicing_cost) {
-        this.servicing_cost = servicing_cost;
+    public void setService_provider_id(int service_provider_id) {
+        this.service_provider_id = service_provider_id;
     }
 
-    public String getServicing_description() {
-        return servicing_description;
+    public int getPay_rate_id() {
+        return pay_rate_id;
     }
 
-    public void setServicing_description(String servicing_description) {
-        this.servicing_description = servicing_description;
+    public void setPay_rate_id(int pay_rate_id) {
+        this.pay_rate_id = pay_rate_id;
+    }
+
+    public double getWork_size() {
+        return work_size;
+    }
+
+    public void setWork_size(double work_size) {
+        this.work_size = work_size;
+    }
+
+    public double getService_cost() {
+        return service_cost;
+    }
+
+    public void setService_cost(double service_cost) {
+        this.service_cost = service_cost;
+    }
+
+    public String isService_completed() {
+        return service_completed;
+    }
+
+    public void setService_completed(String service_completed) {
+        this.service_completed = service_completed;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+    /**
+     * get asset service by name.
+     * @param assetServicingItems
+     * @param asset_id
+     * @return
+     */
+    public static AssetServicingItem getAssetServicingItemByAsset(List<AssetServicingItem>
+                                                                       assetServicingItems,int asset_id) {
+        AssetServicingItem assetServicingItem = null;
+
+        for (int i = 0; i < assetServicingItems.size(); ++i) {
+            if (assetServicingItems.get(i).getAsset_id()==asset_id) {
+                assetServicingItem = assetServicingItems.get(i);
+                break;
+            }
+        }
+        return assetServicingItem;
+    }
+    /**
+     * get asset service by id.
+     * @param assetServicingItems
+     * @param id
+     * @return
+     */
+    public static AssetServicingItem getAssetServicingItemById(List<AssetServicingItem>
+                                                                       assetServicingItems,int id) {
+        AssetServicingItem assetServicingItem = null;
+
+        for (int i = 0; i < assetServicingItems.size(); ++i) {
+            if (assetServicingItems.get(i).getId() == id) {
+                assetServicingItem = assetServicingItems.get(i);
+                break;
+            }
+        }
+        return assetServicingItem;
+    }
+
+    /**
+     * @param activity
+     * @return
+     */
+    public static List<AssetServicingItem> getAllAssetServicings(Activity activity) {
+        List<AssetServicingItem> assetServicingItems = new ArrayList<>();
+
+        try {
+            assetServicingItems = new com.shamba.amoi.shambaapp.models.assets.GetAssetsServices(activity).
+                    execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return assetServicingItems;
+    }
+}
+
+/**
+ * Get assets' services from  server and android local db.
+ */
+class GetAssetsServices extends AsyncTask<Void, Void, List<AssetServicingItem>> {
+    public Activity activity;
+    Context context;
+
+    public GetAssetsServices(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public void onPreExecute() {
+        ShambaAppDB db = new DBAdaptor(activity).getDB();
+    }
+
+    @Override
+    protected List<AssetServicingItem> doInBackground(Void... voids) {
+        return getAllAssetServicesFromServer();
+    }
+    /**
+     * Pools all asset servicing from server application!
+     * @return
+     */
+    private List<AssetServicingItem> getAllAssetServicesFromServer() {
+
+        List<AssetServicingItem> assetServicingItems = new ArrayList<>();
+
+        try {
+            List<JSONObject> response = CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL, "assetService/", "");
+
+            Log.d("# of services pooled:- ", String.valueOf(response.size()));
+
+            JSONArray jArray = new JSONArray(response);
+
+            for (int i = 0; i < jArray.length(); ++i) {
+                AssetServicingItem assetServicingItem = new AssetServicingItem();
+
+                JSONObject jsonObject = jArray.getJSONObject(i);
+                int id = jsonObject.getInt("id");
+                assetServicingItem.setId(id);
+
+                int asset_id = jsonObject.getInt("asset_id");
+                assetServicingItem.setAsset_id(asset_id);
+
+                int service_type_id = jsonObject.getInt("service_type_id");
+                assetServicingItem.setService_type_id(service_type_id);
+
+                int service_provider_id = jsonObject.getInt("service_provider_id");
+                assetServicingItem.setService_provider_id(service_provider_id);
+
+                String  planned_service_start_date = jsonObject.getString(
+                        "planned_service_start_date");
+                assetServicingItem.setPlanned_service_start_date(planned_service_start_date);
+
+                String  planned_service_end_date = jsonObject.getString(
+                        "planned_service_end_date");
+                assetServicingItem.setPlanned_service_end_date(planned_service_end_date);
+
+                String  actual_service_start_date = jsonObject.getString(
+                        "actual_service_start_date");
+                assetServicingItem.setActual_service_start_date(actual_service_start_date);
+
+                String  actual_service_end_date = jsonObject.getString(
+                        "actual_service_end_date");
+                assetServicingItem.setActual_service_end_date(actual_service_end_date);
+
+                int pay_rate_id = jsonObject.getInt("pay_rate_id");
+                assetServicingItem.setPay_rate_id(pay_rate_id);
+
+                double work_size = jsonObject.getDouble("work_size");
+                assetServicingItem.setWork_size(work_size);
+
+                double service_cost = jsonObject.getDouble("service_cost");
+                assetServicingItem.setService_cost(service_cost);
+
+                String  service_completed = jsonObject.getString(
+                        "service_completed");
+                assetServicingItem.setService_completed(service_completed);
+
+                String  details = jsonObject.getString("details");
+                assetServicingItem.setDetails(details);
+
+                assetServicingItems.add(assetServicingItem);
+            }
+
+            AssetServicingItem.staticAssetServicingItems = assetServicingItems;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return assetServicingItems;
+    }
+
+    @Override
+    public void onPostExecute(List<AssetServicingItem> assetServicingItems) {
     }
 }
