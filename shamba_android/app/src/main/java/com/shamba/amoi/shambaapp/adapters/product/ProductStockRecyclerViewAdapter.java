@@ -16,6 +16,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
 import com.shamba.amoi.shambaapp.fragments.product.RestockProductFragment;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.VendorItem;
@@ -29,11 +30,20 @@ public class ProductStockRecyclerViewAdapter extends
     private final List<ProductStockItem> product_stock_list;
     private final HomeActivity homeActivity;
     private ProductItem productItem;
+    public Integer asset_id;
+
 
     public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
                                            HomeActivity homeActivity) {
         product_stock_list = items;
         this.homeActivity = homeActivity;
+    }
+
+    public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
+                                           HomeActivity homeActivity, Integer asset_id) {
+        product_stock_list = items;
+        this.homeActivity = homeActivity;
+        this.asset_id=asset_id;
     }
 
     @Override
@@ -49,30 +59,34 @@ public class ProductStockRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.inv_stock_Item = product_stock_list.get(position);
 
-        String vendor = VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
-                 product_stock_list.get(position).getVendor_id()).getVendor_name();
-        holder.supplier_name.setText(vendor);
+        if(product_stock_list!=null){
 
-        String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
-        holder.stock_date.setText(purchase_date);
-        holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).
-                getStock_balance()));
+            String vendor = VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
+                    product_stock_list.get(position).getVendor_id()).getVendor_name();
+            holder.supplier_name.setText(vendor);
 
-        String order_status = product_stock_list.get(position).getStock_order_status();
+            String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
+            holder.stock_date.setText(purchase_date);
+            holder.stock_quantity.setText(String.valueOf(product_stock_list.get(position).
+                    getStock_balance()));
 
-        if (!(order_status == null)) {
-            Log.d("Stock list item status", order_status);
-            if (!order_status.equalsIgnoreCase("Delivered")) {
-                holder.stock_date.setBackgroundColor(Color.RED);
-                holder.stock_quantity.setBackgroundColor(Color.RED);
-                holder.supplier_name.setBackgroundColor(Color.RED);
+            String order_status = product_stock_list.get(position).getStock_order_status();
+
+            if (!(order_status == null)) {
+                Log.d("Stock list item status", order_status);
+                if (!order_status.equalsIgnoreCase("Delivered")) {
+                    holder.stock_date.setBackgroundColor(Color.RED);
+                    holder.stock_quantity.setBackgroundColor(Color.RED);
+                    holder.supplier_name.setBackgroundColor(Color.RED);
+                }
+            } else {
+                Log.d("Stock list item null", order_status);
+                holder.stock_date.setBackgroundColor(Color.TRANSPARENT);
+                holder.stock_quantity.setBackgroundColor(Color.TRANSPARENT);
+                holder.supplier_name.setBackgroundColor(Color.TRANSPARENT);
             }
-        } else {
-            Log.d("Stock list item null", order_status);
-            holder.stock_date.setBackgroundColor(Color.TRANSPARENT);
-            holder.stock_quantity.setBackgroundColor(Color.TRANSPARENT);
-            holder.supplier_name.setBackgroundColor(Color.TRANSPARENT);
         }
+
 
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +121,8 @@ public class ProductStockRecyclerViewAdapter extends
                 @Override
                 public void onClick(View v) {
                     ProductStockItem.selectedProductStockItem = inv_stock_Item;
+                    ProductItem productItem=ProductItem.getProductItemByID(
+                            ProductItem.getAllProducts(homeActivity),inv_stock_Item.getProduct_id());
                     String product_name = productItem.getProduct_name();
 
                     try {
@@ -121,9 +137,17 @@ public class ProductStockRecyclerViewAdapter extends
                                 "<font color='#FF7000'>Utilize stock</font>"),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        BaseFragment.changeFragment(homeActivity,
-                                                R.id.fragment_placeholder_home,
-                                                new InventoryUtilizationFragment());
+                                        if((asset_id!=null)&&(asset_id>0)){
+                                            BaseFragment.changeFragment(homeActivity,
+                                                    R.id.fragment_placeholder_home,
+                                                     InventoryUtilizationFragment.
+                                                             newInstance(asset_id));
+                                        }
+                                        else{
+                                            BaseFragment.changeFragment(homeActivity,
+                                                    R.id.fragment_placeholder_home,
+                                                    new InventoryUtilizationFragment());
+                                        }
                                     }
                                 });
 

@@ -24,9 +24,8 @@ android {
 
         local {
             dimension = "environmentType"
-            buildConfigField "String", "SERVER_URL", '\"http://10.157.199.181:8080/\"'
-//            buildConfigField "String", "SERVER_URL", '\"http://192.168.43.5:8080/\"'
-
+//            buildConfigField "String", "SERVER_URL", '\"http://10.157.199.181:8080/\"'
+            buildConfigField "String", "SERVER_URL", '\"http://192.168.43.5:8080/\"'
         }
     }
 
@@ -55,4 +54,8 @@ android {
         testImplementation "android.arch.persistence.room:testing:1.0.0"
         implementation 'com.google.code.gson:gson:2.8.2'
     }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:23.+'
 }

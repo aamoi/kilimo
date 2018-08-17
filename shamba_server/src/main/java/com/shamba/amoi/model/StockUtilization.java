@@ -18,12 +18,19 @@ public class StockUtilization {
 //    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private  int id;
     private  int stock_id;
-    private int project_id;
-    private  int phase_id;
+    private int asset_id;
     private  int task_id;
     private  double utilized_quantity;
     private  Date utilized_date;
     private String details;
+
+    public int getAsset_id() {
+        return asset_id;
+    }
+
+    public void setAsset_id(int asset_id) {
+        this.asset_id = asset_id;
+    }
 
     public int getId() {
         return id;
@@ -43,22 +50,6 @@ public class StockUtilization {
 
     public void setStock_id(int stock_id) {
         this.stock_id = stock_id;
-    }
-
-    public int getProject_id() {
-        return project_id;
-    }
-
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
-    }
-
-    public int getPhase_id() {
-        return phase_id;
-    }
-
-    public void setPhase_id(int phase_id) {
-        this.phase_id = phase_id;
     }
 
     public int getTask_id() {
@@ -95,13 +86,12 @@ public class StockUtilization {
 
     public StockUtilization() {  }
 
-    public StockUtilization( int stock_id,int project_id,int phase_id,int task_id,double utilized_quantity,
+    public StockUtilization( int stock_id,int task_id,int asset_id,double utilized_quantity,
              Date utilized_date,String details) {
 
         this.stock_id = stock_id;
-        this.project_id = project_id;
-        this.phase_id = phase_id;
         this.task_id = task_id;
+        this.asset_id = asset_id;
         this.utilized_quantity = utilized_quantity;
         this.utilized_date = utilized_date;
         this.details = details;
@@ -111,8 +101,7 @@ public class StockUtilization {
         return "Productstock{" +
                 "id=" + id +
                 ", stock_id='" + stock_id + '\'' +
-                ", project_id='" + project_id + '\'' +
-                ", phase_id='" + phase_id + '\'' +
+                ", asset_id='" + asset_id + '\'' +
                 ", task_id='" + task_id + '\'' +
                 ", utilized_quantity='" + utilized_quantity + '\'' +
                 ", utilized_date='" + utilized_date + '\'' +

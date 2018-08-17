@@ -19,6 +19,7 @@ import com.shamba.amoi.shambaapp.adapters.product.ProductStockRecyclerViewAdapte
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.product.ProductStockDao;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.UnitOfMeasureItem;
@@ -35,14 +36,18 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ProductStockFragment extends BaseFragment {
+    private static final String asset_key = "asset_key";
+    private Integer asset_id;
 
     ProductItem productItem;
     Button add_stock;
     private OnListFragmentInteractionListener mListener;
 
-    public static ProductStockFragment newInstance(int product_id, String produce_name,
-                                                   String manufacturer, String package_size) {
+    public static ProductStockFragment newInstance(int asset_id) {
         ProductStockFragment fragment = new ProductStockFragment();
+        Bundle args = new Bundle();
+        args.putInt(asset_key, asset_id);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -51,22 +56,34 @@ public class ProductStockFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-
+            asset_id = getArguments().getInt(asset_key);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        productItem = ProductItem.selectedProductItem;
-
         View view = inflater.inflate(R.layout.fragment_productstock_list, container,
                 false);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_product_stock);
 
-        productItem = ProductItem.selectedProductItem;
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+
+        if((asset_id!=null)&&(asset_id>0)){
+            AssetItem assetItem=AssetItem.getAssetItemById(AssetItem.getAllAssets(getActivity()),
+                    asset_id);
+
+            productItem = ProductItem.getProductItemByID(ProductItem.getAllProducts(getActivity()),
+                    assetItem.getFuel_product_id());
+
+            ProductItem.selectedProductItem=productItem;
+        }
+        else{
+            productItem =ProductItem.selectedProductItem;
+        }
 
         List<ProductStockItem> product_stock_list = new ArrayList<>();
-
 
         List<ProductStockItem> all_stocks = new ArrayList<>();
 
@@ -80,8 +97,8 @@ public class ProductStockFragment extends BaseFragment {
             e.printStackTrace();
         }
 
-        product_stock_list=ProductStockItem.getProductStockItemByProductId(all_stocks,ProductItem.
-                selectedProductItem.getId());
+        product_stock_list=ProductStockItem.getProductStockItemByProductId(all_stocks,
+                productItem.getId());
 
         double total_quantity = 0.0;
 
@@ -104,12 +121,15 @@ public class ProductStockFragment extends BaseFragment {
                 getString(R.string.title_fragment_product_stocks) +
                 "(" + String.valueOf(total_quantity) +" "+ unit_of_measure + ")");
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_product_stock);
+        if((asset_id!=null)&&(asset_id>0)) {
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        recyclerView.setAdapter(new ProductStockRecyclerViewAdapter(product_stock_list,
-                (HomeActivity) this.getActivity()));
+            recyclerView.setAdapter(new ProductStockRecyclerViewAdapter(product_stock_list,
+                    (HomeActivity) this.getActivity(),asset_id));
+        }
+        else{
+            recyclerView.setAdapter(new ProductStockRecyclerViewAdapter(product_stock_list,
+                    (HomeActivity) this.getActivity()));
+        }
 
         add_stock = (Button) view.findViewById(R.id.btn_add_product_stock);
         add_stock.setOnClickListener(new View.OnClickListener() {
@@ -124,17 +144,6 @@ public class ProductStockFragment extends BaseFragment {
         return view;
     }
 
-    public String[][] getDummyProductStocks() {
-
-        String[][] stocks = {
-                {"1", "REC010101", "Cabbage", "12/12/2017", "3", "50", "To plant on BlockA"},
-                {"2", "REC010102", "Cabbage", "14/12/2017", "2", "100", "To plant on BlockB"},
-                {"3", "REC010103", "Cabbage", "30/12/2017", "1", "250", "To plant on BlockC"},
-        };
-
-        return stocks;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -147,7 +156,6 @@ public class ProductStockFragment extends BaseFragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ProductStockItem item);
     }
 
@@ -172,8 +180,6 @@ public class ProductStockFragment extends BaseFragment {
             try {
                 List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
                         BuildConfig.SERVER_URL,"productStock/","");
-
-//                Log.d("Product stocks", String.valueOf(response.get(0).getInt("id")));
 
                 JSONArray jArray = new JSONArray(response);
 

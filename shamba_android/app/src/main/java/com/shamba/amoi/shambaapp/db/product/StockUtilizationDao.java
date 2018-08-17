@@ -31,12 +31,6 @@ public interface StockUtilizationDao {
     @Query("select * from stockutilization where task_id in (:task_id)")
     public List<StockUtilization> getStockUtilizationByTask(int task_id);
 
-    @Query("select * from stockutilization where phase_id in (:phase_id)")
-    public List<StockUtilization> getStockUtilizationByPhase(int phase_id);
-
-    @Query("select * from stockutilization where project_id in (:project_id)")
-    public List<StockUtilization> getStockUtilizationByProject(int project_id);
-
-    @Query("select * from stockutilization where project_id in (:project_id) and phase_id in (:phase_id)")
-    public List<StockUtilization> getStockUtilizationByProject(int project_id,int phase_id);
+    @Query("select * from stockutilization where asset_id in (:asset_id)")
+    public List<StockUtilization> getStockUtilizationByAsset(int asset_id);
 }

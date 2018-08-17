@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.models.assets.AssetFuelingItem;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
+import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
+import com.shamba.amoi.shambaapp.models.product.StockUtilizationItem;
 
 import java.util.List;
 
@@ -18,10 +22,10 @@ import java.util.List;
 public class AssetFuelingListRecyclerViewAdapter extends
         RecyclerView.Adapter<AssetFuelingListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<AssetFuelingItem> mValues;
+    private final List<StockUtilizationItem> mValues;
     private final HomeActivity homeActivity;
 
-    public AssetFuelingListRecyclerViewAdapter(List<AssetFuelingItem> items,
+    public AssetFuelingListRecyclerViewAdapter(List<StockUtilizationItem> items,
                                                HomeActivity homeActivity) {
         mValues = items;
         this.homeActivity = homeActivity;
@@ -37,8 +41,15 @@ public class AssetFuelingListRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.first_column.setText(mValues.get(position).getAsset_fueling_id());
-        holder.second_column.setText(mValues.get(position).getFueling_quantity());
+        holder.first_column.setText(mValues.get(position).getUtilized_date().substring(0,10));
+
+        AssetItem assetItem= AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
+                mValues.get(position).getAsset_id());
+        String product_name= ProductItem.getProductItemByID(ProductItem.getAllProducts(homeActivity),
+                assetItem.getFuel_product_id()).getProduct_name();
+        holder.second_column.setText(product_name);
+
+        holder.third_column.setText(String.valueOf(mValues.get(position).getUtilized_quantity()));
     }
 
     @Override
@@ -51,7 +62,7 @@ public class AssetFuelingListRecyclerViewAdapter extends
         public final TextView first_column;
         public final TextView second_column;
         public final TextView third_column;
-        public AssetFuelingItem mItem;
+        public StockUtilizationItem mItem;
 
         public ViewHolder(View view) {
             super(view);

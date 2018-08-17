@@ -13,6 +13,7 @@ import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.UnitOfMeasureItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
@@ -80,8 +81,8 @@ public class AssetRecyclerViewAdapter extends
             active_status = (TextView) view.findViewById(R.id.txt_third_column);
 
             DialogUtility dialogUtility = new DialogUtility(activity,
-                    "Select an action on the asset: ",
-                    "Service", "Details", "Fuel") {
+                    "Select action on asset:", "Fuel",
+                    "Service", "Details") {
 
                 @Override
                 public void onSelectNegativeDialogueOption() {
@@ -98,6 +99,9 @@ public class AssetRecyclerViewAdapter extends
                 @Override
                 public void onSelectNeutralDialogueOption() {
                     AssetItem.currentAssetItem = assetItem;
+                    ProductItem.selectedProductItem = ProductItem.getProductItemByID(
+                            ProductItem.getAllProducts(activity),assetItem.getFuel_product_id());
+
                     BaseFragment.changeFragment(activity, R.id.fragment_placeholder_home,
                             new AssetFuelingListFragment());
                 }

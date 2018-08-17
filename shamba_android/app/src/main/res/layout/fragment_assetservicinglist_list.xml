@@ -13,7 +13,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
+    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     tools:context="com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment"
     tools:listitem="@layout/fragment_assetservicinglist"/>
 />
@@ -22,7 +22,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:id="@+id/btn_service_asset"
-    android:text="Service asset"
+    android:text="Repair asset"
     android:background="@color/flat_green"
     android:layout_alignParentBottom="true"/>
 </RelativeLayout>

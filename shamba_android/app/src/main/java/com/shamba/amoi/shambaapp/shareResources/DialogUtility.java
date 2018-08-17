@@ -32,8 +32,8 @@ public class DialogUtility  {
         this.postive_title = postive_title;
     }
 
-    public DialogUtility(Activity activity, String dialogue_title, String negative_title,
-                         String postive_title,String neutral_title) {
+    public DialogUtility(Activity activity, String dialogue_title,String neutral_title,
+                         String negative_title,String postive_title) {
         this.dialogue_title = dialogue_title;
         this.activity = activity;
         this.negative_title = negative_title;

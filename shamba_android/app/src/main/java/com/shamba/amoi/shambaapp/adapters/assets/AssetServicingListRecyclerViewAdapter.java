@@ -8,16 +8,18 @@ import android.widget.TextView;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
+import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
+import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment.OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
 import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
+import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
+import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 
 import java.util.List;
 
-/**
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class AssetServicingListRecyclerViewAdapter
         extends RecyclerView.Adapter<AssetServicingListRecyclerViewAdapter.ViewHolder> {
 
@@ -27,7 +29,7 @@ public class AssetServicingListRecyclerViewAdapter
     public AssetServicingListRecyclerViewAdapter(List<AssetServicingItem> items,
                                                  HomeActivity homeActivity) {
         mValues = items;
-        this.homeActivity=homeActivity;
+        this.homeActivity = homeActivity;
     }
 
     @Override
@@ -39,13 +41,13 @@ public class AssetServicingListRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.first_column.setText(mValues.get(position).getPlanned_service_start_date().
-                substring(0,10));
-        String service_type= ServiceTypeItem.getServiceTypeById(homeActivity,mValues.get(position).
+        holder.assetServicingItem = mValues.get(position);
+        holder.date.setText(mValues.get(position).getPlanned_service_start_date().
+                substring(0, 10));
+        String service_type = ServiceTypeItem.getServiceTypeById(homeActivity, mValues.get(position).
                 getService_type_id()).getName();
-        holder.second_column.setText(String.valueOf(mValues.get(position).getService_cost()));
-        holder.third_column.setText(service_type);
+        holder.amount.setText(String.valueOf(mValues.get(position).getService_cost()));
+        holder.serviceType.setText(service_type);
 
     }
 
@@ -55,24 +57,53 @@ public class AssetServicingListRecyclerViewAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView first_column;
-        public final TextView second_column;
-        public final TextView third_column;
 
-        public AssetServicingItem mItem;
+        public final View mView;
+        public final TextView date;
+        public final TextView amount;
+        public final TextView serviceType;
+
+        public AssetServicingItem assetServicingItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            first_column = (TextView) view.findViewById(R.id.txt_first_column);
-            second_column = (TextView) view.findViewById(R.id.txt_second_column);
-            third_column = (TextView) view.findViewById(R.id.txt_third_column);
+            date = (TextView) view.findViewById(R.id.txt_first_column);
+            amount = (TextView) view.findViewById(R.id.txt_second_column);
+            serviceType = (TextView) view.findViewById(R.id.txt_third_column);
+
+            DialogUtility dialogUtility = new DialogUtility(homeActivity,
+                    "Select action on service: ",
+                    "Assign", "Complete", "Details") {
+
+                @Override
+                public void onSelectNegativeDialogueOption() {
+                    AssetServicingItem.selectedAssetServicingItem = assetServicingItem;
+                    BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
+                            new AssetServicingListFragment());
+                }
+
+                @Override
+                public void onSelectPostiveDialogueOption() {
+                    AssetServicingItem.selectedAssetServicingItem = assetServicingItem;
+                    BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
+                            new PaymentsFragment());
+                }
+
+                @Override
+                public void onSelectNeutralDialogueOption() {
+                    AssetServicingItem.selectedAssetServicingItem = assetServicingItem;
+                    BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
+                            new AssetFuelingListFragment());
+                }
+            };
+
+            dialogUtility.setSimpleDialogOnRecyclerListItem(mView, date, amount, serviceType);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + first_column.getText() + "'";
+            return super.toString() + " '" + date.getText() + "'";
         }
     }
 }

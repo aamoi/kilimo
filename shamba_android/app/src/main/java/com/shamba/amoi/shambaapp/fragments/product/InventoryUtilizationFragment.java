@@ -20,6 +20,8 @@ import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.product.StockUtilization;
 import com.shamba.amoi.shambaapp.db.product.StockUtilizationDao;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.StockUtilizationItem;
 import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
@@ -40,8 +42,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class InventoryUtilizationFragment extends BaseFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String asset_key = "asset_key";
+    public Integer asset_id;
+
     String TAG = getClass().getSimpleName().toString() + "|";
     Spinner spn_project;
     Spinner spn_phase;
@@ -64,8 +67,6 @@ public class InventoryUtilizationFragment extends BaseFragment {
     double utilized_quantity;
     String utilization_date;
     String details;
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,11 +74,10 @@ public class InventoryUtilizationFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static InventoryUtilizationFragment newInstance(String param1, String param2) {
+    public static InventoryUtilizationFragment newInstance(int  asset_id) {
         InventoryUtilizationFragment fragment = new InventoryUtilizationFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(asset_key, asset_id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,8 +86,7 @@ public class InventoryUtilizationFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            asset_id = getArguments().getInt(asset_key);
         }
     }
 
@@ -96,12 +95,34 @@ public class InventoryUtilizationFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         String stock_item = null;
 
+        Log.d("Asset id",asset_id.toString());
+
+        if((asset_id!=null)&&(asset_id>0)){
+            AssetItem assetItem=AssetItem.getAssetItemById(AssetItem.getAllAssets(getActivity()),
+                    asset_id);
+
+            Log.d("InventoryUtil",assetItem.toString());
+
+            String assetName=assetItem.getName();
+
+            ProductItem productItem=ProductItem.getProductItemByID(ProductItem.
+                    getAllProducts(getActivity()),assetItem.getFuel_product_id());
+            String productName=productItem.getProduct_name();
+
+            String titleName=productName+" for "+assetName;
+
+            Log.d("Title+++",titleName);
+
+            getActivity().setTitle(titleName);
+        }
 //        String stock_item="Utilize "+BaseFragment.productItem.getProduct_name()+"("+
 //                BaseFragment.productStockItem.getStock_quantity()+
 //                BaseFragment.productItem.getUnit_of_measure()+" on "+
 //                BaseFragment.productStockItem.getStock_date().substring(0,5)+")";
-
-        getActivity().setTitle(stock_item);
+        else{
+            getActivity().setTitle(stock_item);
+            asset_id=null;
+        }
 
         View view = inflater.inflate(R.layout.fragment_inventory_utilization, container, false);
 //        getFragmentView(inflater, container, R.submit_form_details.fragment_inventory_utilization);
@@ -147,10 +168,13 @@ public class InventoryUtilizationFragment extends BaseFragment {
                 utilized_quantity = Double.parseDouble(edit_utilized_quantity.getText().toString());
                 utilization_date = edit_utilized_date.getText().toString();
                 details = edit_details.getText().toString();
+                asset_id=asset_id==null?0:asset_id;
                 stock_id = ProductStockItem.selectedProductStockItem.getId();
 
                 try {
-                    new SaveStockUtilization(stock_id, project_id, phase_id, task_id, utilized_quantity,
+                    Log.d("asset id", String.valueOf(asset_id));
+
+                    new SaveStockUtilization(stock_id, task_id, asset_id,utilized_quantity,
                             utilization_date, details).execute().get();
                     server_status = true;
                 } catch (InterruptedException e) {
@@ -160,9 +184,17 @@ public class InventoryUtilizationFragment extends BaseFragment {
                 }
 
                 if (server_status) {
-                    BaseFragment.changeFragment((AppCompatActivity) getActivity(),
-                            R.id.fragment_placeholder_home,
-                            new ProductStockFragment());
+                    if((asset_id!=null)&&(asset_id>0)){
+                        BaseFragment.changeFragment((AppCompatActivity) getActivity(),
+                                R.id.fragment_placeholder_home,
+                                 ProductStockFragment.newInstance(asset_id));
+                    }
+                    else{
+                        BaseFragment.changeFragment((AppCompatActivity) getActivity(),
+                                R.id.fragment_placeholder_home,
+                                new ProductStockFragment());
+                    }
+
                 }
 
 //                Log.d(TAG, String.valueOf(InventoryUtilizationItem.getInventoryUtilizationItems(getActivity()).size()));
@@ -304,8 +336,7 @@ public class InventoryUtilizationFragment extends BaseFragment {
      */
     class SaveStockUtilization extends AsyncTask<Void, Void, Integer> {
         public int stock_id;
-        public int project_id;
-        public int phase_id;
+        public int assetID;
         public int task_id;
         public double utilized_quantity;
         public String utilized_date;
@@ -321,11 +352,10 @@ public class InventoryUtilizationFragment extends BaseFragment {
         int id;
         int success = 0;
 
-        public SaveStockUtilization(int stock_id, int project_id, int phase_id, int task_id,
-                                    double utilized_quantity, String utilized_date, String details) {
+        public SaveStockUtilization(int stock_id,int task_id,int asset_id,double utilized_quantity,
+                                    String utilized_date, String details) {
             this.stock_id = stock_id;
-            this.project_id = project_id;
-            this.phase_id = phase_id;
+            this.assetID = asset_id;
             this.task_id = task_id;
             this.utilized_quantity = utilized_quantity;
             this.utilized_date = utilized_date;
@@ -340,9 +370,8 @@ public class InventoryUtilizationFragment extends BaseFragment {
 
             try {
                 request_object.put("stock_id", stock_id);
-                request_object.put("project_id", project_id);
-                request_object.put("phase_id", phase_id);
                 request_object.put("task_id", task_id);
+                request_object.put("asset_id", assetID);
                 request_object.put("utilized_quantity", utilized_quantity);
                 request_object.put("utilized_date", utilized_date);
                 request_object.put("details", details);
@@ -354,13 +383,12 @@ public class InventoryUtilizationFragment extends BaseFragment {
                 e.printStackTrace();
             }
             try {
-                stockUtilization.setDetails(details);
-                stockUtilization.setPhase_id(phase_id);
-                stockUtilization.setProject_id(project_id);
+                stockUtilization.setAsset_id(asset_id);
                 stockUtilization.setStock_id(stock_id);
-                stockUtilization.setTask_id(stock_id);
+                stockUtilization.setTask_id(task_id);
                 stockUtilization.setUtilized_date(utilized_date);
                 stockUtilization.setUtilized_quantity(utilized_quantity);
+                stockUtilization.setDetails(details);
 
                 Log.d("Utiliz. db request...", stockUtilizationItem.toString());
             } catch (Exception e) {

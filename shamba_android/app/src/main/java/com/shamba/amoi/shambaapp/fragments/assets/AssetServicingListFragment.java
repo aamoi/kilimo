@@ -65,6 +65,8 @@ public class AssetServicingListFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new AssetServicingListRecyclerViewAdapter(assetServicingItems,
                 (HomeActivity)getActivity()));
+
+
         return view;
     }
 

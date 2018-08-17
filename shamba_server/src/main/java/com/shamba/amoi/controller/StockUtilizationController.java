@@ -15,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+@Transactional
 @RestController
 public class StockUtilizationController {
 
@@ -51,8 +52,7 @@ public class StockUtilizationController {
     @PostMapping("/createStockUtilization")
     public StockUtilization create(@RequestBody Map<String, String> body) {
         int stock_id = Integer.parseInt(body.get("stock_id"));
-        int project_id = Integer.parseInt(body.get("project_id"));
-        int phase_id = Integer.parseInt(body.get("phase_id"));
+        int asset_id = Integer.parseInt(body.get("asset_id"));
         int task_id = Integer.parseInt(body.get("task_id"));
         double utilized_quantity = Double.parseDouble(body.get("utilized_quantity"));
         Date utilized_date = DateUtil.stringToDate(body.get("utilized_date"));
@@ -98,16 +98,21 @@ public class StockUtilizationController {
             }
 //            productStockRepository.save(last_product_stock);
 
+            System.out.println("StockUtilizationController|createStockUtilization|"+
+                    "about to submit StockUtilization");
+
             if((current_location_bal>=0)&&(stock_bal>=0)){
+
+                System.out.println("StockUtilizationController|createStockUtilization|"+
+                        "about to submit StockUtilization");
                 productStockRepository.save(productStock);
                 productStockRepository.save(last_location_stock_item);
                 productStockRepository.save(last_product_stock);
-                stockUtilization = stockUtilizationRepository.save(new StockUtilization(stock_id, project_id,
-                        phase_id, task_id, utilized_quantity, utilized_date, details));
+                stockUtilization = stockUtilizationRepository.save(new StockUtilization(stock_id,task_id, asset_id,
+                        utilized_quantity, utilized_date, details));
 
             }
         }
-
 
         return stockUtilization;
     }
