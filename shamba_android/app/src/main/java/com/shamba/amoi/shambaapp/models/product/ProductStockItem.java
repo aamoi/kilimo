@@ -1,7 +1,23 @@
 package com.shamba.amoi.shambaapp.models.product;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.shamba.amoi.shambaapp.BuildConfig;
+import com.shamba.amoi.shambaapp.db.DBAdaptor;
+import com.shamba.amoi.shambaapp.db.ShambaAppDB;
+import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by amoi on 13/02/2018.
@@ -179,5 +195,125 @@ public class ProductStockItem {
             }
         }
         return productStockItemList;
+    }
+
+    /**
+     * get all product stock items.
+     * @param activity
+     * @return
+     */
+    public static List<ProductStockItem> getAllProductStockItems(Activity activity) {
+
+        List<ProductStockItem> productStockItemList = new ArrayList<>();
+
+        try {
+            productStockItemList= new GetProductStocks(activity).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return productStockItemList;
+    }
+}
+
+/**
+ * Get all ProductStockItems from  server and android local db.
+ */
+class GetProductStocks extends AsyncTask<Void, Void, List<ProductStockItem>> {
+    public Activity activity;
+    Context context;
+
+    public GetProductStocks(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public void onPreExecute() {
+        ShambaAppDB db = new DBAdaptor(activity).getDB();
+    }
+
+    @Override
+    protected List<ProductStockItem> doInBackground(Void... voids) {
+        return getAllProductStockFromServer();
+    }
+    /**
+     * Pools all stocks from server application!
+     * @return
+     */
+    private List<ProductStockItem> getAllProductStockFromServer(){
+
+        List<ProductStockItem> productStockItems=new ArrayList<>();
+
+        try {
+            List<JSONObject> response= CommonHelper.sendGetRequestWithJsonResponse(
+                    BuildConfig.SERVER_URL,"productStock/","");
+
+            JSONArray jArray = new JSONArray(response);
+
+            for(int i=0;i<jArray.length();++i){
+
+                ProductStockItem productStockItem=new ProductStockItem();
+
+                JSONObject jsonObject = jArray.getJSONObject(i);
+
+                int id=jsonObject.getInt("id");
+                productStockItem.setId(id);
+
+                int product_id=jsonObject.getInt("product_id");
+                productStockItem.setProduct_id(product_id);
+
+                int vendor_id=jsonObject.getInt("vendor_id");
+                productStockItem.setVendor_id(vendor_id);
+
+                int distributor_id=jsonObject.getInt("distributor_id");
+                productStockItem.setDistributor_id(distributor_id);
+
+                int manufacturer_id=jsonObject.getInt("manufacturer_id");
+                productStockItem.setManufacturer_id(manufacturer_id);
+
+                double purchase_quantity=jsonObject.getDouble("purchase_quantity");
+                productStockItem.setPurchase_quantity(purchase_quantity);
+
+                double stock_balance=jsonObject.getDouble("stock_balance");
+                productStockItem.setStock_balance(stock_balance);
+
+                double purchase_price=jsonObject.getDouble("purchase_price");
+                productStockItem.setPurchase_price(purchase_price);
+
+                String purchase_details=jsonObject.getString("purchase_details");
+                productStockItem.setPurchase_details(purchase_details);
+
+                String purchase_date=jsonObject.getString("purchase_date");
+                productStockItem.setPurchase_date(purchase_date);
+
+                int location_id=jsonObject.getInt("location_id");
+                productStockItem.setLocation_id(location_id);
+
+                double location_balance=jsonObject.getDouble("location_balance");
+                productStockItem.setLocation_balance(location_balance);
+
+                String mpesa_txn_number=jsonObject.getString("mpesa_txn_number");
+                productStockItem.setMpesa_txn_number(mpesa_txn_number);
+
+                String receipt_upload=jsonObject.getString("receipt_upload");
+                productStockItem.setReceipt_upload(receipt_upload);
+
+                String stock_order_status=jsonObject.getString("stock_order_status");
+                productStockItem.setStock_order_status(stock_order_status);
+
+                productStockItems.add(productStockItem);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return productStockItems;
+    }
+
+    @Override
+    public void onPostExecute(List<ProductStockItem> productStockItems) {
     }
 }

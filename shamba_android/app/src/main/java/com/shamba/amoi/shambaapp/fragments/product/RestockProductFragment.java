@@ -97,7 +97,7 @@ public class RestockProductFragment extends BaseFragment {
                         staticLocationItemList, location).getId();
 
                 String vendor = spn_vendor.getSelectedItem().toString();
-                vendor_id = VendorItem.getProductItemByName(VendorItem.
+                vendor_id = VendorItem.getVendorByName(VendorItem.
                         staticVendorItemList, vendor).getId();
 
                 String distributor = spn_distributor.getSelectedItem().toString();

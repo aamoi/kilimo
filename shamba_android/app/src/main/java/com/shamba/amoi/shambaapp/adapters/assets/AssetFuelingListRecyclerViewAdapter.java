@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.models.assets.AssetFuelingItem;
+import com.shamba.amoi.shambaapp.db.product.ProductStock;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
 import com.shamba.amoi.shambaapp.models.product.StockUtilizationItem;
+import com.shamba.amoi.shambaapp.models.product.VendorItem;
 
 import java.util.List;
 
@@ -43,11 +44,13 @@ public class AssetFuelingListRecyclerViewAdapter extends
         holder.mItem = mValues.get(position);
         holder.first_column.setText(mValues.get(position).getUtilized_date().substring(0,10));
 
-        AssetItem assetItem= AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
-                mValues.get(position).getAsset_id());
-        String product_name= ProductItem.getProductItemByID(ProductItem.getAllProducts(homeActivity),
-                assetItem.getFuel_product_id()).getProduct_name();
-        holder.second_column.setText(product_name);
+        ProductStockItem productStock= ProductStockItem.getProductStockItemByID(
+                ProductStockItem.getAllProductStockItems(homeActivity), mValues.get(position).getStock_id());
+
+        String vendor_name= VendorItem.getVendorItemByID(VendorItem.getAllVendors(homeActivity),
+                productStock.getVendor_id()).getVendor_name();
+
+        holder.second_column.setText(vendor_name);
 
         holder.third_column.setText(String.valueOf(mValues.get(position).getUtilized_quantity()));
     }

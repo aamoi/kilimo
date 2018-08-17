@@ -14,7 +14,6 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.adapters.assets.AssetFuelingListRecyclerViewAdapter;
 import com.shamba.amoi.shambaapp.fragments.product.ProductStockFragment;
-import com.shamba.amoi.shambaapp.models.assets.AssetFuelingItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.product.StockUtilizationItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;

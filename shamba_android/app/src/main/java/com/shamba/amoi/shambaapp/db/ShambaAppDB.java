@@ -5,8 +5,6 @@ import android.arch.persistence.room.RoomDatabase;
 
 import com.shamba.amoi.shambaapp.db.assets.Asset;
 import com.shamba.amoi.shambaapp.db.assets.AssetDao;
-import com.shamba.amoi.shambaapp.db.assets.AssetFueling;
-import com.shamba.amoi.shambaapp.db.assets.AssetFuelingDao;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilization;
 import com.shamba.amoi.shambaapp.db.inventory.InventoryUtilizationDao;
 import com.shamba.amoi.shambaapp.db.labor.PayRate;
@@ -44,7 +42,7 @@ import com.shamba.amoi.shambaapp.db.projects.TaskDao;
         Asset.class,PlantingProgram.class, Resource.class,
         PowerSource.class, Task.class,PlantingPhase.class, ProductStock.class, StockUtilization.class,
         TaskAssignment.class, InventoryUtilization.class, Payment.class, PowerSourceStock.class,
-        AssetFueling.class, Phase.class, PayRate.class},
+        Phase.class, PayRate.class},
         version = 4)
 public abstract class ShambaAppDB extends RoomDatabase {
     public abstract ProductDao productDao();
@@ -59,7 +57,6 @@ public abstract class ShambaAppDB extends RoomDatabase {
     public abstract InventoryUtilizationDao inventoryUtilizationDao();
     public abstract PaymentDao paymentDao();
     public abstract PowerSourceStockDao powerSourceStockDao();
-    public abstract AssetFuelingDao assetFuelingDao();
     public abstract PhaseDao phaseDao();
     public abstract ProductStockDao productStockDao();
     public abstract StockUtilizationDao stockUtilizationDao();

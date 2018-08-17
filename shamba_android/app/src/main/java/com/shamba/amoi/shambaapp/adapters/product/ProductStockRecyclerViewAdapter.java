@@ -61,7 +61,7 @@ public class ProductStockRecyclerViewAdapter extends
 
         if(product_stock_list!=null){
 
-            String vendor = VendorItem.getProductItemByID(VendorItem.staticVendorItemList,
+            String vendor = VendorItem.getVendorItemByID(VendorItem.staticVendorItemList,
                     product_stock_list.get(position).getVendor_id()).getVendor_name();
             holder.supplier_name.setText(vendor);
 
