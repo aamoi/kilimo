@@ -100,7 +100,7 @@ public class ResourcesRecyclerViewAdapter
             hr_skills = (TextView) view.findViewById(R.id.txt_second_column);
 
             DialogUtility dialogUtility= new DialogUtility(homeActivity,
-                    "Select an action on the resource: ",
+                    "Select action on resource: ",
                     "Tasks","Payments","Details"){
 
                 @Override

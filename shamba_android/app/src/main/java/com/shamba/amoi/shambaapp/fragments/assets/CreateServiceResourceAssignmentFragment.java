@@ -244,7 +244,8 @@ public class CreateServiceResourceAssignmentFragment extends BaseFragment {
             }
             try {
                 taskAssignment.setResource_id(resource_id);
-                taskAssignment.setTask_id(task_id);
+//                taskAssignment.setTask_id(task_id);
+                taskAssignment.setService_id(task_id);
                 taskAssignment.setPay_rate_id(pay_rate_id);
                 taskAssignment.setAssignment_start_date(start_date);
                 taskAssignment.setAssignment_end_date(end_date);

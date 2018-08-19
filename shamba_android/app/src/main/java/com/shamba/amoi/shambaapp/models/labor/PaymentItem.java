@@ -24,6 +24,7 @@ public class PaymentItem {
     int id;
     int resource_id;
     int task_id;
+    int service_id;
     String task_start_date;
     int pay_rate_id;
     double work_size;
@@ -35,6 +36,14 @@ public class PaymentItem {
     double resource_balance_due;
     String details;
     String task_complete_status;
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
 
     public String getTask_complete_status() {
         return task_complete_status;
@@ -265,6 +274,9 @@ public class PaymentItem {
 
                     int task_id = jsonObject.getInt("task_id");
                     paymentItem.setTask_id(task_id);
+
+                    int service_id = jsonObject.getInt("service_id");
+                    paymentItem.setService_id(service_id);
 
                     String task_start_date = jsonObject.getString("task_start_date");
                     paymentItem.setTask_start_date(task_start_date);

@@ -7,9 +7,7 @@ import android.util.Log;
 import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
-import com.shamba.amoi.shambaapp.db.projects.Task;
 import com.shamba.amoi.shambaapp.db.projects.TaskDao;
-import com.shamba.amoi.shambaapp.models.projects.TaskItem;
 import com.shamba.amoi.shambaapp.shareResources.CommonHelper;
 
 import org.json.JSONArray;
@@ -161,7 +159,6 @@ public class ResourceItem {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
         return resourceItems;
     }
 }

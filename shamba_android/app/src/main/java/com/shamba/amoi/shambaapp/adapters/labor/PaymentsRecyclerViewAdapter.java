@@ -10,6 +10,7 @@ import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
+import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
 import com.shamba.amoi.shambaapp.models.labor.PaymentItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
 
@@ -42,13 +43,16 @@ public class PaymentsRecyclerViewAdapter extends
                     mValues.get(position).getTask_id()).getTask_name();
             holder.task_name.setText(task_name);
         } else {
-//            AssetServicingItem assetServicingItem= AssetServicingItem.getAssetServicingItemById(
-//                    AssetServicingItem.getAllAssetServicings(homeActivity),mValues.get(position).
-//                            get());
-//
-//            String asset_name= AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
-//                    assetServicingItem.getAsset_id()).getName();
-//            holder.task_name.setText(service_name);
+            AssetServicingItem assetServicingItem= AssetServicingItem.getAssetServicingItemById(
+                    AssetServicingItem.getAllAssetServicings(homeActivity),mValues.get(position).
+                           getService_id());
+
+            AssetItem assetItem=AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
+                    assetServicingItem.getAsset_id());
+
+            String service_type_name= ServiceTypeItem.getServiceTypeById(homeActivity,
+                    assetItem.getService_type_id()).getName();
+            holder.task_name.setText(service_type_name);
         }
 
         holder.due_date.setText(mValues.get(position).getDue_date().substring(0, 10));
