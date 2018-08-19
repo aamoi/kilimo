@@ -104,14 +104,14 @@ public class ResourcesRecyclerViewAdapter
                     "Tasks","Payments","Details"){
 
                 @Override
-                public void onSelectNegativeDialogueOption(){
+                public void  onSelectNeutralDialogueOption(){
                     ResourceItem.selectedResourceItem= resource_item;
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,
                             new TaskAssignmentListFragment());
                 }
 
                 @Override
-                public void onSelectPostiveDialogueOption(){
+                public void onSelectNegativeDialogueOption(){
                     ResourceItem.selectedResourceItem= resource_item;
                     Log.d("Resources| selected!", resource_item.toString() );
                     BaseFragment.changeFragment(homeActivity,R.id.fragment_placeholder_home,

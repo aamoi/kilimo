@@ -11,7 +11,9 @@ import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetFuelingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment;
 import com.shamba.amoi.shambaapp.fragments.assets.AssetServicingListFragment.OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.fragments.assets.CreateServiceResourceAssignmentFragment;
 import com.shamba.amoi.shambaapp.fragments.labor.PaymentsFragment;
+import com.shamba.amoi.shambaapp.fragments.labor.TaskAssignmentListFragment;
 import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
 import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
@@ -94,7 +96,7 @@ public class AssetServicingListRecyclerViewAdapter
                 public void onSelectNeutralDialogueOption() {
                     AssetServicingItem.selectedAssetServicingItem = assetServicingItem;
                     BaseFragment.changeFragment(homeActivity, R.id.fragment_placeholder_home,
-                            new AssetFuelingListFragment());
+                            new CreateServiceResourceAssignmentFragment());
                 }
             };
 

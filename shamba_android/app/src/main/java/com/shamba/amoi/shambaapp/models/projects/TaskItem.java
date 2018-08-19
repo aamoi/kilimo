@@ -407,10 +407,10 @@ public class TaskItem {
 
     /**
      * Get all tasks for a phase.
-     *
      * @return
      */
-    public static List<TaskItem> getPlantingPhaseTask(Activity activity, int project_id, int phase_id) {
+    public static List<TaskItem> getPlantingPhaseTask(Activity activity, int project_id,
+                                                      int phase_id) {
 
         List<TaskItem> allTaskItems = new ArrayList<>();
         List<TaskItem> plantingPhaseTasks = new ArrayList<>();

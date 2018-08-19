@@ -62,8 +62,14 @@ public class TaskAssignmentController {
     @PostMapping("/createTaskAssignment")
     public TaskAssignment create(@RequestBody Map<String, String> body) {
 
-        int resource_id = Integer.parseInt(body.get("resource_id"));
-        int task_id = Integer.parseInt(body.get("task_id"));
+        Integer resource_id = Integer.parseInt(body.get("resource_id"));
+
+        String task_id_str=body.get("task_id");
+        int task_id = task_id_str!=null?Integer.parseInt(task_id_str):0;
+
+        String service_id_str=body.get("service_id");
+        int service_id = service_id_str!=null?Integer.parseInt(service_id_str):0;
+
         int pay_rate_id = Integer.parseInt(body.get("pay_rate_id"));
         Date assignment_start_date = DateUtil.stringToDate(body.get("assignment_start_date"));
         Date assignment_end_date = DateUtil.stringToDate(body.get("assignment_end_date"));
@@ -79,13 +85,14 @@ public class TaskAssignmentController {
         TaskAssignment taskAssignment = new TaskAssignment();
         Payment payment = new Payment();
 
-            taskAssignment = taskAssignmentRepository.save(new TaskAssignment(resource_id, task_id, pay_rate_id,
-                    assignment_start_date, assignment_end_date, quantity_worked, amount_due, complete_status,
-                    comments, payment_status, amount_paid));
+            taskAssignment = taskAssignmentRepository.save(new TaskAssignment(resource_id, task_id,service_id,
+                    pay_rate_id,assignment_start_date, assignment_end_date, quantity_worked, amount_due,
+                    complete_status,comments, payment_status, amount_paid));
+
         System.out.println(class_name+"|createTaskAssignment(), taskAssignment:"+taskAssignment.toString());
 
-        payment = paymentRepository.save(new Payment(resource_id, task_id,assignment_start_date,assignment_end_date,
-                    pay_rate_id, quantity_worked, amount_due, null, payment_status, 0.0, amount_due, comments));
+        payment = paymentRepository.save(new Payment(resource_id, task_id,service_id,assignment_start_date,
+                assignment_end_date,pay_rate_id,quantity_worked,amount_due,null,payment_status, 0.0,amount_due,comments));
         System.out.println(class_name+"|createTaskAssignment(), payment:"+payment.toString());
 
         return taskAssignment;

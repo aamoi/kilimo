@@ -20,6 +20,7 @@ public class Payment {
             int id;
     int resource_id;
     int task_id;
+    int service_id;
     Date task_start_date;
     Date due_date;
     int pay_rate_id;
@@ -30,6 +31,14 @@ public class Payment {
     double amount_paid;
     double resource_balance_due;
     String details;
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
 
     public int getPay_rate_id() {
         return pay_rate_id;
@@ -58,12 +67,13 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int resource_id, int task_id, Date task_start_date, Date due_date,int pay_rate_id,
+    public Payment(int resource_id, int task_id, int service_id,Date task_start_date, Date due_date,int pay_rate_id,
                    double  work_size,double amount_due,Date payment_date,String payment_status, double amount_paid,
                    double resource_balance_due,String details) {
 
         this.resource_id = resource_id;
         this.task_id = task_id;
+        this.service_id = service_id;
         this.task_start_date = task_start_date;
         this.due_date = due_date;
         this.pay_rate_id = pay_rate_id;
@@ -166,6 +176,7 @@ public class Payment {
                 "id=" + id +
                 ", resource_id='" + resource_id + '\'' +
                 ", task_id='" + task_id + '\'' +
+                ", service_id='" + service_id + '\'' +
                 ", task_start_date='" + task_start_date + '\'' +
                 ", pay_rate_id='" + pay_rate_id + '\'' +
                 ", work_size='" + work_size + '\'' +

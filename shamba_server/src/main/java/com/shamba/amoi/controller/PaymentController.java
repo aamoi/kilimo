@@ -45,6 +45,7 @@ public class PaymentController {
 
         int resource_id = Integer.parseInt(body.get("resource_id"));
         int task_id = Integer.parseInt(body.get("task_id"));
+        int service_id = Integer.parseInt(body.get("service_id"));
         int pay_rate_id = Integer.parseInt(body.get("pay_rate_id"));
         int work_size = Integer.parseInt(body.get("work_size"));
         Date task_start_date = DateUtil.stringToDate(body.get("task_start_date"));
@@ -56,7 +57,7 @@ public class PaymentController {
         double resource_balance_due =0.0;
         String details = body.get("details");
 
-        return paymentRepository.save(new Payment(resource_id, task_id,task_start_date, due_date,pay_rate_id,
+        return paymentRepository.save(new Payment(resource_id, task_id,service_id,task_start_date, due_date,pay_rate_id,
                 work_size,amount_due,payment_date, payment_status,amount_paid, resource_balance_due, details));
     }
 

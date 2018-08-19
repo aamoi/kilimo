@@ -14,6 +14,7 @@ public class TaskAssignment {
     int id;
     int resource_id;
     int task_id;
+    int service_id;
     int pay_rate_id;
     String assignment_start_date;
     String assignment_end_date;
@@ -21,7 +22,15 @@ public class TaskAssignment {
     double amount_due;
     String complete_status;
     String comments;
-//    String payment_status;
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
+    //    String payment_status;
 //    double amount_paid;
 
     @NonNull

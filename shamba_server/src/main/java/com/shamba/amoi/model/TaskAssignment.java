@@ -19,6 +19,7 @@ public class TaskAssignment {
             int id;
     int resource_id;
     int  task_id;
+    int  service_id;
     int pay_rate_id;
     Date assignment_start_date;
     Date assignment_end_date;
@@ -28,6 +29,18 @@ public class TaskAssignment {
     String comments;
     String payment_status;
     double amount_paid;
+
+    public int getTask_id() {
+        return task_id;
+    }
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -128,12 +141,13 @@ public class TaskAssignment {
     public TaskAssignment() {
     }
 
-    public TaskAssignment(int resource_id,int task_id,int pay_rate_id,Date assignment_start_date,
+    public TaskAssignment(int resource_id,int task_id,int service_id,int pay_rate_id,Date assignment_start_date,
                           Date assignment_end_date,double quantity_worked,double amount_due,String complete_status,
                           String comments,String payment_status,double amount_paid) {
 
         this.resource_id = resource_id;
         this.task_id = task_id;
+        this.service_id=service_id;
         this.pay_rate_id = pay_rate_id;
         this.assignment_start_date = assignment_start_date;
         this.assignment_end_date = assignment_end_date;
@@ -151,6 +165,7 @@ public class TaskAssignment {
                 "id=" + id +
                 ", resource_id='" + resource_id + '\'' +
                 ", task_id='" + task_id + '\'' +
+                ", service_id='" + service_id + '\'' +
                 ", pay_rate_id='" + pay_rate_id + '\'' +
                 ", assignment_start_date='" + assignment_start_date + '\'' +
                 ", assignment_end_date='" + assignment_end_date +

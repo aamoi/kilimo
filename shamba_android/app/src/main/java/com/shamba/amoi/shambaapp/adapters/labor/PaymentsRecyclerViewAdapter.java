@@ -5,12 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
 import com.shamba.amoi.shambaapp.models.labor.PaymentItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
 
 import java.util.List;
+
 public class PaymentsRecyclerViewAdapter extends
         RecyclerView.Adapter<PaymentsRecyclerViewAdapter.ViewHolder> {
 
@@ -33,10 +37,21 @@ public class PaymentsRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        String task_name= TaskItem.getTaskItemById(TaskItem.staticTaskItems,
-                mValues.get(position).getTask_id()).getTask_name();
-        holder.task_name.setText(task_name);
-        holder.due_date.setText(mValues.get(position).getDue_date().substring(0,10));
+        if (mValues.get(position).getTask_id() > 0) {
+            String task_name = TaskItem.getTaskItemById(TaskItem.staticTaskItems,
+                    mValues.get(position).getTask_id()).getTask_name();
+            holder.task_name.setText(task_name);
+        } else {
+//            AssetServicingItem assetServicingItem= AssetServicingItem.getAssetServicingItemById(
+//                    AssetServicingItem.getAllAssetServicings(homeActivity),mValues.get(position).
+//                            get());
+//
+//            String asset_name= AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
+//                    assetServicingItem.getAsset_id()).getName();
+//            holder.task_name.setText(service_name);
+        }
+
+        holder.due_date.setText(mValues.get(position).getDue_date().substring(0, 10));
         holder.amount_due.setText(String.valueOf(mValues.get(position).getAmount_due()));
     }
 
@@ -56,9 +71,9 @@ public class PaymentsRecyclerViewAdapter extends
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            amount_due= (TextView) view.findViewById(R.id.txt_third_column);
-            due_date= (TextView) view.findViewById(R.id.txt_second_column);
-            task_name= (TextView) view.findViewById(R.id.txt_first_column);
+            amount_due = (TextView) view.findViewById(R.id.txt_third_column);
+            due_date = (TextView) view.findViewById(R.id.txt_second_column);
+            task_name = (TextView) view.findViewById(R.id.txt_first_column);
         }
 
         @Override

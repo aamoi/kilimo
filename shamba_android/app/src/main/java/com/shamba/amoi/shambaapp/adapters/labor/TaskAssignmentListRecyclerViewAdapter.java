@@ -1,5 +1,6 @@
 package com.shamba.amoi.shambaapp.adapters.labor;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,17 +10,13 @@ import android.widget.TextView;
 
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.fragments.labor.TaskAssignmentListFragment.
-        OnListFragmentInteractionListener;
+import com.shamba.amoi.shambaapp.models.assets.AssetItem;
+import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
+import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
 import com.shamba.amoi.shambaapp.models.labor.TaskAssignmentItem;
 import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
 import java.util.List;
-
-/**
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class TaskAssignmentListRecyclerViewAdapter
         extends RecyclerView.Adapter<TaskAssignmentListRecyclerViewAdapter.ViewHolder> {
 
@@ -44,16 +41,38 @@ public class TaskAssignmentListRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        TaskItem taskItem=TaskItem.getTaskItemById(TaskItem.staticTaskItems,mValues.get(position).
-                getTask_id());
+        if(mValues.get(position).getTask_id()>0){
+            Log.d("Task assigs adapter|","Hits task assignment");
 
-        String project_name=PlantingProgramItem.getPlantingProgramById(homeActivity,
-                taskItem.getProject_id()).getPlanting_name();
-        holder.project_identity.setText(project_name);
+            TaskItem taskItem=TaskItem.getTaskItemById(TaskItem.staticTaskItems,mValues.get(position).
+                    getTask_id());
 
-        String task_name=taskItem.getTask_name();
-        holder.task_identity.setText(task_name);
-        holder.task_date.setText(mValues.get(position).getAssignment_start_date());
+            String project_name=PlantingProgramItem.getPlantingProgramById(homeActivity,
+                    taskItem.getProject_id()).getPlanting_name();
+            holder.project_identity.setText(project_name);
+
+            String task_name=taskItem.getTask_name();
+            holder.task_identity.setText(task_name);
+        }
+        else {
+            Log.d("Service assigs adapter|","Hits service assignment");
+            TaskItem taskItem=TaskItem.getTaskItemById(TaskItem.staticTaskItems,
+                    mValues.get(position).getTask_id());
+
+           AssetServicingItem assetServicingItem= AssetServicingItem.getAssetServicingItemById(
+                   AssetServicingItem.getAllAssetServicings(homeActivity),mValues.get(position).
+                    getService_id());
+
+            String asset_name= AssetItem.getAssetItemById(AssetItem.getAllAssets(homeActivity),
+                    assetServicingItem.getAsset_id()).getName();
+            holder.project_identity.setText(asset_name);
+
+            String service_name= ServiceTypeItem.getServiceTypeById(homeActivity,mValues.
+                    get(position).getService_id()).getName();
+            holder.task_identity.setText(service_name);
+        }
+
+        holder.task_date.setText(mValues.get(position).getAssignment_start_date().substring(0,10));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
