@@ -64,14 +64,20 @@ public class TaskAssignmentListFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_taskassignmentlist_list, container,
                 false);
 
+        ResourceItem resourceItem=ResourceItem.selectedResourceItem;
+
         List<TaskAssignmentItem> taskAssignmentItemList = new ArrayList<>();
+
         taskAssignmentItemList = TaskAssignmentItem.getAllTaskAssignments(this.getActivity());
         TaskAssignmentItem.staticTaskAssignmentItem = taskAssignmentItemList;
+
+        List<TaskAssignmentItem> resourceAssignmentItemList = TaskAssignmentItem.
+                getAssignmentsByResource(getActivity(),resourceItem.getId());
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_task_assignment);
 
         recyclerView.setAdapter(new TaskAssignmentListRecyclerViewAdapter((HomeActivity) homeActivity,
-                taskAssignmentItemList));
+                resourceAssignmentItemList));
 
         Button submit_task_assignment = (Button) view.findViewById(R.id.btn_add_task_assignment);
 

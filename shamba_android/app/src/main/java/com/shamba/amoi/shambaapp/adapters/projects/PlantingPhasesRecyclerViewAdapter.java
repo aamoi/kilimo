@@ -11,18 +11,11 @@ import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.fragments.projects.PlantingPhasesFragment.OnListFragmentInteractionListener;
 import com.shamba.amoi.shambaapp.fragments.projects.TaskListFragment;
 import com.shamba.amoi.shambaapp.models.projects.PhaseItem;
-import com.shamba.amoi.shambaapp.models.projects.PlantingPhaseItem;
-import com.shamba.amoi.shambaapp.models.projects.PlantingProgramItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class PlantingPhasesRecyclerViewAdapter extends
         RecyclerView.Adapter<PlantingPhasesRecyclerViewAdapter.ViewHolder> {
 
@@ -89,7 +82,7 @@ public class PlantingPhasesRecyclerViewAdapter extends
             mContentView = (TextView) view.findViewById(R.id.phase_stage);
 
             DialogUtility dialogUtility= new DialogUtility(homeActivity,"Phase action?",
-                    "Tasks","Details", ""){
+                    "","Tasks","Details"){
                 @Override
                 public void onSelectNegativeDialogueOption(){
 

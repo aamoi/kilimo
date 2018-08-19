@@ -69,7 +69,7 @@ public class PlantingProgrammesRecyclerViewAdapter
             program_ref = (TextView) view.findViewById(R.id.txt_second_column);
 
             DialogUtility dialogUtility= new DialogUtility(homeActivity,"Planting project action?",
-                    "Tasks","Details",""){
+                    "","Tasks","Details"){
                 @Override
                 public void onSelectNegativeDialogueOption(){
                     PlantingProgramItem.selectedPlantingProgram=pItem;

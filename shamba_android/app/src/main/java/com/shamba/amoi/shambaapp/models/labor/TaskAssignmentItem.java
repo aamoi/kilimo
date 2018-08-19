@@ -57,11 +57,51 @@ public class TaskAssignmentItem {
         return assignmentItemList;
     }
 
-    public int getService_id() {
-        return service_id;
+    /**
+     * Get all  resource assignments.
+     * @param activity
+     * @return
+     */
+    public static List<TaskAssignmentItem> getAssignmentsByResource(Activity activity, int resource_id) {
+
+        List<TaskAssignmentItem> allTaskAssignments = getAllTaskAssignments(activity);
+        List<TaskAssignmentItem> resourceTaskAssignments = new ArrayList<>();
+
+        for (int i = 0; i < allTaskAssignments.size(); ++i) {
+            if (allTaskAssignments.get(i).getResource_id() == resource_id) {
+                resourceTaskAssignments.add(allTaskAssignments.get(i));
+            }
+        }
+
+        return resourceTaskAssignments;
     }
     //    String payment_status;
 //    double amount_paid;
+
+    /**
+     * Get all assignments.
+     *
+     * @param activity
+     * @return
+     */
+    public static List<TaskAssignmentItem> getAllAssignments(Activity activity) {
+
+        List<TaskAssignmentItem> taskAssignmentItems = new ArrayList<>();
+
+        try {
+            taskAssignmentItems = new GetTaskAssignmentList(activity).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return taskAssignmentItems;
+    }
+
+    public int getService_id() {
+        return service_id;
+    }
 
     public void setService_id(int service_id) {
         this.service_id = service_id;
@@ -69,14 +109,6 @@ public class TaskAssignmentItem {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getComplete_status() {
-        return complete_status;
     }
 
 //    public String getPayment_status() {
@@ -94,6 +126,14 @@ public class TaskAssignmentItem {
 //    public void setAmount_paid(double amount_paid) {
 //        this.amount_paid = amount_paid;
 //    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComplete_status() {
+        return complete_status;
+    }
 
     public void setComplete_status(String complete_status) {
         this.complete_status = complete_status;

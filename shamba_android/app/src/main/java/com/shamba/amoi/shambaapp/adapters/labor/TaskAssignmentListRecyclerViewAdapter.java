@@ -1,6 +1,7 @@
 package com.shamba.amoi.shambaapp.adapters.labor;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class TaskAssignmentListRecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
+
         if(mValues.get(position).getTask_id()>0){
             Log.d("Task assigs adapter|","Hits task assignment");
 
@@ -71,8 +73,15 @@ public class TaskAssignmentListRecyclerViewAdapter
                     get(position).getService_id()).getName();
             holder.task_identity.setText(service_name);
         }
-
         holder.task_date.setText(mValues.get(position).getAssignment_start_date().substring(0,10));
+
+        String complete_status=mValues.get(position).getComplete_status();
+
+        if(!complete_status.equalsIgnoreCase("Yes")){
+            holder.project_identity.setBackgroundColor(Color.RED);
+            holder.task_identity.setBackgroundColor(Color.RED);
+            holder.task_date.setBackgroundColor(Color.RED);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

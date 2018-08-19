@@ -100,10 +100,10 @@ public class CreateServiceResourceAssignmentFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 String resource_name = spn_resource.getSelectedItem().toString();
-                ResourceItem resourceItem= ResourceItem.getResourceByName(getActivity(),
+                ResourceItem resourceItem = ResourceItem.getResourceByName(getActivity(),
                         resource_name);
-                ResourceItem.selectedResourceItem=resourceItem;
-                int resource_id =resourceItem.getId();
+                ResourceItem.selectedResourceItem = resourceItem;
+                int resource_id = resourceItem.getId();
 
                 int service_id = AssetServicingItem.selectedAssetServicingItem.getId();
                 pay_rate = spn_pay_rate.getSelectedItem().toString();
@@ -205,7 +205,7 @@ public class CreateServiceResourceAssignmentFragment extends BaseFragment {
         int id;
         int success = 0;
 
-        public SaveResourceAssignment(int resource_id,int task_id,int pay_rate_id,String start_date,
+        public SaveResourceAssignment(int resource_id, int task_id, int pay_rate_id, String start_date,
                                       String end_date, double quantity_worked, double amount_due,
                                       String complete_status, String comments) {
             this.resource_id = resource_id;
