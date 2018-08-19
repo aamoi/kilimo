@@ -1,6 +1,7 @@
 package com.shamba.amoi.shambaapp.adapters.labor;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import com.shamba.amoi.shambaapp.models.assets.AssetItem;
 import com.shamba.amoi.shambaapp.models.assets.AssetServicingItem;
 import com.shamba.amoi.shambaapp.models.assets.ServiceTypeItem;
 import com.shamba.amoi.shambaapp.models.labor.PaymentItem;
+import com.shamba.amoi.shambaapp.models.labor.TaskAssignmentItem;
 import com.shamba.amoi.shambaapp.models.projects.TaskItem;
+import com.shamba.amoi.shambaapp.shareResources.DialogUtility;
 
 import java.util.List;
 
@@ -78,6 +81,24 @@ public class PaymentsRecyclerViewAdapter extends
             amount_due = (TextView) view.findViewById(R.id.txt_third_column);
             due_date = (TextView) view.findViewById(R.id.txt_second_column);
             task_name = (TextView) view.findViewById(R.id.txt_first_column);
+
+            DialogUtility dialogUtility = new DialogUtility(homeActivity,
+                    "Select action on payment: ",
+                    "", "Pay", "Details") {
+
+                @Override
+                public void onSelectNegativeDialogueOption() {
+                    PaymentItem.selectedPaymentItem = mItem;
+                    Log.d("Payment| selected!", mItem.toString());
+                }
+
+                @Override
+                public void onSelectPostiveDialogueOption() {
+                    PaymentItem.selectedPaymentItem = mItem;
+                    Log.d("Payment| selected!", mItem.toString());
+                }
+            };
+            dialogUtility.setSimpleDialogOnRecyclerListItem(mView,amount_due,due_date,task_name);
         }
 
         @Override

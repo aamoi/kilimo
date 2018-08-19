@@ -184,6 +184,9 @@ public class CreateServiceResourceAssignmentFragment extends BaseFragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     *
+     */
     class SaveResourceAssignment extends AsyncTask<Void, Void, Integer> {
         public int resource_id;
         public int task_id;
