@@ -18,36 +18,38 @@ import com.shamba.amoi.shambaapp.fragments.product.InventoryUtilizationFragment;
 import com.shamba.amoi.shambaapp.fragments.product.RestockProductFragment;
 import com.shamba.amoi.shambaapp.models.product.ProductItem;
 import com.shamba.amoi.shambaapp.models.product.ProductStockItem;
+import com.shamba.amoi.shambaapp.models.product.ProductVarietyItem;
 import com.shamba.amoi.shambaapp.models.product.VendorItem;
 import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 
 import java.util.List;
 
-public class ProductStockRecyclerViewAdapter extends
+
+public class ProductVarietyRecyclerViewAdapter extends
         RecyclerView.Adapter<ProductVarietyRecyclerViewAdapter.ViewHolder> {
 
-    private final List<ProductStockItem> product_stock_list;
+    List<ProductVarietyItem> productVarietyItems=null;
     private final HomeActivity homeActivity;
-    private ProductItem productItem;
-    public Integer asset_id;
+    private ProductVarietyItem productVarietyItem;
+    public Integer productID;
 
 
-    public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
-                                           HomeActivity homeActivity) {
-        product_stock_list = items;
+    public ProductVarietyRecyclerViewAdapter(List<ProductVarietyItem> items,
+                                             HomeActivity homeActivity) {
+        productVarietyItems = items;
         this.homeActivity = homeActivity;
     }
 
-    public ProductStockRecyclerViewAdapter(List<ProductStockItem> items,
-                                           HomeActivity homeActivity, Integer asset_id) {
-        product_stock_list = items;
+    public ProductVarietyRecyclerViewAdapter(List<ProductVarietyItem> items,
+                                             HomeActivity homeActivity, Integer product_id) {
+        productVarietyItems = items;
         this.homeActivity = homeActivity;
-        this.asset_id=asset_id;
+        this.productID=product_id;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        productItem = ProductItem.selectedProductItem;
+        productVarietyItem = ProductVarietyItem.selectedProductVarietyItem;
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_productstock, parent, false);
@@ -56,12 +58,12 @@ public class ProductStockRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.inv_stock_Item = product_stock_list.get(position);
+        holder.product_variety_item = productVarietyItems.get(position);
 
-        if(product_stock_list!=null){
+        if(productVarietyItems!=null){
 
             String vendor = VendorItem.getVendorItemByID(VendorItem.staticVendorItemList,
-                    product_stock_list.get(position).getVendor_id()).getVendor_name();
+                    productVarietyItems.get(position).()).getVendor_name();
             holder.supplier_name.setText(vendor);
 
             String purchase_date = product_stock_list.get(position).getPurchase_date().substring(0, 10);
@@ -86,7 +88,6 @@ public class ProductStockRecyclerViewAdapter extends
             }
         }
 
-
         holder.stock_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,30 +97,31 @@ public class ProductStockRecyclerViewAdapter extends
 
     @Override
     public int getItemCount() {
-        return product_stock_list != null ? product_stock_list.size() : 0;
+        return productVarietyItems != null ? productVarietyItems.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View stock_view;
+        public final View product_variety_view;
 
         public final TextView supplier_name;
-        public final TextView stock_date;
         public final TextView stock_quantity;
-        public ProductStockItem inv_stock_Item;
+        public final TextView stock_date;
+
+        public ProductVarietyItem product_variety_item;
 
         @SuppressLint("ResourceAsColor")
         public ViewHolder(View view) {
             super(view);
-            stock_view = view;
+            product_variety_view = view;
 
+            supplier_name = (TextView) view.findViewById(R.id.txt_third_column);
             stock_date = (TextView) view.findViewById(R.id.txt_first_column);
             stock_quantity = (TextView) view.findViewById(R.id.txt_second_column);
-            supplier_name = (TextView) view.findViewById(R.id.txt_third_column);
 
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ProductStockItem.selectedProductStockItem = inv_stock_Item;
+                    ProductVarietyItem.selectedProductVarietyItem = productVarietyItem;
                     ProductItem productItem=ProductItem.getProductItemByID(
                             ProductItem.getAllProducts(homeActivity),inv_stock_Item.getProduct_id());
                     String product_name = productItem.getProduct_name();
@@ -136,11 +138,11 @@ public class ProductStockRecyclerViewAdapter extends
                                 "<font color='#FF7000'>Utilize stock</font>"),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        if((asset_id!=null)&&(asset_id>0)){
+                                        if((productID!=null)&&(productID>0)){
                                             BaseFragment.changeFragment(homeActivity,
                                                     R.id.fragment_placeholder_home,
-                                                     InventoryUtilizationFragment.
-                                                             newInstance(asset_id));
+                                                    InventoryUtilizationFragment.
+                                                            newInstance(productID));
                                         }
                                         else{
                                             BaseFragment.changeFragment(homeActivity,
@@ -167,7 +169,7 @@ public class ProductStockRecyclerViewAdapter extends
                     } catch (Exception ex) { ex.printStackTrace(); }
                 }
             };
-            stock_view.setOnClickListener(listener);
+            product_variety_view.setOnClickListener(listener);
             supplier_name.setOnClickListener(listener);
             stock_date.setOnClickListener(listener);
             stock_quantity.setOnClickListener(listener);

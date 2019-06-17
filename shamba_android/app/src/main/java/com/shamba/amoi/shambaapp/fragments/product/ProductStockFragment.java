@@ -15,7 +15,7 @@ import android.widget.Button;
 import com.shamba.amoi.shambaapp.BuildConfig;
 import com.shamba.amoi.shambaapp.R;
 import com.shamba.amoi.shambaapp.activities.HomeActivity;
-import com.shamba.amoi.shambaapp.adapters.product.ProductStockRecyclerViewAdapter;
+import com.shamba.amoi.shambaapp.adapters.product.ProductVarietyRecyclerViewAdapter;
 import com.shamba.amoi.shambaapp.db.DBAdaptor;
 import com.shamba.amoi.shambaapp.db.ShambaAppDB;
 import com.shamba.amoi.shambaapp.db.product.ProductStockDao;
@@ -123,11 +123,11 @@ public class ProductStockFragment extends BaseFragment {
 
         if((asset_id!=null)&&(asset_id>0)) {
 
-            recyclerView.setAdapter(new ProductStockRecyclerViewAdapter(product_stock_list,
+            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
                     (HomeActivity) this.getActivity(),asset_id));
         }
         else{
-            recyclerView.setAdapter(new ProductStockRecyclerViewAdapter(product_stock_list,
+            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
                     (HomeActivity) this.getActivity()));
         }
 

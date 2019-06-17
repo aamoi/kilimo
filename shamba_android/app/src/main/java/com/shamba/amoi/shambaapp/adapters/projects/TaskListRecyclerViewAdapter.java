@@ -50,13 +50,19 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
         String complete_status= holder.mItem.getComplete_status();
 
         if(!(complete_status.equalsIgnoreCase("Complete"))){
-            holder.mIdView.setBackgroundColor(Color.RED);
-            holder.mContentView.setBackgroundColor(Color.RED);
+//            holder.mIdView.setBackgroundColor(Color.RED);
+//            holder.mContentView.setBackgroundColor(Color.RED);
+
+            holder.mContentView.setTextColor(Color.RED);
+            holder.mIdView.setTextColor(Color.RED);
+
         }
 
         holder.mIdView.setText(tasks.get(position).getTask_name());
 
-        holder.mContentView.setText(tasks.get(position).getPlanned_start_date());
+        String task_start_date=tasks.get(position).getPlanned_start_date().substring(0,10);
+
+        holder.mContentView.setText(task_start_date);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
