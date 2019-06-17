@@ -121,15 +121,15 @@ public class ProductStockFragment extends BaseFragment {
                 getString(R.string.title_fragment_product_stocks) +
                 "(" + String.valueOf(total_quantity) +" "+ unit_of_measure + ")");
 
-        if((asset_id!=null)&&(asset_id>0)) {
-
-            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
-                    (HomeActivity) this.getActivity(),asset_id));
-        }
-        else{
-            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
-                    (HomeActivity) this.getActivity()));
-        }
+//        if((asset_id!=null)&&(asset_id>0)) {
+//
+//            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
+//                    (HomeActivity) this.getActivity(),asset_id));
+//        }
+//        else{
+//            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(product_stock_list,
+//                    (HomeActivity) this.getActivity()));
+//        }
 
         add_stock = (Button) view.findViewById(R.id.btn_add_product_stock);
         add_stock.setOnClickListener(new View.OnClickListener() {

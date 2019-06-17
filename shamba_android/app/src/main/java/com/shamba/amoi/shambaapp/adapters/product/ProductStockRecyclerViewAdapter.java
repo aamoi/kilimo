@@ -24,7 +24,7 @@ import com.shamba.amoi.shambaapp.shareResources.BaseFragment;
 import java.util.List;
 
 public class ProductStockRecyclerViewAdapter extends
-        RecyclerView.Adapter<ProductVarietyRecyclerViewAdapter.ViewHolder> {
+        RecyclerView.Adapter<ProductStockRecyclerViewAdapter.ViewHolder> {
 
     private final List<ProductStockItem> product_stock_list;
     private final HomeActivity homeActivity;

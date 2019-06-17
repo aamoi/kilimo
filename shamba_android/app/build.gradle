@@ -24,7 +24,7 @@ android {
 
         local {
             dimension = "environmentType"
-            buildConfigField "String", "SERVER_URL", '\"http://192.168.86.68:8080/\"'
+            buildConfigField "String", "SERVER_URL", '\"http://192.168.86.35:8080/\"'
 //            buildConfigField "String", "SERVER_URL", '\"http://192.168.43.5:8080/\"'
         }
     }

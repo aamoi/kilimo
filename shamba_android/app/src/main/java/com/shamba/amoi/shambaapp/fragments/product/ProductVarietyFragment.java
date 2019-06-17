@@ -9,11 +9,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.shamba.amoi.shambaapp.R;
+import com.shamba.amoi.shambaapp.activities.HomeActivity;
 import com.shamba.amoi.shambaapp.adapters.product.ProductVarietyRecyclerViewAdapter;
+import com.shamba.amoi.shambaapp.adapters.product.ProductsRecyclerViewAdapter;
 import com.shamba.amoi.shambaapp.fragments.product.dummy.DummyContent;
 import com.shamba.amoi.shambaapp.fragments.product.dummy.DummyContent.DummyItem;
+import com.shamba.amoi.shambaapp.models.product.ProductItem;
+import com.shamba.amoi.shambaapp.models.product.ProductVarietyItem;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +35,7 @@ public class ProductVarietyFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private List<ProductVarietyItem> productVarietyItemList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,17 +68,27 @@ public class ProductVarietyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_productvariety_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        productVarietyItemList = ProductVarietyItem.getProductVarieties(getActivity(),
+                ProductItem.selectedProductItem.getId());
+
+        getActivity().setTitle(String.valueOf(productVarietyItemList.size()) + " " +
+                getString(R.string.title_fragment_product_list));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_list_product);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        prod = new ProductsRecyclerViewAdapter(productItems,
+                (HomeActivity) this.getActivity());
+
+        productsRecyclerViewAdapter.setProductList(getContext(), productItems);
+
+        recyclerView.setAdapter(productsRecyclerViewAdapter);
+        btn_add_product = (Button) view.findViewById(R.id.btn_add_product);
+        btn_add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToCreateProductScreen();
             }
-            recyclerView.setAdapter(new ProductVarietyRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+        });
         return view;
     }
 
