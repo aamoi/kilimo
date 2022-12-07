@@ -1,7 +1,5 @@
 package com.shamba.amoi.Utils;
 
-import com.oracle.tools.packager.Log;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
